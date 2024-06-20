@@ -1,0 +1,11 @@
+.nextflow*
+work/
+data/
+results/
+null/
+.DS_Store
+testing/
+testing*
+*.pyc
+*.fastq.gz
+assets/samplesheet.csv
