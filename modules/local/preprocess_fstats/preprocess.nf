@@ -6,20 +6,19 @@ process PREPROCESS {
   label 'process_medium'
   label 'ERRO'
 
-  container "docker://juliaapolonio/coloc:5.2.3"
+  container "docker://ubuntu:22.04"
 
   input:
     path(qtl)
 
   output:
-    path("*txt.gz")        , emit: qtl_sumstats
+    path("*MR.txt.gz")        , emit: qtl_sumstats
 
   when:
   task.ext.when == null || task.ext.when
 
   script:
   """
-  preprocess_metabrain.sh \\
-    $qtl \\
+  preprocess_metabrain.sh $qtl
   """
 }
