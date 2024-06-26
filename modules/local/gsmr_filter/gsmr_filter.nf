@@ -9,27 +9,17 @@ process GSMR_FILTER {
   container "docker://juliaapolonio/coloc:5.2.3"
 
   input:
-    path(reads)
-    path(outcome)
-    path(reference)
+    path(res_file)
 
   output:
-    path("*csv")        , emit: harmonised
-    path("*md")         , emit: report
-    path("figure")      , emit: figures
+    path("genelist.txt")        , emit: genelist
 
   when:
   task.ext.when == null || task.ext.when
 
   script:
-  def prefix1 = reads.getBaseName()
-  def prefix2 = outcome.getBaseName()
   """
-  run_twosamplemr.R \\
-    $prefix1 \\
-    $prefix2 \\
-    $reads \\
-    $outcome \\
-    $reference
+  extract_gene_list.R \\
+    $res_file \\
   """
 }

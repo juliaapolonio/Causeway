@@ -1,9 +1,10 @@
 #### Get a significative gene list from GSMR to filter input for TSMR and coloc
 
 
-eqtlgen_all=vroom("../GSMR/nextflow/data/results/sdep_eqtlgen/results/results_eqtlgen_sdep.txt")
+args <- commandArgs(trailingOnly = TRUE)
+res_file <- args[1]
 
-eqtlgen_all <- vroom("/data/home/julia.amorim/scripts/GSMR/nextflow/data/results/eqtlgen/results/results_bdep_eqtlgen.txt")
+eqtlgen_all <- vroom(res_file)
 
 # Filter results based on pBH and nsnp
 eqtlgen_result=eqtlgen_all %>% mutate("p"=as.numeric(p)) %>% filter(!is.na(p))
@@ -18,4 +19,4 @@ vroom_write(eqtlgen_result, "gsmr_filtered_genes.txt")
 
 # Get gene list and save
 sign_genes <- eqtlgen_result$Exposure
-write(sign_genes, "gsmr_sdep_genelist.txt")
+write(sign_genes, "genelist.txt")
