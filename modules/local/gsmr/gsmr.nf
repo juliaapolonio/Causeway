@@ -1,7 +1,8 @@
 process GCTA_GSMR {
-    label 'GCTA_GSMR'
+    label 'GSMR'
     publishDir "${params.outdir}/results", mode: 'copy'
     container "docker://quay.io/biocontainers/gcta:1.94.1--h9ee0642_0"
+    executor 'slurm'
 
     input: 
     path(exposure)
