@@ -15,7 +15,7 @@ cat "$name"_tmp0.txt  | tr ':' '\t' | tr '_' '\t' | cut -f1,5,8,9,10,15,16,17,19
 # Create f-stats column
 awk 'NR==1{print} NR>1{print $0, $11=$9^2/$10^2}' "$name"_tmp.txt > "$name"_tmp1.txt
 # Filter by f-stats
-awk -F "\t" '$12<10' "$name"_tmp1.txt  > "$name"_fstats.txt 
+awk -F "\t" '$12>10' "$name"_tmp1.txt  > "$name"_fstats.txt 
 # Change header to MR format
 var="ensemble\tgenesymbol\tSNP\tA1\tA2\tfreq\tp\tN\tbeta\tse\ttissue\tfstat"
 sed -i "1s/.*/$var/" "$name"_fstats.txt
