@@ -23,8 +23,8 @@ for i in *pleiotropy*; do
     column -t > "./modified_files/$i"
 done
 
-for file in ./*heterogeneity*; do tail -n+2 $file >> merged_heterogeneity.csv; done
-for file in ./*steiger*; do tail -n+2 $file >> merged_steiger.csv; done
-for file in ./*metrics*; do tail -n+2 $file >> merged_metrics.csv; done
-for file in ./*pleiotropy*; do tail -n+2 $file >> merged_pleiotropy.csv; done
+for file in ./modified_files/*heterogeneity*; do tail -n+2 $file >> merged_heterogeneity.csv; done
+for file in ./modified_files/*steiger*; do tail -n+2 $file >> merged_steiger.csv; done
+for file in ./modified_files/*metrics*; do tail -n+2 $file >> merged_metrics.csv; done
+for file in ./modified_files/*pleiotropy*; do tail -n+2 $file >> merged_pleiotropy.csv; done
 
