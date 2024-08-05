@@ -28,5 +28,5 @@ for file in ./modified_files/*steiger*; do tail -n+2 $file >> merged_steiger.csv
 for file in ./modified_files/*metrics*; do tail -n+2 $file >> merged_metrics.csv; done
 for file in ./modified_files/*pleiotropy*; do tail -n+2 $file >> merged_pleiotropy_comma.csv; done
 
-cat ./modified_files/merged_pleiotropy_comma.csv | tr "," "\t" >> merged_pleiotropy.csv
+cat merged_pleiotropy_comma.csv | tr "," "\t" >> merged_pleiotropy.csv
 
