@@ -1,13 +1,15 @@
 #!/bin/bash
 
-# Source directory where the files are located
-source_dir="/storages/acari/julia.amorim/qtls/eqtl/eQTLGen_coloc"
+# Check if the correct number of arguments is provided
+if [ "$#" -ne 3 ]; then
+    echo "Usage: $0 <source_dir> <destination_dir> <gene_list>"
+    exit 1
+fi
 
-# Destination directory where you want to move the files
-destination_dir="/storages/acari/julia.amorim/qtls/eqtl/eQTLGen_coloc/significant_genes"
-
-# Text file containing the list of gene names
-gene_list="~/scripts/data/gsmr_gene_list.txt"
+# Assign command-line arguments to variables
+source_dir="$1"
+destination_dir="$2"
+gene_list="$3"
 
 # Iterate over each gene name in the list
 while IFS= read -r gene_name; do
