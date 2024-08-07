@@ -14,7 +14,7 @@ gene_list="$3"
 # Iterate over each gene name in the list
 while IFS= read -r gene_name; do
     # Search for files matching the gene name pattern in the source directory
-    matching_files=("$source_dir"/*"${gene_name}"*_coloc_input.txt.gz)
+    matching_files=("$source_dir"/*"${gene_name}"_*)
     
     # Move matching files to the destination directory
     for file in "${matching_files[@]}"; do
