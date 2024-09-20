@@ -34,6 +34,7 @@ process GCTA_GSMR {
     --clump-r2 0.05   \
     --heidi-thresh 0.01   \
     --effect-plot   \
+    --gsmr2-beta \
     --out "${exposure.getBaseName(2)}_${outcome.baseName}"
     """
 }
