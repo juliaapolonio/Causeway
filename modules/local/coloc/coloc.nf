@@ -14,6 +14,7 @@ process COLOC {
 
   output:
     path("*txt")        , emit: results
+    path("*png")        , emit: plots
 
   when:
   task.ext.when == null || task.ext.when
