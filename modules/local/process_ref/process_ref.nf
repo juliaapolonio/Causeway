@@ -6,7 +6,8 @@ process PROCESS_REF {
   label 'process_medium'
   label 'ERRO'
 
-  container 'docker://biocontainer/plink2:alpha2.3_jan2020'
+  container 'biocontainer/plink2:alpha2.3_jan2020'
+  container 'biocontainer/plink2:alpha2.3_jan2020'
 
 
   input:

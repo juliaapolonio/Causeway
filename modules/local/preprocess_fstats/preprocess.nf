@@ -6,7 +6,8 @@ process PREPROCESS {
   label 'process_medium'
   label 'ERRO'
 
-  container "docker://ubuntu:22.04"
+  container "ubuntu:22.04"
+  container "ubuntu:22.04"
 
   input:
     path(qtl)
