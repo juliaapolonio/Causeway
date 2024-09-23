@@ -6,7 +6,8 @@ process GSMR_FILTER {
   label 'process_medium'
   label 'ERRO'
 
-  container "docker://juliaapolonio/coloc:5.2.3"
+  container "juliaapolonio/coloc:5.2.3"
+  container "juliaapolonio/coloc:5.2.3"
 
   input:
     path(res_file)

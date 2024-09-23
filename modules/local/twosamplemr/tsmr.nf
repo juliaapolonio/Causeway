@@ -6,7 +6,8 @@ process TWOSAMPLEMR {
   label 'process_medium'
   label 'ERRO'
 
-  container "docker://jvfe/twosamplemr:0.5.11"
+  container "jvfe/twosamplemr:0.5.11"
+  container "jvfe/twosamplemr:0.5.11"
 
   input:
     path(reads)
