@@ -6,12 +6,16 @@ process RESULT {
   label 'process_medium'
   label 'ERRO'
 
-  container "docker://juliaapolonio/coloc:5.2.3"
+  container "juliaapolonio/coloc:5.2.3"
+  container "juliaapolonio/coloc:5.2.3"
 
   input:
-    path(gsmr_out)
-    path(2smr_out)
-    path(coloc_out)
+    path(coloc_path)
+    path(gsmr_path)
+    path(tsmr_hetero_path)
+    path(tsmr_steiger_path)
+    path(tsmr_pleiotropy_path)
+    path(tsmr_metrics_path)
 
   output:
     path("genelist.txt")        , emit: genelist
@@ -23,8 +27,11 @@ process RESULT {
   script:
   """
   mr_final_results.R \\
-    $gsmr_out \\
-    $2smr_out \\
-    $coloc_out
+    $coloc_path \\
+    $gsmr_path \\
+    $tsmr_hetero_path \\
+    $tsmr_steiger_path \\
+    $tsmr_pleiotropy_path \\
+    $tsmr_metrics_path
   """
 }
