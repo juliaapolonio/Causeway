@@ -86,3 +86,13 @@ write.table(
 )
 
 mr_report(dat, output_type = "md")
+
+res <- mr(dat)
+
+p1 <- mr_scatter_plot(res, dat)
+
+png(paste0(prefix_exp, "_effect.png"))
+
+p1[[1]]
+
+dev.off()
