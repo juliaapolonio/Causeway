@@ -1,4 +1,4 @@
-process TWOSAMPLEMR {
+process PARSE_2SMR {
   """
   Parse TwoSampleMR reports into CSV tables
   """
@@ -6,7 +6,8 @@ process TWOSAMPLEMR {
   label 'process_medium'
   label 'ERRO'
 
-  container "docker://jvfe/parse_2mr_report:0.1.0"
+  container "jvfe/twosamplemr:0.5.11"
+  container "jvfe/twosamplemr:0.5.11"
 
   input:
     tuple val(meta), path(report)
@@ -24,7 +25,7 @@ process TWOSAMPLEMR {
   prefix = task.ext.prefix ?: meta
 
   """
-  process_twosamplemr_reports.py \\
+  parse_twosamplemr_reports.py \\
     $report \\
     $prefix
   """
