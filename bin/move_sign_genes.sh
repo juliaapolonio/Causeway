@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Check if the correct number of arguments is provided
-if [ "$#" -ne 3 ]; then
+if [ "$#" -ne 1 ]; then
     echo "Usage: $0 <gene_list>"
     exit 1
 fi
@@ -9,8 +9,9 @@ fi
 # Assign command-line arguments to variables
 gene_list="$1"
 
-destination_dir = ./filtered
+destination_dir="./filtered"
 
+mkdir $destination_dir
 # Iterate over each gene name in the list
 while IFS= read -r gene_name; do
     # Search for files matching the gene name pattern in the source directory

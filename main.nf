@@ -67,12 +67,13 @@ workflow {
 	    )
 
     GSMR_FILTER (
-	    GCTA_GSMR.out.gsmr_res.collect{}
+	    GCTA_GSMR.out.gsmr_res.collect()
 //concatena os arquivos, da como entrada pra script R
 //cria novo modulo que pega a lista de genes e manda para uma nova pasta
 	    )
 
     GENE_LIST (
+            data.collect(),
 	    GSMR_FILTER.out.genelist
 	    )
 

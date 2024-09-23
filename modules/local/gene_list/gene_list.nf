@@ -7,13 +7,12 @@ process GENE_LIST {
   label 'ERRO'
 
   container "juliaapolonio/coloc:5.2.3"
-  container "juliaapolonio/coloc:5.2.3"
 
   input:
+    path(exposures)
     path(gene_list)
 
   output:
-    path("genelist.txt")        , emit: genelist
     path("filtered/*")            , emit: filtered
 
   when:
@@ -21,10 +20,7 @@ process GENE_LIST {
 
   script:
   """
-  extract_gene_list.R \\
-    $gsmr_result
-
   move_sign_genes.sh \\
-    ${gsmr_result.getBasename(1)}_genelist.txt
+    $gene_list
   """
 }
