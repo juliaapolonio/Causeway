@@ -14,9 +14,10 @@ process TWOSAMPLEMR {
     path(reference)
 
   output:
-    path("*csv")        , emit: harmonised
     path("*md")         , emit: report
+    path("*csv")        , emit: data
     path("figure")      , emit: figures
+    path("*png")        , emit: effplot
 
   when:
   task.ext.when == null || task.ext.when

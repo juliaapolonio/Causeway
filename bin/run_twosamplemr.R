@@ -6,9 +6,9 @@ library(dplyr)
 args <- commandArgs(trailingOnly = TRUE)
 
 exposure_path <- args[1]
-prefix_exp <- sub("\\..*$", "", exposure_path)
+prefix_exp <- gene_name <- sub(".*/filtered/([^_]+)_.*", "\\1", exposure_path)
 outcome_path <- args[2]
-prefix_outcome <- sub("\\..*$", "", outcome_path)
+prefix_outcome <- gene_name <- sub(".*/filtered/([^_]+)_.*", "\\1", outcome_path)
 ref <- args[3]
 
 # prefix_exp <- "phylym_Actinobacteria"
