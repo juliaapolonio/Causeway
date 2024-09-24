@@ -9,7 +9,7 @@ process TWOSAMPLEMR {
   container "jvfe/twosamplemr:0.5.11"
 
   input:
-    path(exposure)
+    each(exposure)
     path(outcome)
     path(reference)
 

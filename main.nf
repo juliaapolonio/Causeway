@@ -79,7 +79,7 @@ workflow {
 	    )
 
     TWOSAMPLEMR (
-            GENE_LIST.out.filtered.flatMap(),
+            GENE_LIST.out.filtered,
             outcome,
             true_ref_folder
             )
