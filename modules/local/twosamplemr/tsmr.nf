@@ -7,10 +7,9 @@ process TWOSAMPLEMR {
   label 'ERRO'
 
   container "jvfe/twosamplemr:0.5.11"
-  container "jvfe/twosamplemr:0.5.11"
 
   input:
-    path(reads)
+    path(exposure)
     path(outcome)
     path(reference)
 
@@ -23,13 +22,9 @@ process TWOSAMPLEMR {
   task.ext.when == null || task.ext.when
 
   script:
-  def prefix1 = reads.getBaseName()
-  def prefix2 = outcome.getBaseName()
   """
   run_twosamplemr.R \\
-    $prefix1 \\
-    $prefix2 \\
-    $reads \\
+    $exposure \\
     $outcome \\
     $reference
   """

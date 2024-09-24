@@ -5,11 +5,11 @@ library(dplyr)
 
 args <- commandArgs(trailingOnly = TRUE)
 
-prefix_exp <- args[1]
-prefix_outcome <- args[2]
-exposure_path <- args[3]
-outcome_path <- args[4]
-ref <- args[5]
+exposure_path <- args[1]
+prefix_exp <- sub("\\..*$", "", exposure_path)
+outcome_path <- args[2]
+prefix_outcome <- sub("\\..*$", "", outcome_path)
+ref <- args[3]
 
 # prefix_exp <- "phylym_Actinobacteria"
 # prefix_outcome <- "2100_both"

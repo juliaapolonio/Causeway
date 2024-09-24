@@ -5,10 +5,11 @@
 */
 
 data = Channel.fromPath("/storages/acari/julia.amorim/qtls/eqtl/eQTLGen_fstats/teste/*")
-outcome = "/storages/acari/julia.amorim/qtls/SDEP_rsID.txt"
+outcome = file("/storages/acari/julia.amorim/qtls/SDEP_rsID.txt")
 //psam_url = "www.dropbox.com/s/6ppo144ikdzery5/phase3_corrected.psam"
 //pgen_url = "www.dropbox.com/s/y6ytfoybz48dc0u/all_phase3.pgen.zst"
 //pvar_url = "www.dropbox.com/s/odlexvo8fummcvt/all_phase3.pvar.zst"
+true_ref_folder = Channel.fromPath("/storages/acari/julia.amorim/references/tsmr_ref")
 ref_folder = Channel.fromPath("/storages/acari/julia.amorim/references/plink_bfile/EUR_phase3_chr*")
 ref_folder.map { it -> it.getBaseName() }.unique().collectFile(name: "_MR.txt.gz", newLine:true).collect().set { ref_file }
 ref_folder.collect().set { collected_ref }
@@ -78,9 +79,9 @@ workflow {
 	    )
 
     TWOSAMPLEMR (
-            GENE_LIST.out.filtered,
+            GENE_LIST.out.filtered.flatMap(),
             outcome,
-            ref_folder
+            true_ref_folder
             )
 
 //    COLOC (

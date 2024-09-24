@@ -22,5 +22,7 @@ process GENE_LIST {
   """
   move_sign_genes.sh \\
     $gene_list
+  
+  for file in filtered/*; do gunzip -f \$file; done
   """
 }
