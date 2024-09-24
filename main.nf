@@ -59,8 +59,6 @@ workflow {
 //	    )
 
       GCTA_GSMR (
-       	  //PREPROCESS.out.preprocess_out,
-          //PROCESS_REF.out.ref_folder, COMO VAI FAZER O COLLECT AQUI?
 	  data,
 	  collected_ref,
 	  outcome,
@@ -69,8 +67,6 @@ workflow {
 
     GSMR_FILTER (
 	    GCTA_GSMR.out.gsmr_res.collect()
-//concatena os arquivos, da como entrada pra script R
-//cria novo modulo que pega a lista de genes e manda para uma nova pasta
 	    )
 
     GENE_LIST (
@@ -89,10 +85,10 @@ workflow {
 	    outcome
 	    )
 
-//    PARSE_2SMR (
-//	    TWOSAMPLEMR.out.results_2smr
-//	    )
-//
+    PARSE_2SMR (
+	    TWOSAMPLEMR.out.report
+	    )
+
 //    RESULT (
 //	    COLOC.out.results_coloc,
 //            GCTA_GSMR.out.results_gsmr,
@@ -101,6 +97,6 @@ workflow {
 //	    PARSE_2SMR.out.results_pleiotropy,
 //	    PARSE_2SMR.out.results_metrics
 //	    )
-//	    
-//
+	    
+
 }

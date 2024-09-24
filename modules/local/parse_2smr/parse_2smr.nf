@@ -6,27 +6,24 @@ process PARSE_2SMR {
   label 'process_medium'
   label 'ERRO'
 
-  container "jvfe/twosamplemr:0.5.11"
-  container "jvfe/twosamplemr:0.5.11"
+  container "biocontainers/pandas:1.5.1_cv1"
 
   input:
-    tuple val(meta), path(report)
+    each(report)
 
   output:
-    tuple val(meta), path("*_metrics.csv")        , emit: results_metrics
-    tuple val(meta), path("*_steiger.csv")        , emit: results_steiger
-    tuple val(meta), path("*_pleiotropy.csv")        , emit: results_pleiotropy
-    tuple val(meta), path("*_heterogeneity.csv")        , emit: results_heterogeneity
+    path("*_metrics.csv")        , emit: results_metrics
+    path("*_steiger.csv")        , emit: results_steiger
+    path("*_pleiotropy.csv")        , emit: results_pleiotropy
+    path("*_heterogeneity.csv")        , emit: results_heterogeneity
 
   when:
   task.ext.when == null || task.ext.when
 
   script:
-  prefix = task.ext.prefix ?: meta
-
+  
   """
   parse_twosamplemr_reports.py \\
     $report \\
-    $prefix
   """
 }

@@ -4,21 +4,20 @@ import sys
 import re
 import argparse
 import pandas as pd
-from scipy.stats import false_discovery_control as fdc
 from io import StringIO
 
 def parse_args(args=None):
     Description = "Parse TwoSampleMR reports and write metrics table to a CSV file."
-    Epilog = "Example usage: python parse_twosamplemr_reports.py <REPORT> <PREFIX>"
+    Epilog = "Example usage: python parse_twosamplemr_reports.py <REPORT>"
 
     parser = argparse.ArgumentParser(description=Description, epilog=Epilog)
     parser.add_argument("REPORT", help="TwoSampleMR Markdown Report")
-    parser.add_argument("PREFIX", help="Name of the report")
     return parser.parse_args(args)
 
 
-def parse_twosamplemr_reports(report, prefix):
-
+def parse_twosamplemr_reports(report):
+    
+    prefix = re.search(r"TwoSampleMR\.([A-Z0-9]+)_against_.*", report).group(1)
     metrics_table = []
     pleiotropy_table = []
     steiger_table = []
@@ -41,7 +40,6 @@ def parse_twosamplemr_reports(report, prefix):
             .iloc[1:]
         )
 
-        table["padj"] = fdc(table["pval"].astype(float), method="bh")
 
         table.to_csv(f"{prefix}_metrics.csv")
         
@@ -111,7 +109,7 @@ def parse_twosamplemr_reports(report, prefix):
 
 def main(args=None):
     args = parse_args(args)
-    parse_twosamplemr_reports(args.REPORT, args.PREFIX)
+    parse_twosamplemr_reports(args.REPORT)
 
 
 if __name__ == "__main__":
