@@ -25,5 +25,7 @@ process PARSE_2SMR {
   """
   parse_twosamplemr_reports.py \\
     $report \\
+  
+  parse_2smr_results.sh
   """
 }

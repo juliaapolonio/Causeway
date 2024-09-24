@@ -97,6 +97,6 @@ workflow {
 //	    PARSE_2SMR.out.results_pleiotropy,
 //	    PARSE_2SMR.out.results_metrics
 //	    )
-	    
+//	    
 
 }
