@@ -20,13 +20,12 @@ dataset2=list(beta=input$b_eqtl, varbeta=input$varbeta_eqtl, snp=input$SNP, type
 
 result <- coloc.abf(dataset1,dataset2)
 
-name <- sub("\\..*$", "", qtl_path)
+name <- sub(".*/filtered/([^_]+)_.*", "\\1", qtl_path)
 png(filename = paste0(name,".png"))
 sensitivity(result,rule="H4 >= 0.8")
 dev.off()
 
-arquivo <- tools::file_path_sans_ext(basename(qtl_path))
-line = paste(arquivo, result[[1]][5], result[[1]][6], sep = "\t")
-write(line,file=paste0(arquivo,"_coloc.txt"))
+line = paste(name, result[[1]][5], result[[1]][6], sep = "\t")
+write(line,file=paste0(name,"_coloc.txt"))
 
  

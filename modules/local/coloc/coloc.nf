@@ -10,7 +10,7 @@ process COLOC {
   container "juliaapolonio/coloc:5.2.3"
 
   input:
-    path(reads)
+    each(reads)
     path(outcome)
 
   output:

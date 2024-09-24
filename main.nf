@@ -84,11 +84,11 @@ workflow {
             true_ref_folder
             )
 
-//    COLOC (
-//	    data_filter,
-//	    outcome
-//	    )
-//
+    COLOC (
+	    GENE_LIST.out.filtered,
+	    outcome
+	    )
+
 //    PARSE_2SMR (
 //	    TWOSAMPLEMR.out.results_2smr
 //	    )
