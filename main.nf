@@ -41,7 +41,7 @@ include { ADD_COLUMN as ADD_H_COLUMN } from "./modules/local/add_column/add_colu
 include { ADD_COLUMN as ADD_S_COLUMN } from "./modules/local/add_column/add_column.nf"
 include { ADD_COLUMN as ADD_P_COLUMN } from "./modules/local/add_column/add_column.nf"
 include { ADD_COLUMN as ADD_M_COLUMN } from "./modules/local/add_column/add_column.nf"
-
+include { FINAL_REPORT } from "./modules/local/final_report/final_report.nf"
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -133,5 +133,10 @@ workflow {
             concatenated_s,
             concatenated_p,
             concatenated_m,
+    )
+
+    FINAL_REPORT (
+            GSMR_FILTER.out.results_gsmr,
+            RESULT.out.final_results            
     )
 }

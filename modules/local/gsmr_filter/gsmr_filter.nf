@@ -13,16 +13,17 @@ process GSMR_FILTER {
 
   output:
     path("genelist.txt")        , emit: genelist
-    path("filtered_genes.txt")   , emit: filtered_genes   
+    path("filtered_genes.txt")  , emit: filtered_genes   
+    path("results_gsmr.txt")    , emit: results_gsmr
 
   when:
   task.ext.when == null || task.ext.when
 
   script:
   """
-  for file in $res_file; do sed -n '2p' \$file >> "results_new_sdep_eqtlgen.txt"; done
+  for file in $res_file; do sed -n '2p' \$file >> "results_gsmr.txt"; done
 
   extract_gene_list.R \\
-    results_new_sdep_eqtlgen.txt \\
+    results_gsmr.txt \\
   """
 }
