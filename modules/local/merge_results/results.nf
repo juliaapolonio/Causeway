@@ -4,9 +4,8 @@ process RESULT {
   """
 
   label 'process_medium'
-  label 'ERRO'
 
-  container "juliaapolonio/parse_mr_files:latest"
+  container "rocker/tidyverse:latest"
 
   input:
     path(coloc_path)
@@ -17,8 +16,8 @@ process RESULT {
     path(tsmr_metrics_path)
 
   output:
-    path("genelist.txt")        , emit: genelist
-    path("final_results.txt")        , emit: merged_results
+    path("candidate_gene_list.txt")  , emit: genelist
+    path("final_results.csv")        , emit: final_results
 
   when:
   task.ext.when == null || task.ext.when

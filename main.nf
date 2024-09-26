@@ -90,7 +90,7 @@ workflow {
 	    )
 
    COLOC.out.merged_coloc
-         .collectFile(name: 'concatenated_coloc.csv')
+         .collectFile(name: 'concatenated_coloc.csv', storeDir: "${params.outdir}/collected_files/")
          .set { concatenated_coloc }
 
 
@@ -102,36 +102,36 @@ workflow {
 	    PARSE_2SMR.out.results_heterogeneity,
     )
     ADD_H_COLUMN.out.formatted_report
-        .collectFile(name: 'concatenated_h.csv', skip: 1)
+        .collectFile(name: 'concatenated_h.csv', skip: 1, storeDir: "${params.outdir}/collected_files/")
         .set { concatenated_h }
 
     ADD_S_COLUMN (
 	    PARSE_2SMR.out.results_steiger,
     )
     ADD_S_COLUMN.out.formatted_report
-        .collectFile(name: 'concatenated_s.csv', skip: 1)
+        .collectFile(name: 'concatenated_s.csv', skip: 1, storeDir: "${params.outdir}/collected_files/")
         .set { concatenated_s }
 
     ADD_P_COLUMN (
 	    PARSE_2SMR.out.results_pleiotropy,
     )
     ADD_P_COLUMN.out.formatted_report
-        .collectFile(name: 'concatenated_p.csv', skip: 1)
+        .collectFile(name: 'concatenated_p.csv', skip: 1, storeDir: "${params.outdir}/collected_files/")
         .set { concatenated_p }
 
     ADD_M_COLUMN (
-	    PARSE_2SMR.out.results_heterogeneity,
+	    PARSE_2SMR.out.results_metrics,
     )
     ADD_M_COLUMN.out.formatted_report
-        .collectFile(name: 'concatenated_m.csv', skip: 1)
+        .collectFile(name: 'concatenated_m.csv', skip: 1, storeDir: "${params.outdir}/collected_files/")
         .set { concatenated_m }
 
     RESULT (
-	    concatenated_h,
+	    concatenated_coloc,
+            GSMR_FILTER.out.filtered_genes,
+            concatenated_h,
             concatenated_s,
             concatenated_p,
             concatenated_m,
-            concatenated_coloc,
-            GSMR_FILTER.out.filtered_genes,
     )
 }
