@@ -7,14 +7,13 @@ process COLOC {
   label 'ERRO'
 
   container "juliaapolonio/coloc:5.2.3"
-  container "juliaapolonio/coloc:5.2.3"
 
   input:
     each(reads)
     path(outcome)
 
   output:
-    path("*txt")        , emit: results
+    path("*coloc*")        , emit: merged_coloc
     path("*png")        , emit: plots
 
   when:
@@ -25,5 +24,6 @@ process COLOC {
   colocalization.R \\
     $reads \\
     $outcome \\
+
   """
 }

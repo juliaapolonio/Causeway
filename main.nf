@@ -62,12 +62,12 @@ workflow {
 //	    urls_ch
 //	    )
 
-      GCTA_GSMR (
+    GCTA_GSMR (
 	  data,
 	  collected_ref,
 	  outcome,
           ref_file
-	    )
+    )
 
     GSMR_FILTER (
 	    GCTA_GSMR.out.gsmr_res.collect()
@@ -133,7 +133,5 @@ workflow {
             concatenated_m,
             concatenated_coloc,
             GSMR_FILTER.out.filtered_genes,
-	    )
-	    
-
+    )
 }

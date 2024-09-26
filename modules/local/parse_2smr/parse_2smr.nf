@@ -12,10 +12,10 @@ process PARSE_2SMR {
     each(report)
 
   output:
-    path("*_metrics.csv")        , emit: results_metrics
-    path("*_steiger.csv")        , emit: results_steiger
-    path("*_pleiotropy.csv")        , emit: results_pleiotropy
-    path("*_heterogeneity.csv")        , emit: results_heterogeneity
+    path("*metrics.csv")        , emit: results_metrics
+    path("*steiger.csv")        , emit: results_steiger
+    path("*pleiotropy.csv")        , emit: results_pleiotropy
+    path("*heterogeneity.csv")        , emit: results_heterogeneity
 
   when:
   task.ext.when == null || task.ext.when
@@ -25,7 +25,6 @@ process PARSE_2SMR {
   """
   parse_twosamplemr_reports.py \\
     $report \\
-  
-  parse_2smr_results.sh
+ 
   """
 }

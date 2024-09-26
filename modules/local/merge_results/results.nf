@@ -6,8 +6,7 @@ process RESULT {
   label 'process_medium'
   label 'ERRO'
 
-  container "juliaapolonio/coloc:5.2.3"
-  container "juliaapolonio/coloc:5.2.3"
+  container "juliaapolonio/parse_mr_files:latest"
 
   input:
     path(coloc_path)
