@@ -1,6 +1,9 @@
 #!/usr/bin/env Rscript
 args <- commandArgs(trailingOnly = TRUE)
 
+library(vroom)
+library(tidyverse)
+
 # Get results from GSMR, coloc and twosampleMR and merge to get the intersection of the significant genes
 coloc_path <- args[1]
 gsmr_path <- args[2]
