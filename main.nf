@@ -9,10 +9,7 @@ outcome = file("/storages/acari/julia.amorim/qtls/SDEP_rsID.txt")
 //psam_url = "www.dropbox.com/s/6ppo144ikdzery5/phase3_corrected.psam"
 //pgen_url = "www.dropbox.com/s/y6ytfoybz48dc0u/all_phase3.pgen.zst"
 //pvar_url = "www.dropbox.com/s/odlexvo8fummcvt/all_phase3.pvar.zst"
-true_ref_folder = Channel.fromPath("/storages/acari/julia.amorim/references/tsmr_ref")
-ref_folder = Channel.fromPath("/storages/acari/julia.amorim/references/plink_bfile/EUR_phase3_chr*")
-ref_folder.map { it -> it.getBaseName() }.unique().collectFile(name: "_MR.txt.gz", newLine:true).collect().set { ref_file }
-ref_folder.collect().set { collected_ref }
+true_ref_folder = file("/storages/acari/julia.amorim/references/tsmr_ref/")
 //params.urlFile = "/home/jamorim/scratch/MR_workflow/teste.txt"
 
 // Channel to read URLs from the file
@@ -64,7 +61,7 @@ workflow {
 
     GCTA_GSMR (
 	  data,
-	  collected_ref,
+	  true_ref_folder,
 	  outcome,
           ref_file
     )

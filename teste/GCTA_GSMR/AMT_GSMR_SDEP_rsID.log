@@ -1,0 +1,59 @@
+*******************************************************************
+* Genome-wide Complex Trait Analysis (GCTA)
+* version v1.94.1 Linux
+* Built at Nov 15 2022 21:14:25, by GCC 8.5
+* (C) 2010-present, Yang Lab, Westlake University
+* Please report bugs to Jian Yang <jian.yang@westlake.edu.cn>
+*******************************************************************
+Analysis started at 16:43:32 UTC on Fri Sep 27 2024.
+Hostname: 38ced78c89c9
+
+Accepted options:
+--mbfile reference.txt
+--gsmr-file AMT_GSMR.input.txt outcome.txt
+--gsmr-direction 0
+--gsmr-snp-min 1
+--diff-freq 0.5
+--gwas-thresh 5e-08
+--clump-r2 0.05
+--heidi-thresh 0.01
+--effect-plot
+--gsmr2-beta
+--out AMT_GSMR_SDEP_rsID
+
+Warning: The number of SNP instruments included in the analysis is too small. There might not be enough SNPs to perform the HEIDI-outlier analysis.
+Warning: The threshold of multi-SNP-based HEIDI-outlier analysis is not specified. The default value is 0.010.
+
+There are 1 PLINK genotype files specified in [reference.txt].
+
+Reading the PLINK FAM files ....
+503 individuals have been included from the PLINK FAM files.
+Reading the PLINK BIM files ...
+10866805 SNPs to be included from PLINK BIM files.
+
+Reading GWAS summary data for exposure(s) from [AMT_GSMR.input.txt].
+Reading GWAS summary data for outcome(s) from [outcome.txt].
+393 genome-wide significant SNPs in common between the exposure(s) and the outcome(s).
+Filtering out SNPs with multiple alleles or missing value ...
+393 SNPs are retained after filtering.
+392 genome-wide significant SNPs with p < 5.0e-08 are in common among the exposure(s), the outcome(s) and the LD reference sample.
+
+Reading PLINK BED files ...
+Genotype data for 503 individuals and 392 SNPs have been included.
+Calculating allele frequencies ...
+Checking allele frequencies among the GWAS summary data and the reference sample...
+
+Forward GSMR analysis for exposure #1 and outcome #1 ...
+8 index SNPs are obtained from the clumping analysis with p < 5.0e-08 and LD r2 < 0.05.
+2 pleiotropic SNPs are filtered by HEIDI-outlier analysis.
+6 index SNPs are retained after HEIDI-outlier analysis.
+Forward GSMR analysis for exposure #1 and outcome #1 completed.
+
+The pleiotropic SNPs filtered by HEIDI-outlier analysis have been saved in [AMT_GSMR_SDEP_rsID.pleio_snps].
+Saving the SNP instruments for the GSMR plots to [AMT_GSMR_SDEP_rsID.eff_plot.gz] ...
+Saving the GSMR analyses results of 1 exposure(s) and 1 outcome(s) to [AMT_GSMR_SDEP_rsID.gsmr] ...
+
+GSMR analyses completed.
+
+Analysis finished at 16:45:17 UTC on Fri Sep 27 2024
+Overall computational time: 1 minute 44 sec.

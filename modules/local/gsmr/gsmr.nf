@@ -7,7 +7,6 @@ process GCTA_GSMR {
     path(exposure)
     path(reference)
     path(outcome)
-    path(reffile)
 
     output:
     path "${exposure.getBaseName(2)}_${outcome.baseName}.log", emit: gsmr_log
@@ -22,9 +21,10 @@ process GCTA_GSMR {
 
     echo  "${exposure.getBaseName(2)} ${exposure.getBaseName(1)}" > ${exposure.getBaseName(2)}.input.txt
     echo "BDEP $outcome" > outcome.txt
+    echo "$reference/1KG_phase3_EUR" > reference.txt
 
     gcta  \
-    --mbfile $reffile  \
+    --mbfile reference.txt  \
     --gsmr-file ${exposure.getBaseName(2)}.input.txt outcome.txt \
     --gsmr-direction 0   \
     --gsmr-snp-min 1   \
