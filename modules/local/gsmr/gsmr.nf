@@ -20,7 +20,7 @@ process GCTA_GSMR {
     fi
 
     echo  "${exposure.getBaseName(2)} ${exposure.getBaseName(1)}" > ${exposure.getBaseName(2)}.input.txt
-    echo "BDEP $outcome" > outcome.txt
+    echo "${outcome.baseName} $outcome" > outcome.txt
     echo "$reference/1KG_phase3_EUR" > reference.txt
 
     gcta  \

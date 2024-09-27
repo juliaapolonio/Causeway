@@ -62,8 +62,7 @@ workflow {
     GCTA_GSMR (
 	  data,
 	  true_ref_folder,
-	  outcome,
-          ref_file
+	  outcome
     )
 
     GSMR_FILTER (
