@@ -55,8 +55,8 @@ results_mr <- gsmr %>%
 
 	# Create inclusion filter
 	is_candidate <- results_mr %>%
-	  filter(`Q_pval_MR_Egger` > 0.05 | `Q_pval_Inverse_variance_weighted` > 0.05) %>%
-	  filter(nsnp > 3) %>%
+	  filter(!(`Q_pval_MR_Egger` <= 0.05) & !(`Q_pval_Inverse_variance_weighted` <= 0.05))%>%
+	  filter(nsnp >= 3) %>%
 	    filter(steiger_pval == 0) %>%
 	    filter(H4 > 0.8) %>%
 	      filter(pleiotropy_pval > 0.05) %>%
