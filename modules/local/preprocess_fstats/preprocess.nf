@@ -1,25 +1,22 @@
 process PREPROCESS {
   """
-  Preprocess MetaBrain data to run MR
+  Preprocess eQTLGen data to run MR
   """
 
   label 'process_medium'
   label 'ERRO'
 
-  container "ubuntu:22.04"
-  container "ubuntu:22.04"
-
-  input:
-    path(qtl)
+  container "juliaapolonio/ubuntu-wget:latest"
 
   output:
-    path("*MR.txt.gz")        , emit: qtl_sumstats
+    path("*txt.gz")                                 , emit: qtl_sumstats
+    path("eQTLGen_exposure_variants_extract.txt")   , emit: variants_extract
 
   when:
   task.ext.when == null || task.ext.when
 
   script:
   """
-  preprocess_metabrain.sh $qtl
+  setup_eqtlgen.sh
   """
 }

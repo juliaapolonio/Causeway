@@ -7,7 +7,6 @@ process PROCESS_REF {
   label 'ERRO'
 
   container 'biocontainer/plink2:alpha2.3_jan2020'
-  container 'biocontainer/plink2:alpha2.3_jan2020'
 
 
   input:

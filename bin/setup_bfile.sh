@@ -44,13 +44,8 @@ plink2 --pfile all_phase3_autosomes \
 plink2 --pfile EUR_phase3_autosomes \
        --maf 0.005 \
        --make-bed \
-       --out EUR_phase3_autosomes
+       --out 1KG_phase3_EUR
        
-# Split bed/bim/fam by chromosome
-for i in {1..22}
-do plink2 --bfile EUR_phase3_autosomes --chr $i --make-bed --out EUR_phase3_chr$i
-done
-
 # Send all files to internal ref_folder
 mkdir ref_folder
-mv *EUR_phase3_chr* ref_folder
+mv 1KG_phase3_EUR* ref_folder
