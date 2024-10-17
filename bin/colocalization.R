@@ -20,12 +20,14 @@ dataset2=list(beta=input$b_eqtl, varbeta=input$varbeta_eqtl, snp=input$SNP, type
 
 result <- coloc.abf(dataset1,dataset2)
 
+
+# Plot colocalization results
 name <- sub(".*/filtered/([^_]+)_.*", "\\1", qtl_path)
 png(filename = paste0(name,".png"))
 sensitivity(result,rule="H4 >= 0.8")
 dev.off()
 
-line = paste(name, result[[1]][5], result[[1]][6], sep = "\t")
+# Write H3 and H4 and the causal SNP in a file
+causal_snp <- result[[2]][which(result[[2]][11]==max(result[[2]][11])),1]
+line <- paste(name, result[[1]][5], result[[1]][6], causal_snp, sep = "\t")
 write(line,file=paste0(name,"_coloc.txt"))
-
- 
