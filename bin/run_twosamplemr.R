@@ -11,11 +11,6 @@ outcome_path <- args[2]
 prefix_outcome <- gene_name <- sub(".*/filtered/([^_]+)_.*", "\\1", outcome_path)
 ref <- args[3]
 
-# prefix_exp <- "phylym_Actinobacteria"
-# prefix_outcome <- "2100_both"
-# exposure_path <- "data/phylum_Actinobacteria_merged.txt"
-# outcome_path <- "data/2100.gwas.imputed_v3.both_sexes.tsv"
-
 exp <-
   read_exposure_data(
     exposure_path,
@@ -34,7 +29,6 @@ exp[, "exposure"] <- prefix_exp
 
 exp_filtered <- exp[which(exp$pval.exposure < 0.00001), ]
 
-# mic_exp <- clump_data(exp_filtered, clump_r2 = 0.3)
 mic_exp <- ieugwasr::ld_clump(
   exp_filtered |> dplyr::select(
     rsid = SNP,
@@ -45,7 +39,6 @@ mic_exp <- ieugwasr::ld_clump(
   clump_p = 5e-8,
   clump_r2 = 0.05,
   plink_bin = genetics.binaRies::get_plink_binary(),
-  # bfile = "data/concat_ref/1KG_phase3_EUR"
   bfile = paste0(ref, "/1KG_phase3_EUR")
 ) |>
   dplyr::select(-c(pval, id)) |>

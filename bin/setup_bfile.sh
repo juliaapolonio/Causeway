@@ -5,7 +5,6 @@
 #### Source of 1000 Genomes link: https://dougspeed.com/1000-genomes-project/
 #### Source of code: https://cran.r-project.org/web/packages/snpsettest/vignettes/reference_1000Genomes.html
 
-# The links in here may change in future
 # "-O" to specify output file name
 wget -O all_phase3.psam $1
 wget -O all_phase3.pgen.zst $2

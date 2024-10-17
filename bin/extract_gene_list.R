@@ -6,7 +6,6 @@ args <- commandArgs(trailingOnly = TRUE)
 library(dplyr)
 
 # Get path and filename of file
-#eqtlgen_all_path <- "~/scripts/GSMR/nextflow/bdep_new_eqtlgen_gsmr/results/results_new_bdep_eqtlgen.txt"
 eqtlgen_all_path <- args[1]
 eqtlgen_all_name <- stringr::str_remove(eqtlgen_all_path, "\\.txt")
 

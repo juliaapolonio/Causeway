@@ -12,9 +12,6 @@ library(vroom)
 gsmr_result_path <- args[1]
 merged_result_path <- args[2]
 
-#gsmr_result_path <- "../MR_workflow/results/results_gsmr.txt"
-#merged_result_path <- "../MR_workflow/results/final_results.csv"
-
 # Candidates file
 is_candidate <- vroom(merged_result_path) # Output from merge module
 
@@ -35,7 +32,6 @@ png("volcano.png", width = 750, height = 500)
 ggplot(mr_result, mapping=aes(x=bxy, y=-log10(Q), label = Exposure))+
   geom_point(aes(size=nsnp), colour="gray")+
   geom_point(data=mr_result[mr_result$is_candidate == T,], aes(x=bxy, y=-log10(Q), size=nsnp), colour="black")+
-  #geom_hline(yintercept=-log10(0.05/16000), linetype="dashed", color="red")+
   geom_text_repel(data=mr_result[mr_result$is_candidate == T,], aes(label=Exposure, size=20))+
   xlim(-0.05, 0.05)+
   theme_classic()
