@@ -5,7 +5,8 @@ process FINAL_REPORT {
 
   label 'process_medium'
 
-  container "juliaapolonio/my-tidyverse-ggrepel:latest"
+  container "${ workflow.containerEngine == 'singularity' ? 'docker://juliaapolonio/my-tidyverse-ggrepel:latest':
+            'docker.io/juliaapolonio/my-tidyverse-ggrepel:latest' }"
 
   input:
     path(gsmr_path)

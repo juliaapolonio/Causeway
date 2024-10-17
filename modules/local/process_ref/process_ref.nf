@@ -6,8 +6,8 @@ process PROCESS_REF {
   label 'process_medium'
   label 'ERRO'
 
-  container 'biocontainer/plink2:alpha2.3_jan2020'
-
+  container "${ workflow.containerEngine == 'singularity' ? 'docker://biocontainer/plink2:alpha2.3_jan2020':
+            'docker.io/biocontainer/plink2:alpha2.3_jan2020' }"
 
   input:
     val psam_url

@@ -6,7 +6,8 @@ process PARSE_2SMR {
   label 'process_medium'
   label 'ERRO'
 
-  container "biocontainers/pandas:1.5.1_cv1"
+  container "${ workflow.containerEngine == 'singularity' ? 'docker://biocontainers/pandas:1.5.1_cv1':
+            'docker.io/biocontainers/pandas:1.5.1_cv1' }"
 
   input:
     each(report)

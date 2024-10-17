@@ -6,7 +6,8 @@ process PREPROCESS {
   label 'process_medium'
   label 'ERRO'
 
-  container "juliaapolonio/ubuntu-wget:latest"
+  container "${ workflow.containerEngine == 'singularity' ? 'docker://juliaapolonio/ubuntu-wget:latest':
+            'docker.io/juliaapolonio/ubuntu-wget:latest' }"
 
   output:
     path("*txt.gz")                                 , emit: qtl_sumstats

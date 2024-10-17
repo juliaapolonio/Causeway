@@ -6,7 +6,8 @@ process GENE_LIST {
   label 'process_medium'
   label 'ERRO'
 
-  container "juliaapolonio/coloc:5.2.3"
+  container "${ workflow.containerEngine == 'singularity' ? 'docker://juliaapolonio/coloc:5.2.3':
+            'docker.io/juliaapolonio/coloc:5.2.3' }"
 
   input:
     path(exposures)

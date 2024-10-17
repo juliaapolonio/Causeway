@@ -5,7 +5,8 @@ process RESULT {
 
   label 'process_medium'
 
-  container "rocker/tidyverse:latest"
+  container "${ workflow.containerEngine == 'singularity' ? 'docker://rocker/tidyverse:latest':
+            'docker.io/rocker/tidyverse:latest' }"
 
   input:
     path(coloc_path)

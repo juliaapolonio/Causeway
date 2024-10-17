@@ -1,6 +1,7 @@
 process ADD_COLUMN {
 
-container 'biocontainers/seaborn:0.12.2_cv1'
+container "${ workflow.containerEngine == 'singularity' ? 'docker://biocontainers/seaborn:0.12.2_cv1':
+        'docker.io/biocontainers/seaborn:0.12.2_cv1' }"
 
 input:
   path(table)

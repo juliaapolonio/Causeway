@@ -6,7 +6,8 @@ process GSMR_FILTER {
   label 'process_medium'
   label 'ERRO'
 
-  container "jvfe/twosamplemr:0.5.11"
+  container "${ workflow.containerEngine == 'singularity' ? 'docker://jvfe/twosamplemr:0.5.11':
+            'docker.io/jvfe/twosamplemr:0.5.11' }"
 
   input:
     path(res_file)
