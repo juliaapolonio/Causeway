@@ -13,7 +13,7 @@ tsmr_pleiotropy_path <- args[5]
 tsmr_metrics_path <- args[6]
 
 # Load data
-coloc <- vroom(coloc_path, col_names = c("gene", "H3", "H4"))
+coloc <- vroom(coloc_path, col_names = c("gene", "H3", "H4", "causal_snp"))
 gsmr <- vroom(gsmr_path, col_names = c("gene", "outcome","gsmr_beta", "gsmr_se", "gsmr_pval", "gsmr_nsnp", "heidi_out", "gsmr_padj"))
 tsmr_hetero <- vroom(tsmr_hetero_path, delim=',', col_names = c("method", "Q", "Q_df", "Q_pval", "gene"))
 tsmr_steiger <- vroom(tsmr_steiger_path, delim=',', col_names = c("r2_exposure", "r2_oucome", "correct_dir", "steiger_pval", "gene"))
