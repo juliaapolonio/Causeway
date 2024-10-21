@@ -115,11 +115,13 @@ The bioinformatics analysis pipeline [juliaapolonio/MR_workflow](https://github.
 
 # Pipeline Results
 
-## Candidate Genes
+## Forest Plot
 
 ```{r, eval = !isFALSE(params$forest_plot), out.width='100%', dpi=1200, fig.align='center'}
 knitr::include_graphics(params$forest_plot)
 ```
+
+## Volcano Plot
 
 ```{r, eval = !isFALSE(params$volcano_plot), out.width='100%', dpi=1200, fig.align='center'}
 knitr::include_graphics(params$volcano_plot)
@@ -130,7 +132,8 @@ knitr::include_graphics(params$volcano_plot)
 ```{r, results='asis'}
 final_results <- read.csv(file = params$final_results, header = TRUE)
 
-final_results <- final_results[final_results$is_candidate == TRUE, c("gene", "nsnp", "b_Inverse_variance_weighted", "pval_Inverse_variance_weighted", "gsmr_beta", "gsmr_pval", "causal_snp")]
+cols <- c("gene", "nsnp", "b_Inverse_variance_weighted", "pval_Inverse_variance_weighted", "gsmr_beta", "gsmr_pval", "causal_snp")
+final_results <- final_results[final_results$is_candidate == TRUE, cols]
 
 datatable(final_results, options = list(
         scrollX = TRUE,
