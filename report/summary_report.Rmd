@@ -21,7 +21,6 @@ params:
 
     # pipeline versions
     workflow_manifest_version: NULL
-    workflow_scriptid: NULL
 
     # file paths
     input_samplesheet: FALSE
