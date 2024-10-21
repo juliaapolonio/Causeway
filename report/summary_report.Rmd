@@ -70,7 +70,7 @@ cat(paste0("
 
 pipeline_version <- paste0("version ",params$workflow_manifest_version)
 report_title <- params$report_title
-report_subtitle <- paste0('juliaapolonio/PROSTAGMA ', pipeline_version)
+report_subtitle <- paste0('juliaapolonio/MR_workflow ', pipeline_version)
 ```
 
 ---
