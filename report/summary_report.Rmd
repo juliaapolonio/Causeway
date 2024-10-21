@@ -1,0 +1,166 @@
+---
+output:
+    html_document:
+        toc: true # table of contents
+        toc_float: true # float the table of contents to the left of the main document content
+        toc_depth: 3 # header levels 1,2,3
+        theme: default
+        number_sections: true # add section numbering to headers
+        df_print: paged # tables are printed as an html table with support for pagination over rows and columns
+        highlight: pygments
+    pdf_document: true
+#bibliography: ./references.bibtex
+params:
+    # any parameter that is by default "FALSE" is used to evaluate the inclusion of a codeblock with e.g. "eval=!isFALSE(params$mqc_plot)"
+
+    # report style
+    css: NULL
+    report_logo: NULL
+    report_title: "Summary of analysis results"
+    report_abstract: FALSE
+
+    # pipeline versions
+    workflow_manifest_version: NULL
+    workflow_scriptid: NULL
+
+    # file paths
+    input_samplesheet: FALSE
+    input_folder: FALSE
+    forest_plot: NULL
+    volcano_plot: NULL
+    final_results: NULL
+---
+
+<!-- Load libraries -->
+
+```{r libraries, include=FALSE}
+library("dplyr")
+library("ggplot2")
+library("knitr")
+library("DT")
+library("formattable")
+library("purrr")
+```
+
+<!-- set notebook defaults -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE) # echo is set in differentialabundance v1.2.0 to TRUE
+```
+
+<!-- Include the CSS and set the logo -->
+
+```{r, echo=FALSE, eval = !isFALSE(params$report_logo)}
+htmltools::includeCSS(params$css)
+```
+
+```{r results="asis", eval = !isFALSE(params$report_logo), echo=FALSE}
+cat(paste0("
+<style>
+#TOC {
+    background-image: url(\"", knitr::image_uri(params$report_logo), "\");
+}
+</style>
+"))
+```
+
+<!-- Output complete header -->
+
+```{r}
+
+pipeline_version <- paste0("version ",params$workflow_manifest_version)
+report_title <- params$report_title
+report_subtitle <- paste0('juliaapolonio/PROSTAGMA ', pipeline_version)
+```
+
+---
+title:  "<img src=\"`r file.path(params$report_logo)`\" width=\"100%\" style=\"float: none;\"/>`r report_title`"
+subtitle: `r report_subtitle`
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+---
+
+---
+
+<!-- Start with the actual report text -->
+
+```{r, results='asis'}
+if ( !isFALSE(params$report_abstract) ) {
+    report_abstract <- paste(readLines(params$report_abstract), collapse="\n")
+    cat(report_abstract)
+} else {
+    # with tab indentation, the following will be a code block!
+    cat(paste0("
+# Abstract
+
+The bioinformatics analysis pipeline [juliaapolonio/MR_workflow](https://github.com/juliaapolonio/MR_workflow/) is a pipeline for Mendelian Randomization and sensitivity analysis between a given GWAS sumstats and QTL data.
+    "))
+}
+```
+
+<!-- Section on Input -->
+
+```{r, results='asis'}
+# if ( !isFALSE(params$input_samplesheet) ) {
+#     # samplesheet input
+#     cat("\nSequencing data was provided in the samplesheet file `", params$input_samplesheet, "` that is displayed below:", sep="")
+# 
+#     samplesheet <- read.table(file = params$input_samplesheet, header = TRUE, sep = "\t")
+#     # Display table
+#     datatable(samplesheet, options = list(
+#         scrollX = TRUE,
+#         scrollY = "300px",
+#         paging = FALSE))
+# }
+```
+
+# Pipeline Results
+
+## Candidate Genes
+
+```{r, eval = !isFALSE(params$forest_plot), out.width='100%', dpi=1200, fig.align='center'}
+knitr::include_graphics(params$forest_plot)
+```
+
+```{r, eval = !isFALSE(params$volcano_plot), out.width='100%', dpi=1200, fig.align='center'}
+knitr::include_graphics(params$volcano_plot)
+```
+
+## Full Results
+
+```{r, results='asis'}
+final_results <- read.csv(file = params$final_results, header = TRUE)
+
+final_results <- final_results[final_results$is_candidate == TRUE, c("gene", "nsnp", "b_Inverse_variance_weighted", "pval_Inverse_variance_weighted", "gsmr_beta", "gsmr_pval", "causal_snp")]
+
+datatable(final_results, options = list(
+        scrollX = TRUE,
+        scrollY = "300px",
+        paging = FALSE))
+```
+
+
+<!-- Subsection on nextflow and pipeline information -->
+
+```{r, results='asis'}
+cat(paste0("
+# Nextflow and pipeline information
+
+Technical information to the pipeline run are collected in folder [pipeline_info](../pipeline_info),
+including software versions collected at runtime in file `software_versions.yml` (can be viewed with a text editor),
+all parameter settings in file `params_{date}_{time}.json` (can be viewed with a text editor),
+execution report in file `execution_report_{date}_{time}.html`,
+execution trace in file `execution_trace_{date}_{time}.txt`,
+execution timeline in file `execution_timelime_{date}_{time}.html`, and
+pipeline direct acyclic graph (DAG) in file `pipeline_dag_{date}_{time}.html`.
+"))
+```
+
+<!-- Section on final notes -->
+
+# Final notes
+
+This report (file `summary_report.html`) is located in folder [summary_report](.) of the original pipeline results folder.
+In this file, all links to files and folders are relative, therefore hyperlinks will only work when the report is at its original place in the pipeline results folder.
+Plots specifically produced for this report (if any) can be also found in folder [summary_report](.).
+
+Please cite the [pipeline publication](https://doi.org/10.3389/fmicb.2020.550420) and any software tools used by the pipeline (see [citations](https://github.com/juliaapolonio/MR_workflow/?tab=readme-ov-file#citations)) when you use any of the pipeline results in your study.
