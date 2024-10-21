@@ -65,16 +65,16 @@ results_mr <- gsmr %>%
 			     pval_pass_median = adjp_Weighted_median < 0.05,
 			         pval_pass_ivw = adjp_Inverse_variance_weighted < 0.05,
 				     pval_pass_mode = adjp_Simple_mode < 0.05,
-				       ) %>% 
-	        rowwise() %>% 
+				       ) %>%
+	        rowwise() %>%
 		  mutate(
 			     pass = sum(pval_pass_egger, pval_pass_median, pval_pass_mode, pval_pass_ivw)
-			       ) %>% 
+			       ) %>%
 		  filter(pass >= 2)
 
 		  # Add column indicating significant genes
-		  results_mr <- results_mr %>% 
-		    mutate(is_candidate <- ifelse(gene %in% is_candidate$gene, TRUE, FALSE))
+		  results_mr <- results_mr %>%
+		    mutate(is_candidate = ifelse(gene %in% is_candidate$gene, TRUE, FALSE))
 
 		  results_mr$analysis = NULL
 		  results_mr$analysis.x = NULL
