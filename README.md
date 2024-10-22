@@ -37,18 +37,19 @@ The following two modules are run only for the FDR-significant genes of GSMR.
 - Heterogeneity Egger;
 - Heterogeneity Inverse Variance Weighted;
 - Steiger direction test;
-- Pleiotropy Egger intercept.
+- Pleiotropy Egger intercept;
+- WIP: MR-PRESSO outlier analysis.
 
 ### Coloc
 
-[Coloc](https://chr1swallace.github.io/coloc/) is an R package to run colocalization analysis. For this workflow, the informations retrieved from Coloc are:
+[Coloc](https://chr1swallace.github.io/coloc/) is an R package for colocalization analysis. For this workflow, the information retrieved from Coloc are:
 - H3;
 - H4;
 - Most probable causal variant.
 
-### Merge all results and find candidate drug targets
+### Generate output report
 
-An R script that collects the outputs from the previous modules and merges everything in a .csv file.
+This set of processes collects all results from the analysis and merges them into a single .csv file and the results are filtered to a list of candidate drug targets. A markdown report is generated with the analysis highlights.
 
 ## Quick Start
 
@@ -56,12 +57,13 @@ An R script that collects the outputs from the previous modules and merges every
 
 2. Install any of [`Docker`](https://docs.docker.com/engine/installation/), [`Singularity`](https://www.sylabs.io/guides/3.0/user-guide/) (you can follow [this tutorial](https://singularity-tutorial.github.io/01-installation/)), [`Podman`](https://podman.io/), [`Shifter`](https://nersc.gitlab.io/development/shifter/how-to-use/) or [`Charliecloud`](https://hpc.github.io/charliecloud/) for full pipeline reproducibility _(you can use [`Conda`](https://conda.io/miniconda.html) both to install Nextflow itself and also to manage software within pipelines. Please only use it within pipelines as a last resort; see [docs](https://nf-co.re/usage/configuration#basic-configuration-profiles))_.
 
-3. Download the pipeline and test it on a minimal dataset with a single command (WORK IN PROGRESS):
+3. Download the pipeline and test it on a minimal dataset with a single command:
 
 ```bash
-nextflow run juliaapolonio/MR_workflow -profile test,YOURPROFILE --outdir <OUTDIR>
+nextflow run juliaapolonio/MR_workflow -profile YOURPROFILE --outdir <OUTDIR> --run-vignette
 ```
 
+This will set up eQTLGen data and European 1000 Genomes reference with your sumstats.
 Note that some form of configuration will be needed so that Nextflow knows how to fetch the required software. This is usually done in the form of a config profile (`YOURPROFILE` in the example command above). You can chain multiple config profiles in a comma-separated string.
 
 > - The pipeline comes with config profiles called `docker`, `singularity`, `podman`, `shifter`, `charliecloud` and `conda` which instruct the pipeline to use the named tool for software management. For example, `-profile test,docker`.
@@ -93,14 +95,17 @@ Neither the Exposure nor the Outcome files should contain multi-allelic SNPs and
 
 ## Outputs
 
-If successfully run, the workflow should give two files as an output:
+If successfully run, the workflow should give three files as the main output:
 
+- `summary_report.html` is a html report with all analysis highlights;
 - `mr_merged_results.csv` should contain all analyses results for each GSMR significant gene;
 - `significant_genes.txt` should give a gene list of all genes that fill the criteria.
 
+Other intermediate outputs are stored in a folder with the corresponding process name.
+
 ## Credits
 
-juliaapolonio/MR_workflow was co-authored by Julia Apolonio and João Cavalcante, under the supervision of Dr. Vasiliki Lagou.
+juliaapolonio/MR_workflow was authored by Julia Apolonio with the assistance of João Cavalcante, under the supervision of Dr. Vasiliki Lagou.
 
 
 ## Citations
