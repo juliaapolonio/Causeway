@@ -7,15 +7,8 @@ As a future improvement, when possible, the local modules will be submitted to a
 
 ## Pipeline summary
 
-```mermaid
-graph TD
-    A[Input] --> B[GSMR]
-    B --> C[Filtering]
-    C --> D[TwoSampleMR]
-    C --> E[Coloc]
-    E --> F[Aggregration of Results]
-    D --> F
-```
+![pipeline summary](https://github.com/juliaapolonio/MR_workflow/blob/master/mr_workflow_diagram.png?raw=true)
+
 
 ### Generalized Summary Mendelian Randomization (GSMR)
 
