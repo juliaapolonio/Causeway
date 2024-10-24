@@ -55,7 +55,7 @@ nextflow run juliaapolonio/MR_workflow -profile YOURPROFILE --outdir <OUTDIR> --
 ```
 
 This will set up [eQTLGen cis-eQTL](https://eqtlgen.org/phase1.html) data and [1000 Genomes phase 3 dataset (GRCh37)](https://www.cog-genomics.org/plink/2.0/resources#1kg_phase3) genotype [p-file](https://www.cog-genomics.org/plink/2.0/formats#pgen) with [Finngen's Dysthymia or Depression sumstats](https://r11.finngen.fi/pheno/F5_DEPRESSION_DYSTHYMIA). 
-Note that some form of configuration will be needed so that Nextflow knows how to fetch the required software. This is usually done in the form of a config profile (`YOURPROFILE` in the example command above). You can chain multiple config profiles in a comma-separated string.
+Note that some form of configuration will be needed so that Nextflow knows how to fetch the required software. This is usually done in the form of a config profile (`YOURPROFILE` in the example command above).
 
 > - The pipeline comes with config profiles called `docker`, `singularity`, `podman`, `shifter`, `charliecloud` and `conda` which instruct the pipeline to use the named tool for software management. For example, `-profile test,docker`.
 > - Please check [nf-core/configs](https://github.com/nf-core/configs#documentation) to see if a custom config file to run nf-core pipelines already exists for your Institute. If so, you can simply use `-profile <institute>` in your command. This will enable either `docker` or `singularity` and set the appropriate execution settings for your local compute environment.
@@ -68,8 +68,8 @@ Note that some form of configuration will be needed so that Nextflow knows how t
 nextflow run juliaapolonio/MR_workflow \
   --exposure samplesheet.csv \
   --outdir <OUTDIR> \
-  --ref_folder 1000G_reference \
-  --outcome outcome_file \
+  --ref_folder <REFERENCE_FOLDER> \
+  --outcome <OUTCOME_FILE> \
   -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
 ```
 
@@ -80,9 +80,8 @@ MR_workflow needs 3 inputs to run:
 - An Exposure sample sheet;
 - An Outcome file.
 
-The code to download and format reference data (in the example is European 1000Genomes) is located in `bin/setup_bfile.sh`.
-Both Exposure and Outcome files should follow the [GCTA-Cojo format](https://yanglab.westlake.edu.cn/software/gcta/#COJO). The Exposure file should be separated by one gene per file.
-Neither the Exposure nor the Outcome files should contain multi-allelic SNPs and the frequency is the Minor Allele Frequency (MAF). If the Outcome has a small number os SNPs (less than 2M) it is expected that a substantial amount of the tasks will fail due to lack or small number of matching IVs between the Exposure and Outcome data. If the Outcome data has a large number of SNPs (more than 10M) it is still expected that at most 10% of GSMR tasks will fail.
+Both Exposure and Outcome files should follow the [GCTA-Cojo format](https://yanglab.westlake.edu.cn/software/gcta/#COJO). The Exposure file should be separated by one gene per file. The reference files should be in [PLINK bfile](https://www.cog-genomics.org/plink/1.9/formats#bed) format.
+Neither the Exposure nor the Outcome files should contain multi-allelic SNPs; the frequency (freq) is the Minor Allele Frequency (MAF). If the Outcome has a small number of SNPs (less than 2M) it is expected that a substantial amount of the tasks will fail due to lack or small number of matching IVs between the Exposure and Outcome data. If the Outcome data has a large number of SNPs (more than 10M) it is still expected that around 10% of GSMR tasks will fail.
 
 ## Outputs
 
