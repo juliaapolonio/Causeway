@@ -16,11 +16,9 @@ This is the main part of the process. It runs [GSMR](https://yanglab.westlake.ed
 
 ### Significant gene calculation and filtering
 
-With the results from GSMR, this module calculates the FDR p-value for each gene and filters by it and the number of IVs.
+With the results from GSMR, this module calculates the FDR p-value for each gene and filters by it and the number of IVs. This step will substantially decrease the number of tasks for the subsequent processes, and therefore, the execution time for the pipeline.
 
 ### Two Sample MR (2SMR)
-
-The following two modules are run only for the FDR-significant genes of GSMR.
 
 [Two Sample MR](https://mrcieu.github.io/TwoSampleMR/) is an R package that performs Mendelian Randomization and sensitivity analysis. The workflow is configured to run the following 2SMR tests:
 - Inverse Variance Weighted regression;
@@ -56,7 +54,7 @@ This set of processes collects all results from the analysis and merges them int
 nextflow run juliaapolonio/MR_workflow -profile YOURPROFILE --outdir <OUTDIR> --run-vignette
 ```
 
-This will set up eQTLGen data and European 1000 Genomes reference with [Finngen's Dysthymia or Depression sumstats](https://r11.finngen.fi/pheno/F5_DEPRESSION_DYSTHYMIA). 
+This will set up [eQTLGen cis-eQTL](https://eqtlgen.org/phase1.html) data and [European 1000 Genomes](https://www.internationalgenome.org/) genotype [p-file](https://www.cog-genomics.org/plink/2.0/formats#pgen) with [Finngen's Dysthymia or Depression sumstats](https://r11.finngen.fi/pheno/F5_DEPRESSION_DYSTHYMIA). 
 Note that some form of configuration will be needed so that Nextflow knows how to fetch the required software. This is usually done in the form of a config profile (`YOURPROFILE` in the example command above). You can chain multiple config profiles in a comma-separated string.
 
 > - The pipeline comes with config profiles called `docker`, `singularity`, `podman`, `shifter`, `charliecloud` and `conda` which instruct the pipeline to use the named tool for software management. For example, `-profile test,docker`.
