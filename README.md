@@ -7,7 +7,7 @@ As a future improvement, when possible, the local modules will be submitted to a
 
 ## Pipeline summary
 
-![pipeline summary](https://github.com/juliaapolonio/MR_workflow/blob/master/mr_workflow_diagram.png?raw=true)
+![pipeline summary](https://github.com/juliaapolonio/MR_workflow/blob/master/causeway_diagram.png?raw=true)
 
 
 ### Generalized Summary Mendelian Randomization (GSMR)
