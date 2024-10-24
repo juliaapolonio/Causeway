@@ -56,7 +56,7 @@ This set of processes collects all results from the analysis and merges them int
 nextflow run juliaapolonio/MR_workflow -profile YOURPROFILE --outdir <OUTDIR> --run-vignette
 ```
 
-This will set up eQTLGen data and European 1000 Genomes reference with your sumstats.
+This will set up eQTLGen data and European 1000 Genomes reference with [Finngen's Dysthymia or Depression sumstats](https://r11.finngen.fi/pheno/F5_DEPRESSION_DYSTHYMIA). 
 Note that some form of configuration will be needed so that Nextflow knows how to fetch the required software. This is usually done in the form of a config profile (`YOURPROFILE` in the example command above). You can chain multiple config profiles in a comma-separated string.
 
 > - The pipeline comes with config profiles called `docker`, `singularity`, `podman`, `shifter`, `charliecloud` and `conda` which instruct the pipeline to use the named tool for software management. For example, `-profile test,docker`.
@@ -84,7 +84,7 @@ MR_workflow needs 3 inputs to run:
 
 The code to download and format reference data (in the example is European 1000Genomes) is located in `bin/setup_bfile.sh`.
 Both Exposure and Outcome files should follow the [GCTA-Cojo format](https://yanglab.westlake.edu.cn/software/gcta/#COJO). The Exposure file should be separated by one gene per file.
-Neither the Exposure nor the Outcome files should contain multi-allelic SNPs and the frequency is the Minor Allele Frequency (MAF).
+Neither the Exposure nor the Outcome files should contain multi-allelic SNPs and the frequency is the Minor Allele Frequency (MAF). If the Outcome has a small number os SNPs (less than 2M) it is expected that a substantial amount of the tasks will fail due to lack or small number of matching IVs between the Exposure and Outcome data. If the Outcome data has a large number of SNPs (more than 10M) it is still expected that at most 10% of GSMR tasks will fail.
 
 ## Outputs
 
@@ -98,7 +98,7 @@ Other intermediate outputs are stored in a folder with the corresponding process
 
 ## Credits
 
-juliaapolonio/MR_workflow was authored by Julia Apolonio with the assistance of João Cavalcante, under the supervision of Dr. Vasiliki Lagou.
+juliaapolonio/MR_workflow was authored by [Julia Apolonio](https://github.com/juliaapolonio/) with [João Cavalcante](https://github.com/jvfe/)'s assistance, under Dr. [Vasiliki Lagou](https://scholar.google.co.uk/citations?user=bjj5KdwAAAAJ&hl=en)'s supervision.
 
 
 ## Citations
