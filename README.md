@@ -1,6 +1,9 @@
-## Introduction
+<a href="github.com/juliaapolonio/MR_workflow"><img src="horizontal_logo.png" style="display: block; margin: 0 auto" height="298" /></a>
 
-**juliaapolonio/MR_workflow** is a pipeline for Mendelian Randomization and sensitivity analysis between a given GWAS sumstats and QTL data.
+
+## Overview
+
+**juliaapolonio/MR_workflow** is a pipeline for Mendelian Randomization and sensitivity analysis between a phenotype GWAS sumstats and QTL data.
 
 The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It uses Docker/Singularity containers making installation trivial and results highly reproducible. The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementation of this pipeline uses one container per process which makes it much easier to maintain and update software dependencies. 
 As a future improvement, when possible, the local modules will be submitted to and installed from [nf-core/modules](https://github.com/nf-core/modules) in order to make them available to all nf-core pipelines, and to everyone within the Nextflow community!
