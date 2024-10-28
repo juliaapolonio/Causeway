@@ -1,4 +1,4 @@
-<a href="github.com/juliaapolonio/MR_workflow"><img src="horizontal_logo.png" style="display: block; margin: 0 auto" height="298" /></a>
+<a href="github.com/juliaapolonio/MR_workflow"><img src="assets/horizontal_logo.png" style="display: block; margin: 0 auto" height="298" /></a>
 
 
 ## Overview
@@ -10,7 +10,7 @@ As a future improvement, when possible, the local modules will be submitted to a
 
 ## Pipeline summary
 
-![pipeline summary](https://github.com/juliaapolonio/MR_workflow/blob/master/causeway_diagram.png?raw=true)
+![pipeline summary](https://github.com/juliaapolonio/MR_workflow/blob/master/assets/causeway_diagram.png?raw=true)
 
 
 ### Generalized Summary Mendelian Randomization (GSMR)
