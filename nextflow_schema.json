@@ -1,0 +1,88 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "https://raw.githubusercontent.com/jvfe/ukb_ppp_gsmr/master/nextflow_schema.json",
+    "title": "jvfe/ukb_ppp_gsmr pipeline parameters",
+    "description": "A pipeline for mendelian randomization",
+    "type": "object",
+    "definitions": {
+        "sumstats": {
+            "title": "Sumstats",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "exposures": {
+                    "type": "string",
+                    "format": "file-path",
+                    "mimetype": "text/csv",
+                    "schema": "/assets/schema_exposures.json",
+                    "description": "Samplesheet of exposure sumstats"
+                },
+                "outcomes": {
+                    "type": "string",
+                    "format": "file-path",
+                    "mimetype": "text/csv",
+                    "schema": "/assets/schema_outcomes.json",
+                    "description": "Samplesheet of outcome sumstats"
+                }
+            }
+        },
+        "gwas_references": {
+            "type": "object",
+            "title": "GWAS References",
+            "properties": {
+                "references": {
+                    "type": "string"
+                },
+                "twosmr_ref": {
+                    "type": "string"
+                }
+            }
+        },
+        "skip_steps": {
+            "title": "Skip steps",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "skip_gsmr": {
+                    "type": "boolean",
+                    "description": "Skip GSMR"
+                },
+                "skip_2smr": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "nf_validation": {
+            "title": "nf-validation",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "validationSkipDuplicateCheck": {
+                    "type": "boolean",
+                    "hidden": true
+                },
+                "validationS3PathCheck": {
+                    "type": "string",
+                    "hidden": true
+                }
+            }
+        }
+    },
+    "allOf": [
+        {
+            "$ref": "#/definitions/sumstats"
+        },
+        {
+            "$ref": "#/definitions/gwas_references"
+        },
+        {
+            "$ref": "#/definitions/skip_steps"
+        },
+        {
+            "$ref": "#/definitions/nf_validation"
+        }
+    ]
+}
