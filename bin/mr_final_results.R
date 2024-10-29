@@ -11,6 +11,7 @@ tsmr_hetero_path <- args[3]
 tsmr_steiger_path <- args[4]
 tsmr_pleiotropy_path <- args[5]
 tsmr_metrics_path <- args[6]
+tsmr_mrpresso_path <- args[7]
 
 # Load data
 coloc <- vroom(coloc_path, col_names = c("gene", "H3", "H4", "causal_snp"))
@@ -19,6 +20,7 @@ tsmr_hetero <- vroom(tsmr_hetero_path, delim=',', col_names = c("method", "Q", "
 tsmr_steiger <- vroom(tsmr_steiger_path, delim=',', col_names = c("r2_exposure", "r2_oucome", "correct_dir", "steiger_pval", "gene"))
 tsmr_pleiotropy <- vroom(tsmr_pleiotropy_path, delim=',', col_names = c("pleiotropy_egger_intercept", "pleiotropy_se", "pleiotropy_pval", "method"))
 tsmr_metrics <- vroom(tsmr_metrics_path, delim=',', col_names = c("method", "nsnp", "b", "se", "pval", "gene"))
+tsmr_mrpresso <- vroom(tsmr_mrpresso_path, col_names = c("gene", "mrpresso_pval"))
 
 #Split method columns
 tsmr_metrics <- tidyr::separate(data = tsmr_metrics, col = "gene", into = c("gene", "analysis"))
@@ -44,7 +46,8 @@ results_mr <- gsmr %>%
   inner_join(wide_metrics, by = "gene") %>%
     inner_join(tsmr_steiger, by = "gene") %>%
     inner_join(coloc, by = "gene") %>%
-      inner_join(tsmr_pleiotropy, by = "gene")
+      inner_join(tsmr_pleiotropy, by = "gene") %>%
+  inner_join(tsmr_mrpresso, by = "gene")
 
     # Calculate Adjusted p-value
     results_mr <- results_mr %>%
@@ -59,6 +62,7 @@ results_mr <- gsmr %>%
 	  filter(nsnp >= 3) %>%
 	    filter(steiger_pval == 0) %>%
 	    filter(H4 > 0.8) %>%
+	  filter(mrpresso_pval > 0.05) %>%
 	      filter(pleiotropy_pval > 0.05) %>%
 	      mutate(
 		         pval_pass_egger = adjp_MR_Egger < 0.05,

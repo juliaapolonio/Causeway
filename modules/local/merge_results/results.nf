@@ -15,6 +15,7 @@ process RESULT {
     path(tsmr_steiger_path)
     path(tsmr_pleiotropy_path)
     path(tsmr_metrics_path)
+    path(tsmr_mrpresso_path)
 
   output:
     path("candidate_gene_list.txt")  , emit: genelist
@@ -31,6 +32,7 @@ process RESULT {
     $tsmr_hetero_path \\
     $tsmr_steiger_path \\
     $tsmr_pleiotropy_path \\
-    $tsmr_metrics_path
+    $tsmr_metrics_path \\
+    $tsmr_mrpresso_path
   """
 }

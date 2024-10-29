@@ -66,8 +66,11 @@ outcome[, "outcome"] <- prefix_outcome
 
 dat <- harmonise_data(exposure_dat = mic_exp, outcome_dat = outcome)
 
+
+# Create outfile prefix
 outfile <- paste(prefix_exp, prefix_outcome, sep = "_")
 
+# Calculate rsquare for each association
 df <- add_rsq(dat)
 
 write.table(
@@ -78,8 +81,18 @@ write.table(
   quote = F
 )
 
+# Run MR-PRESSO and get global p-value
+mrpresso <- run_mr_presso(dat, NbDistribution = 1000, SignifThreshold = 0.05)
+
+mrpresso_pval <- mrpresso[[1]][["MR-PRESSO results"]]["Global Test"]$`Global Test`$Pvalue
+
+write(c(prefix_exp, mrpresso_pval), ncolumns = 2, file = paste0(prefix_exp, "_mrpresso.txt"))
+
+# Generate and save MR report with the other metrics
 mr_report(dat, output_type = "md")
 
+
+# Effect plot
 res <- mr(dat)
 
 p1 <- mr_scatter_plot(res, dat)
