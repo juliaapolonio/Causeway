@@ -3,12 +3,12 @@ body {
 }
 
 h1 {
-  color: rgb(118, 34, 129);
+  color: #6b3230;
   font-size: 200%;
 }
 
 h2 {
-  color: rgb(118, 34, 129);
+  color: #6b3230;
   font-size: 150%;
 }
 
@@ -35,25 +35,25 @@ h4 {
   top: 50%;
   left: 50%;
   font-size: 500%;
-  color: #d343e0;
+  color: #b85551;
 }
 
 .list-group-item.active {
   z-index: 2;
   color: #fff;
-  background-color: #d343e0;
-  border-color: #d343e0;
+  background-color: #b85551;
+  border-color: #b85551;
 }
 .list-group-item.active:hover {
   z-index: 2;
   color: #fff;
-  background-color: #d343e0;
-  border-color: #d343e0;
+  background-color: #b85551;
+  border-color: #b85551;
 }
 
 #TOC {
   background-size: contain;
-  padding-top: 60px !important;
+  padding-top: 90px !important;
   background-repeat: no-repeat;
 }
 
@@ -61,10 +61,10 @@ h4 {
 .nav-pills > li.active > a:hover,
 .nav-pills > li.active > a:focus {
   color: #fff;
-  background-color: #d343e0;
+  background-color: #b85551;
 }
 
 a {
-  color: #d343e0;
+  color: #b85551;
   text-decoration: none;
 }
