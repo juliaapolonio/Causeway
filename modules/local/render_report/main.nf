@@ -1,7 +1,7 @@
 
 process RENDER_REPORT {
     label 'process_low'
-    container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ? 'https://depot.galaxyproject.org/singularity/mulled-v2-b2ec1fea5791d428eebb8c8ea7409c350d31dada:a447f6b7a6afde38352b24c30ae9cd6e39df95c4-1' : 'quay.io/biocontainers/mulled-v2-b2ec1fea5791d428eebb8c8ea7409c350d31dada:a447f6b7a6afde38352b24c30ae9cd6e39df95c4-1'}"
+    container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ? 'oras://community.wave.seqera.io/library/r-dplyr_r-dt_r-formattable_r-ggplot2_pruned:2e69c6685edb51c7' : 'community.wave.seqera.io/library/r-dplyr_r-dt_r-formattable_r-ggplot2_pruned:ce4deb74423a0a8f'}"
 
     input:
     path report_template
