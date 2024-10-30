@@ -15,7 +15,7 @@ merged_result_path <- args[2]
 # Candidates file
 is_candidate <- vroom(merged_result_path) # Output from merge module
 
-is_candidate <- is_candidate[is_candidate$`is_candidate <- ifelse(gene %in% is_candidate$gene, TRUE, FALSE)` == TRUE,]
+is_candidate <- is_candidate[is_candidate$is_candidate == TRUE,]
 
 # Full file
 mr_result <- vroom(gsmr_result_path, col_names = c("Exposure", "Outcome", "bxy", "se", "p", "nsnp", "heidi")) # Output from GSMR module before filter

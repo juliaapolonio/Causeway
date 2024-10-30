@@ -4,9 +4,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-data = Channel.fromPath("/storages/acari/julia.amorim/qtls/eqtl/eQTLGen_fstats/*txt*")
-outcome = file("/data/home/julia.amorim/scripts/data/outputs/mtag/bdep_noswb_gsmr.txt")
-true_ref_folder = file("/storages/acari/julia.amorim/references/tsmr_ref/")
+data = Channel.fromPath("/storages/acari/julia.amorim/qtls/eqtl/eQTLGen_fstats/teste/*txt.gz")
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -51,8 +49,8 @@ workflow {
 
     GCTA_GSMR (
 	  data,
-	  true_ref_folder,
-	  outcome
+	  params.ref,
+	  params.outcome
     )
 
     GSMR_FILTER (
@@ -66,19 +64,22 @@ workflow {
 
     TWOSAMPLEMR (
             GENE_LIST.out.filtered,
-            outcome,
-            true_ref_folder
+            params.outcome,
+            params.ref
             )
 
     COLOC (
 	    GENE_LIST.out.filtered,
-	    outcome
+	    params.outcome
 	    )
 
-   COLOC.out.merged_coloc
+    COLOC.out.merged_coloc
          .collectFile(name: 'concatenated_coloc.csv', storeDir: "${params.outdir}/collected_files/")
          .set { concatenated_coloc }
 
+    TWOSAMPLEMR.out.mrpresso
+        .collectFile(name: 'concatenated_mrpresso.txt', storeDir: "$params.outdir}/collected_files/")
+        .set { concatenated_mrpresso }
 
     PARSE_2SMR (
 	    TWOSAMPLEMR.out.report
@@ -119,6 +120,7 @@ workflow {
             concatenated_s,
             concatenated_p,
             concatenated_m,
+            concatenated_mrpresso
     )
 
     FINAL_REPORT (
