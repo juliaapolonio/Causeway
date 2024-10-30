@@ -18,6 +18,7 @@ process RENDER_REPORT {
     task.ext.when == null || task.ext.when
 
     script:
+    // USE JSON DATA AS PARAM FOR QUARTO REPORT
     def params_list_named = ["css='${report_styles}'", "report_logo='${report_logo}'", "workflow_manifest_version='${workflow.manifest.version}'", "forest_plot='${forest_plot}'", "volcano_plot='${volcano_plot}'", "final_results='${final_results}'"]
     params_list_named_string = params_list_named.findAll().join(',').trim()
     """
