@@ -10,7 +10,7 @@ process PARSE_2SMR {
             'docker.io/biocontainers/pandas:1.5.1_cv1' }"
 
   input:
-    each(report)
+    path(report)
 
   output:
     path("*metrics.csv")        , emit: results_metrics
@@ -25,7 +25,7 @@ process PARSE_2SMR {
   
   """
   parse_twosamplemr_reports.py \\
-    $report \\
+    $report
  
   """
 }

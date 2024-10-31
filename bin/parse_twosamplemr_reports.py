@@ -17,7 +17,7 @@ def parse_args(args=None):
 
 def parse_twosamplemr_reports(report):
     
-    prefix = re.search(r"TwoSampleMR\.([A-Z0-9]+)_against_.*", report).group(1)
+    prefix = re.search(r"TwoSampleMR\.([A-Z0-9]+)GSMRtxt_against_.*", report).group(1)
     metrics_table = []
     pleiotropy_table = []
     steiger_table = []

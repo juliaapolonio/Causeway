@@ -10,8 +10,7 @@ process TWOSAMPLEMR {
             'docker.io/julia_2smr:latest' }"
 
   input:
-    each(exposure)
-    path(outcome)
+    tuple path(exposure), val(meta), path(outcome)
     path(reference)
 
   output:

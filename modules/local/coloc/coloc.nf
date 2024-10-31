@@ -10,8 +10,7 @@ process COLOC {
             'docker.io/juliaapolonio/coloc:5.2.3' }"
 
   input:
-    each(reads)
-    path(outcome)
+    tuple path(reads), val(meta), path(outcome)
 
   output:
     path("*coloc*")        , emit: merged_coloc

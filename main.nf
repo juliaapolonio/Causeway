@@ -4,7 +4,8 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-data = Channel.fromPath("/storages/acari/julia.amorim/qtls/eqtl/eQTLGen_fstats/teste/*txt.gz")
+
+include { fromSamplesheet; validateParameters } from 'plugin/nf-validation'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -47,10 +48,13 @@ workflow {
             )
     }
 
+    data = Channel.fromSamplesheet("exposures")
+    outcomes = Channel.fromSamplesheet("outcomes")
+
+    data.combine(outcomes).set { og_combinations }
     GCTA_GSMR (
-	  data,
+          og_combinations,
 	  params.ref,
-	  params.outcome
     )
 
     GSMR_FILTER (
@@ -58,19 +62,18 @@ workflow {
 	    )
 
     GENE_LIST (
-            data.collect(),
+            data.collect { meta, path -> path },
 	    GSMR_FILTER.out.genelist
 	    )
 
+    GENE_LIST.out.filtered.flatten().combine(outcomes).set { combinations }
     TWOSAMPLEMR (
-            GENE_LIST.out.filtered,
-            params.outcome,
+            combinations,
             params.ref
             )
 
     COLOC (
-	    GENE_LIST.out.filtered,
-	    params.outcome
+            combinations
 	    )
 
     COLOC.out.merged_coloc
