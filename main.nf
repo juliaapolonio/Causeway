@@ -28,7 +28,9 @@ include { ADD_COLUMN as ADD_S_COLUMN } from "./modules/local/add_column/add_colu
 include { ADD_COLUMN as ADD_P_COLUMN } from "./modules/local/add_column/add_column.nf"
 include { ADD_COLUMN as ADD_M_COLUMN } from "./modules/local/add_column/add_column.nf"
 include { FINAL_REPORT } from "./modules/local/final_report/final_report.nf"
-
+include { UNTAR } from "./modules/nf-core/untar/main.nf"
+include { MERGE } from "./modules/local/merge_file/merge_file.nf"
+include { R_LIFT } from "./modules/local/r_lift/r_lift.nf"
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -38,18 +40,45 @@ include { FINAL_REPORT } from "./modules/local/final_report/final_report.nf"
 
 workflow {
 
-    if (params.run_vignette) {
+    if(params.run_eqtlgen) {
         PREPROCESS ()
         
+    }
+
+    if(params.run_ukb) {
+        reads = Channel.fromPath(params.ukb_path)
+        UNTAR (
+            reads
+        )
+
+        MERGE (
+            UNTAR.out.untar
+        )
+
+        R_LIFT (
+            MERGE.out.merged,
+            sumstats
+        )
+    }
+
+    if(params.1KG_ref) {
         PROCESS_REF (
            params.psam_url,
            params.pgen_url,
            params.pvar_url
             )
     }
-
+    
     data = Channel.fromSamplesheet("exposures")
     outcomes = Channel.fromSamplesheet("outcomes")
+
+    if(params.run_vignette){
+        zenodo_ref = Channel.fromPath(params.zenodo_link)
+        UNTAR (
+            zenodo_ref
+        )
+        UNTAR.out.untar.collectFile().set { ref }
+    }
 
     data.combine(outcomes).set { og_combinations }
     GCTA_GSMR (
