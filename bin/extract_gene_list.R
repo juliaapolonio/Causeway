@@ -11,7 +11,7 @@ eqtlgen_all_name <- stringr::str_remove(eqtlgen_all_path, "\\.txt")
 
 # Open and tidy file
 eqtlgen_all=read.table(eqtlgen_all_path)
-colnames(eqtlgen_all) <- c("Exposure", "Outcome", "bxy", "se", "p", "nsnp", "multi_snp_based_heidi_outlier")
+colnames(eqtlgen_all) <- c("Exposure", "Outcome", "bxy", "se", "p", "nsnp")
 
 # Filter results based on pBH and nsnp
 eqtlgen_result=eqtlgen_all %>% mutate("p"=as.numeric(p)) %>% filter(!is.na(p))

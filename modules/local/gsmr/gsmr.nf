@@ -16,6 +16,8 @@ process GCTA_GSMR {
 
     script:
     """
+    ulimit -c 0
+
     if [[ $exposure == *.gz ]]; then
         gunzip "$exposure"
     fi
@@ -34,7 +36,6 @@ process GCTA_GSMR {
     --clump-r2 0.05   \
     --heidi-thresh 0.01   \
     --effect-plot   \
-    --gsmr2-beta \
     --out "${exposure.getBaseName(2)}_${outcome.baseName}"
     """
 }
