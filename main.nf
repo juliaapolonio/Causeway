@@ -29,6 +29,7 @@ include { ADD_COLUMN as ADD_P_COLUMN } from "./modules/local/add_column/add_colu
 include { ADD_COLUMN as ADD_M_COLUMN } from "./modules/local/add_column/add_column.nf"
 include { FINAL_REPORT } from "./modules/local/final_report/final_report.nf"
 include { UNTAR } from "./modules/nf-core/untar/main.nf"
+include { UNTAR as UNTAR_REF } from "./modules/nf-core/untar/main.nf"
 include { MERGE } from "./modules/local/merge_file/merge_file.nf"
 include { R_LIFT } from "./modules/local/r_lift/r_lift.nf"
 /*
@@ -40,6 +41,7 @@ include { R_LIFT } from "./modules/local/r_lift/r_lift.nf"
 
 workflow {
 
+    ref = params.ref
     if(params.run_eqtlgen) {
         PREPROCESS ()
         
@@ -61,7 +63,7 @@ workflow {
         )
     }
 
-    if(params.1KG_ref) {
+    if(params.create_ref) {
         PROCESS_REF (
            params.psam_url,
            params.pgen_url,
@@ -73,17 +75,17 @@ workflow {
     outcomes = Channel.fromSamplesheet("outcomes")
 
     if(params.run_vignette){
-        zenodo_ref = Channel.fromPath(params.zenodo_link)
-        UNTAR (
+        zenodo_ref = [[id: 'zenodo'], file(params.zenodo_link)]
+        UNTAR_REF (
             zenodo_ref
         )
-        UNTAR.out.untar.collectFile().set { ref }
+        UNTAR_REF.out.untar.set { ref }
     }
 
     data.combine(outcomes).set { og_combinations }
     GCTA_GSMR (
           og_combinations,
-	  params.ref,
+	  ref,
     )
 
     GSMR_FILTER (
@@ -98,7 +100,7 @@ workflow {
     GENE_LIST.out.filtered.flatten().combine(outcomes).set { combinations }
     TWOSAMPLEMR (
             combinations,
-            params.ref
+            ref
             )
 
     COLOC (
