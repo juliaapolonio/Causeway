@@ -37,9 +37,6 @@ process GCTA_GSMR {
     --heidi-thresh 0.01   \
     --out "${exposure.getBaseName(2)}_${outcome.baseName}"
 
-    ### Restart error command
-    set -e
-
     if [[ -f "${exposure.getBaseName(2)}_${outcome.baseName}.log" ]]; then
         # Check if the error message exists in the log file
         if [[ \$(grep -c "Error: not enough SNPs" "${exposure.getBaseName(2)}_${outcome.baseName}.log") -gt 0 ]]; then
