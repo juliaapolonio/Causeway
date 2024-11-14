@@ -15,6 +15,7 @@ process GCTA_GSMR {
 
     script:
     """
+    set +e
     ulimit -c 0
 
     if [[ $exposure == *.gz ]]; then
@@ -34,8 +35,22 @@ process GCTA_GSMR {
     --gwas-thresh 5e-8   \
     --clump-r2 0.05   \
     --heidi-thresh 0.01   \
-    --effect-plot   \
     --out "${exposure.getBaseName(2)}_${outcome.baseName}"
+
+    ### Restart error command
+    set -e
+
+    if [[ -f "${exposure.getBaseName(2)}_${outcome.baseName}.log" ]]; then
+        # Check if the error message exists in the log file
+        if [[ \$(grep -c "Error: not enough SNPs" "${exposure.getBaseName(2)}_${outcome.baseName}.log") -gt 0 ]]; then
+            echo "${exposure.getBaseName(2)}" > ${exposure.getBaseName(2)}_${outcome.baseName}.gsmr
+            exit 0
+        fi
+    else
+        # If the error message is not found, return the original exit code
+        echo "No error found, or file does not exist."
+        exit 1  # Or replace 1 with the actual exit code you want in this case
+    fi
     """
 }
 
