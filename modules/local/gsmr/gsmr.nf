@@ -12,7 +12,6 @@ process GCTA_GSMR {
     output:
     path "${exposure.getBaseName(2)}_${outcome.baseName}.log", emit: gsmr_log
     path "${exposure.getBaseName(2)}_${outcome.baseName}.gsmr", emit: gsmr_res, optional: true
-    path "${exposure.getBaseName(2)}_${outcome.baseName}.eff_plot.gz", emit: gsmr_effplt, optional: true
 
     script:
     """
