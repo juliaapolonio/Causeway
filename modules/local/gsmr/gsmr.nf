@@ -12,6 +12,7 @@ process GCTA_GSMR {
     output:
     path "${exposure.getBaseName(2)}_${outcome.baseName}.log", emit: gsmr_log
     path "${exposure.getBaseName(2)}_${outcome.baseName}.gsmr", emit: gsmr_res, optional: true
+    path "${exposure.getBaseName(2)}_${outcome.baseName}.err", emit: gsmr_res, optional: true
 
     script:
     """
@@ -40,7 +41,7 @@ process GCTA_GSMR {
     if [[ -f "${exposure.getBaseName(2)}_${outcome.baseName}.log" ]]; then
         # Check if the error message exists in the log file
         if [[ \$(grep -c "Error: not enough SNPs" "${exposure.getBaseName(2)}_${outcome.baseName}.log") -gt 0 ]]; then
-            echo "${exposure.getBaseName(2)}" > ${exposure.getBaseName(2)}_${outcome.baseName}.gsmr
+            echo "${meta}" > ${exposure.getBaseName(2)}_${outcome.baseName}.err
             exit 0
         fi
     else
