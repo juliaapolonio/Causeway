@@ -29,9 +29,7 @@ tsmr_hetero <- tidyr::separate(data = tsmr_hetero, col = "gene", into = c("gene"
 tsmr_pleiotropy <- tidyr::separate(data = tsmr_pleiotropy, col = "method", into = c("gene", "analysis"))
 coloc$gene <- stringr::str_remove(coloc$gene, "\\_coloc_input")
 
-tsmr_metrics$method <- gsub("\\s+", "_", tsmr_metrics$method)
-tsmr_hetero$method <- gsub("\\s+", "_", tsmr_hetero$method)
-
+tsmr_mrpresso$gene <- sub("_.*", "", tsmr_mrpresso$gene)
 
 
 # Spread dataframes
