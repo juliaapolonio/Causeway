@@ -30,6 +30,7 @@ tsmr_pleiotropy <- tidyr::separate(data = tsmr_pleiotropy, col = "method", into 
 coloc$gene <- stringr::str_remove(coloc$gene, "\\_coloc_input")
 
 tsmr_mrpresso$gene <- sub("_.*", "", tsmr_mrpresso$gene)
+coloc$gene <- sub("_.*", "", coloc$gene)
 
 
 # Spread dataframes
