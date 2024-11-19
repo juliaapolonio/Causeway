@@ -80,12 +80,12 @@ workflow {
         UNTAR_REF (
             zenodo_ref
         )
-        UNTAR_REF.out.untar.set { ref }
+        ref = UNTAR_REF.out.untar.map { it[1] } + "/ref"
     }
 
     data.combine(outcomes).set { og_combinations }
     GCTA_GSMR (
-          og_combinations,
+      og_combinations,
 	  ref,
     )
 
