@@ -9,6 +9,8 @@ process GCTA_MERGE_ERR {
 
     script:
     """
-    cat ${err_files} > gcta_error_genes.txt
+    echo "# GCTA could not finish the analysis for the following
+# molecular QTLs due to insufficient number of IVs: " > gcta_error_genes.txt
+    cat ${err_files} >> gcta_error_genes.txt
     """
 }
