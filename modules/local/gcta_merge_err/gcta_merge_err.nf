@@ -1,5 +1,5 @@
 process GCTA_MERGE_ERR {
-    publishDir "${params.outdir}/results", mode: 'copy'
+    publishDir "${params.outdir}/GCTA_GSMR/", mode: 'copy'
 
     input:
     path err_files
