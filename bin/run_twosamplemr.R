@@ -1,5 +1,4 @@
 #!/usr/bin/env Rscript
-library(genetics.binaRies)
 library(TwoSampleMR)
 library(dplyr)
 
@@ -38,7 +37,7 @@ mic_exp <- ieugwasr::ld_clump(
   clump_kb = 1000,
   clump_p = 5e-8,
   clump_r2 = 0.05,
-  plink_bin = genetics.binaRies::get_plink_binary(),
+  plink_bin = "/usr/local/bin/plink",
   bfile = paste0(ref, "/1KG_phase3_EUR")
 ) |>
   dplyr::select(-c(pval, id)) |>

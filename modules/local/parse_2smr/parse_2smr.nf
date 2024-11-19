@@ -4,7 +4,6 @@ process PARSE_2SMR {
   """
 
   label 'process_medium'
-  label 'ERRO'
 
   container "${ workflow.containerEngine == 'singularity' ? 'docker://biocontainers/pandas:1.5.1_cv1':
             'docker.io/biocontainers/pandas:1.5.1_cv1' }"

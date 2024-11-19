@@ -30,14 +30,14 @@ process UNTAR {
     if [[ \$(tar -taf ${archive} | grep -o -P "^.*?\\/" | uniq | wc -l) -eq 1 ]]; then
         tar \\
             -C $prefix --strip-components 1 \\
-            -xavf \\
+            -xvf \\
             $args \\
             $archive \\
             $args2
     else
         tar \\
             -C $prefix \\
-            -xavf \\
+            -xvf \\
             $args \\
             $archive \\
             $args2

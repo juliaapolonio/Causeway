@@ -32,6 +32,8 @@ coloc$gene <- stringr::str_remove(coloc$gene, "\\_coloc_input")
 tsmr_mrpresso$gene <- sub("_.*", "", tsmr_mrpresso$gene)
 coloc$gene <- sub("_.*", "", coloc$gene)
 
+tsmr_metrics$method <- gsub("\\s+", "_", tsmr_metrics$method)
+tsmr_hetero$method <- gsub("\\s+", "_", tsmr_hetero$method)
 
 # Spread dataframes
 wide_hetero <- pivot_wider(tsmr_hetero, names_from = "method", values_from = c("Q", "Q_df", "Q_pval"))

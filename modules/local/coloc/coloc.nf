@@ -4,7 +4,6 @@ process COLOC {
   """
 
   label 'process_medium'
-  label 'ERRO'
 
   container "${ workflow.containerEngine == 'singularity' ? 'docker://juliaapolonio/coloc:5.2.3':
             'docker.io/juliaapolonio/coloc:5.2.3' }"

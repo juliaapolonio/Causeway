@@ -17,6 +17,7 @@ include { fromSamplesheet; validateParameters } from 'plugin/nf-validation'
 include { TWOSAMPLEMR } from "./modules/local/twosamplemr/tsmr.nf"
 include { COLOC } from "./modules/local/coloc/coloc.nf"
 include { GCTA_GSMR } from "./modules/local/gsmr/gsmr.nf"
+include { GCTA_MERGE_ERR } from "./modules/local/gcta_merge_err/gcta_merge_err.nf"
 include { RESULT } from "./modules/local/merge_results/results.nf"
 include { PREPROCESS } from "./modules/local/preprocess_fstats/preprocess.nf"
 include { PROCESS_REF } from "./modules/local/process_ref/process_ref.nf"
@@ -74,19 +75,21 @@ workflow {
     data = Channel.fromSamplesheet("exposures")
     outcomes = Channel.fromSamplesheet("outcomes")
 
-    if(params.run_vignette){
+    if(!params.ref && params.run_vignette){
         zenodo_ref = [[id: 'zenodo'], file(params.zenodo_link)]
         UNTAR_REF (
             zenodo_ref
         )
-        UNTAR_REF.out.untar.set { ref }
+        ref = UNTAR_REF.out.untar.map { it[1] } + "/ref"
     }
 
     data.combine(outcomes).set { og_combinations }
     GCTA_GSMR (
-          og_combinations,
+      og_combinations,
 	  ref,
     )
+
+    GCTA_MERGE_ERR(GCTA_GSMR.out.gsmr_err.collect())
 
     GSMR_FILTER (
 	    GCTA_GSMR.out.gsmr_res.collect()

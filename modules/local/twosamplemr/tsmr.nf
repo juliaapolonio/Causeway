@@ -4,10 +4,9 @@ process TWOSAMPLEMR {
   """
 
   label 'process_medium'
-  label 'ERRO'
 
   container "${ workflow.containerEngine == 'singularity' ? 'docker://juliaapolonio/julia_2smr:latest':
-            'docker.io/julia_2smr:latest' }"
+            'docker.io/juliaapolonio/julia_2smr:latest' }"
 
   input:
     tuple path(exposure), val(meta), path(outcome)
