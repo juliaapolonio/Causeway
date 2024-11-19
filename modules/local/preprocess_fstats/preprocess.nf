@@ -4,7 +4,6 @@ process PREPROCESS {
   """
 
   label 'process_medium'
-  label 'ERRO'
 
   container "${ workflow.containerEngine == 'singularity' ? 'docker://juliaapolonio/ubuntu-wget:latest':
             'docker.io/juliaapolonio/ubuntu-wget:latest' }"

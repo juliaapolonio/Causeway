@@ -6,17 +6,19 @@ process GCTA_GSMR {
               'quay.io/biocontainers/gcta:1.94.1--h9ee0642_0' }"
 
     input: 
-    path(exposure)
+    tuple val(meta), path(exposure), val(meta2), path(outcome)
     path(reference)
-    path(outcome)
 
     output:
     path "${exposure.getBaseName(2)}_${outcome.baseName}.log", emit: gsmr_log
     path "${exposure.getBaseName(2)}_${outcome.baseName}.gsmr", emit: gsmr_res, optional: true
-    path "${exposure.getBaseName(2)}_${outcome.baseName}.eff_plot.gz", emit: gsmr_effplt, optional: true
+    path "${exposure.getBaseName(2)}_${outcome.baseName}.err", emit: gsmr_err, optional: true
 
     script:
     """
+    set +e
+    ulimit -c 0
+
     if [[ $exposure == *.gz ]]; then
         gunzip "$exposure"
     fi
@@ -34,9 +36,19 @@ process GCTA_GSMR {
     --gwas-thresh 5e-8   \
     --clump-r2 0.05   \
     --heidi-thresh 0.01   \
-    --effect-plot   \
-    --gsmr2-beta \
     --out "${exposure.getBaseName(2)}_${outcome.baseName}"
+
+    if [[ -f "${exposure.getBaseName(2)}_${outcome.baseName}.log" ]]; then
+        # Check if the error message exists in the log file
+        if [[ \$(grep -c "Error: not enough SNPs" "${exposure.getBaseName(2)}_${outcome.baseName}.log") -gt 0 ]]; then
+            echo "${meta.id}" > ${exposure.getBaseName(2)}_${outcome.baseName}.err
+            exit 0
+        fi
+    else
+        # If the error message is not found, return the original exit code
+        echo "No error found, or file does not exist."
+        exit 1  # Or replace 1 with the actual exit code you want in this case
+    fi
     """
 }
 
