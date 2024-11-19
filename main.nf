@@ -75,7 +75,7 @@ workflow {
     data = Channel.fromSamplesheet("exposures")
     outcomes = Channel.fromSamplesheet("outcomes")
 
-    if(params.run_vignette){
+    if(!params.ref && params.run_vignette){
         zenodo_ref = [[id: 'zenodo'], file(params.zenodo_link)]
         UNTAR_REF (
             zenodo_ref
