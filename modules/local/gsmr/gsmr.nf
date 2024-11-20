@@ -1,6 +1,5 @@
 process GCTA_GSMR {
     label 'GSMR'
-    publishDir "${params.outdir}/results", mode: 'copy'
 
     container "${ workflow.containerEngine == 'singularity' ? 'docker://quay.io/biocontainers/gcta:1.94.1--h9ee0642_0':
               'quay.io/biocontainers/gcta:1.94.1--h9ee0642_0' }"

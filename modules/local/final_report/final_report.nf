@@ -13,8 +13,9 @@ process FINAL_REPORT {
     path(mr_final_path)
 
   output:
-    path("volcano.png")     , emit: volcano_plot
-    path("forest.png")      , emit: forest_plot
+    path("volcano.png")          , emit: volcano_plot
+    path("forest.png")           , emit: forest_plot
+    path("forest_plot.rds")      , emit: forest_rds
 
   when:
   task.ext.when == null || task.ext.when
