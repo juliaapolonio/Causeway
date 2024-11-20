@@ -54,7 +54,7 @@ This set of processes collects all results from the analysis and merges them int
 3. Download the pipeline and test it on a minimal dataset with a single command:
 
 ```bash
-nextflow run juliaapolonio/MR_workflow -profile YOURPROFILE --outdir <OUTDIR> --run-vignette
+nextflow run juliaapolonio/MR_workflow -profile test,YOURPROFILE --outdir <OUTDIR>
 ```
 
 This will set up [eQTLGen cis-eQTL](https://eqtlgen.org/phase1.html) data and [1000 Genomes phase 3 dataset (GRCh37)](https://www.cog-genomics.org/plink/2.0/resources#1kg_phase3) genotype [p-file](https://www.cog-genomics.org/plink/2.0/formats#pgen) with [Finngen's Dysthymia or Depression sumstats](https://r11.finngen.fi/pheno/F5_DEPRESSION_DYSTHYMIA). 
@@ -69,10 +69,10 @@ Note that some form of configuration will be needed so that Nextflow knows how t
 
 ```bash
 nextflow run juliaapolonio/MR_workflow \
-  --exposure samplesheet.csv \
+  --exposure <EXPOSURE_SAMPLESHEET> \
   --outdir <OUTDIR> \
-  --ref_folder <REFERENCE_FOLDER> \
-  --outcome <OUTCOME_FILE> \
+  --ref <REFERENCE_FOLDER> \
+  --outcome <OUTCOME_SAMPLESHEET> \
   -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
 ```
 
@@ -92,13 +92,13 @@ If successfully run, the workflow should give three files as the main output:
 
 - `summary_report.html` is a html report with all analysis highlights;
 - `mr_merged_results.csv` should contain all analyses results for each GSMR significant gene;
-- `significant_genes.txt` should give a gene list of all genes that fill the criteria.
+- `significant_genes.txt` should give a gene list of all genes that fill the criteria defined in its paper.
 
 Other intermediate outputs are stored in a folder with the corresponding process name.
 
 ## Credits
 
-juliaapolonio/MR_workflow was authored by [Julia Apolonio](https://github.com/juliaapolonio/) with [João Cavalcante](https://github.com/jvfe/)'s assistance, under Dr. [Vasiliki Lagou](https://scholar.google.co.uk/citations?user=bjj5KdwAAAAJ&hl=en)'s supervision.
+juliaapolonio/MR_workflow was authored by [Julia Apolonio](https://github.com/juliaapolonio/) with [João Cavalcante](https://github.com/jvfe/) and [Diego Coelho](https://github.com/diegomscoelho)'s assistance, under Dr. [Vasiliki Lagou](https://scholar.google.co.uk/citations?user=bjj5KdwAAAAJ&hl=en)'s supervision.
 
 
 ## Citations
