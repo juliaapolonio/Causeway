@@ -33,6 +33,7 @@ include { UNTAR } from "./modules/nf-core/untar/main.nf"
 include { UNTAR as UNTAR_REF } from "./modules/nf-core/untar/main.nf"
 include { MERGE } from "./modules/local/merge_file/merge_file.nf"
 include { R_LIFT } from "./modules/local/r_lift/r_lift.nf"
+include { RENDER_REPORT } from "./modules/local/render_report/main.nf"
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -164,4 +165,11 @@ workflow {
             GSMR_FILTER.out.results_gsmr,
             RESULT.out.final_results            
     )
+
+    RENDER_REPORT (
+        FINAL_REPORT.out.forest_rds,
+        FINAL_REPORT.out.volcano_plot,
+        RESULT.out.final_results
+    )
+
 }
