@@ -107,8 +107,15 @@ workflow {
             ref
             )
 
+    Channel
+        .fromPath("${params.ref}/*")
+        .filter { it.name.endsWith('.bim') } // Filter files ending with .bim
+        .set { bim_files }
+
+    bim_files.combine(combinations).set { coloc_combinations }
+    
     COLOC (
-            combinations
+            coloc_combinations
 	    )
 
     COLOC.out.merged_coloc

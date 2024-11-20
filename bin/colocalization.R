@@ -3,9 +3,14 @@ args <- commandArgs(trailingOnly = TRUE)
 
 qtl_path <- args[1]
 gwas_path <- args[2]
+ref_bim <- args[3]
 
 # Run colocalization
 library(coloc)
+library(dplyr)
+library(ggplot2)
+library(locuszoomr)
+library(cowplot)
 
 eqtl <- read.table(file=qtl_path, header=T, as.is=T); head(eqtl) 
 gwas <- read.table(file=gwas_path, header=T, as.is=T); head(gwas)
@@ -29,5 +34,49 @@ dev.off()
 
 # Write H3 and H4 and the causal SNP in a file
 causal_snp <- result[[2]][which(result[[2]][11]==max(result[[2]][11])),1]
-line <- paste(name, result[[1]][5], result[[1]][6], causal_snp, sep = "\t")
+
+h3 = result[[1]][5]
+h4 = result[[1]][6]
+
+line <- paste(name, h3, h4, causal_snp, sep = "\t")
 write(line,file=paste0(name,"_coloc.txt"))
+
+# Regional plot using locuszoom
+if (h4 >= 0.8){
+
+  bim <- vroom::vroom(ref_bim, col_names=c("chr", "SNP", "A", "pos", "B", "C"))[,c("chr", "SNP", "pos")]
+
+  print(colnames(result[["results"]]))
+  print(colnames(input))
+  print(colnames(bim))
+
+  result_coloc <- as.data.frame(result[["results"]])
+  pval <- input %>% select("SNP", "pgwas", "p_eqtl")
+
+  result_coloc <- inner_join(result_coloc, pval, by = c("snp"="SNP"))
+  result_coloc <- inner_join(result_coloc, bim, by = c("snp"="SNP"))
+  input_locuszoom <- subset(result_coloc, select = c("snp", "position", "pgwas", "p_eqtl", "chr"))
+  causal_snp <- result[[2]][which(result[[2]][11]==max(result[[2]][11])),1]
+
+  if (require(EnsDb.Hsapiens.v75)) {
+    loc_gwas <- locus(data = input_locuszoom, gene = name, flank = 1e6,
+                      ens_db = "EnsDb.Hsapiens.v75", chrom = "chr", pos = "position",
+                      p = "pgwas")
+    loc_gwas <- link_LD(loc_gwas, token = "5c4d1f5eeb21")
+    loc_qtl <- locus(data = input_locuszoom, gene = name, flank = 1e6,
+                    ens_db = "EnsDb.Hsapiens.v75", chrom = "chr", pos = "position",
+                    p = "p_eqtl")
+    loc_qtl <- link_LD(loc_qtl, token = "5c4d1f5eeb21")
+  }
+
+  g <- gg_genetracks(loc_gwas, highlight = name)
+  pg <- gg_scatter(loc_gwas, labels = causal_snp, nudge_x = 0.2, nudge_y = 0.2) + 
+    labs(title = "GWAS") 
+  pq <- gg_scatter(loc_qtl) +
+    labs(title = "QTL")
+
+  png(filename = paste0(name,"_regional.png"))
+  plot_grid(pq, pg, g, ncol = 1, rel_heights = c(2, 2, 1), align = "v")
+  dev.off()
+
+}
