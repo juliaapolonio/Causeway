@@ -49,11 +49,11 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE) # echo is 
 
 <!-- Include the CSS and set the logo -->
 
-```{r, echo=FALSE, eval = !isFALSE(params$report_logo)}
+```{r css, echo=FALSE, eval = !isFALSE(params$report_logo)}
 htmltools::includeCSS(params$css)
 ```
 
-```{r results="asis", eval = !isFALSE(params$report_logo), echo=FALSE}
+```{r header, results="asis", eval = !isFALSE(params$report_logo), echo=FALSE}
 cat(paste0("
 <style>
 #TOC {
@@ -65,7 +65,7 @@ cat(paste0("
 
 <!-- Output complete header -->
 
-```{r}
+```{r versioning}
 
 pipeline_version <- paste0("version ",params$workflow_manifest_version)
 report_title <- params$report_title
@@ -82,7 +82,7 @@ date: '`r format(Sys.Date(), "%B %d, %Y")`'
 
 <!-- Start with the actual report text -->
 
-```{r, results='asis'}
+```{r abstract, results='asis'}
 if ( !isFALSE(params$report_abstract) ) {
     report_abstract <- paste(readLines(params$report_abstract), collapse="\n")
     cat(report_abstract)
@@ -98,7 +98,7 @@ The bioinformatics analysis pipeline [juliaapolonio/MR_workflow](https://github.
 
 <!-- Section on Input -->
 
-```{r, results='asis'}
+```{r input, results='asis'}
 # if ( !isFALSE(params$input_samplesheet) ) {
 #     # samplesheet input
 #     cat("\nSequencing data was provided in the samplesheet file `", params$input_samplesheet, "` that is displayed below:", sep="")
@@ -116,13 +116,13 @@ The bioinformatics analysis pipeline [juliaapolonio/MR_workflow](https://github.
 
 ## Volcano Plot
 
-```{r, eval = !isFALSE(params$volcano_plot), out.width='100%', dpi=1200, fig.align='center'}
+```{r volcano, eval = !isFALSE(params$volcano_plot), out.width='100%', dpi=1200, fig.align='center'}
 knitr::include_graphics(params$volcano_plot)
 ```
 
 ## Forest Plot
 
-```{r, eval = !isFALSE(params$forest_plot), out.width='100%', dpi=1200, fig.align='center'}
+```{r forest, eval = !isFALSE(params$forest_plot), out.width='100%', dpi=1200, fig.align='center'}
 forest_plot_obj <- readRDS(file = params$forest_plot)
 
 plotly::ggplotly(forest_plot_obj, height = 1000)
@@ -130,7 +130,7 @@ plotly::ggplotly(forest_plot_obj, height = 1000)
 
 ## Full Results
 
-```{r, results='asis'}
+```{r full, results='asis'}
 final_results <- read.csv(file = params$final_results, header = TRUE)
 
 cols <- c("gene", "nsnp", "b_Inverse_variance_weighted", "pval_Inverse_variance_weighted", "gsmr_beta", "gsmr_pval", "causal_snp")
@@ -145,7 +145,7 @@ datatable(final_results, options = list(
 
 <!-- Subsection on nextflow and pipeline information -->
 
-```{r, results='asis'}
+```{r info, results='asis'}
 cat(paste0("
 # Nextflow and pipeline information
 
