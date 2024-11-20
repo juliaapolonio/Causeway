@@ -73,7 +73,7 @@ eqtlgen_result$psize <- (psize * 1) + 0.5
 # p-value filter to display results
 sign = eqtlgen_result[eqtlgen_result$p<0.0005,]
 
-ggplot(data=sign, aes(y=p1, x=estimate, xmin=estimate-stderr, xmax=estimate+stderr)) +
+forest <- ggplot(data=sign, aes(y=p1, x=estimate, xmin=estimate-stderr, xmax=estimate+stderr)) +
   geom_point(aes(size=psize)) +
   scale_size_continuous(range = c(0,2)) +
   geom_errorbarh(height=0.5) +
@@ -82,4 +82,7 @@ ggplot(data=sign, aes(y=p1, x=estimate, xmin=estimate-stderr, xmax=estimate+stde
   guides(size=FALSE) +
   theme_classic()
 
+saveRDS(forest, file = "forest_plot.rds")
+
+forest
 ggsave("forest.png",units="in",width=5, height=15, dpi=300)
