@@ -44,18 +44,13 @@ write(line,file=paste0(name,"_coloc.txt"))
 # Regional plot using locuszoom
 if (h4 >= 0.8){
 
-  bim <- vroom::vroom(ref_bim, col_names=c("chr", "SNP", "A", "pos", "B", "C"))[,c("chr", "SNP", "pos")]
-
-  print(colnames(result[["results"]]))
-  print(colnames(input))
-  print(colnames(bim))
-
+  bim <- vroom::vroom(ref_bim, col_names=c("chr", "SNP", "A", "position", "B", "C"))[,c("chr", "SNP", "position")]
   result_coloc <- as.data.frame(result[["results"]])
-  pval <- input %>% select("SNP", "pgwas", "p_eqtl")
-
-  result_coloc <- inner_join(result_coloc, pval, by = c("snp"="SNP"))
-  result_coloc <- inner_join(result_coloc, bim, by = c("snp"="SNP"))
-  input_locuszoom <- subset(result_coloc, select = c("snp", "position", "pgwas", "p_eqtl", "chr"))
+  pval <- input %>% select("SNP", "pgwas", "p_eqtl");
+  
+  result_coloc <- inner_join(result_coloc, pval, by = c("snp"="SNP"));
+  result_coloc <- inner_join(result_coloc, bim, by = c("snp"="SNP"));
+  input_locuszoom <- subset(result_coloc, select = c("snp", "position", "pgwas", "p_eqtl", "chr"));
   causal_snp <- result[[2]][which(result[[2]][11]==max(result[[2]][11])),1]
 
   if (require(EnsDb.Hsapiens.v75)) {
@@ -71,7 +66,7 @@ if (h4 >= 0.8){
 
   g <- gg_genetracks(loc_gwas, highlight = name)
   pg <- gg_scatter(loc_gwas, labels = causal_snp, nudge_x = 0.2, nudge_y = 0.2) + 
-    labs(title = "GWAS") 
+    labs(title = "GWAS")
   pq <- gg_scatter(loc_qtl) +
     labs(title = "QTL")
 
