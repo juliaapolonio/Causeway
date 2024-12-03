@@ -27,7 +27,7 @@ result <- coloc.abf(dataset1,dataset2)
 
 
 # Plot colocalization results
-name <- sub(".*/filtered/([^_]+)_.*", "\\1", qtl_path)
+name <- sub("_GSMR\\.txt$", "", qtl_path)
 png(filename = paste0(name,".png"))
 sensitivity(result,rule="H4 >= 0.8")
 dev.off()
@@ -44,13 +44,13 @@ write(line,file=paste0(name,"_coloc.txt"))
 # Regional plot using locuszoom
 if (h4 >= 0.8){
 
-  bim <- vroom::vroom(ref_bim, col_names=c("chr", "SNP", "A", "position", "B", "C"))[,c("chr", "SNP", "position")]
+  bim <- vroom::vroom(ref_bim, col_names=c("chr", "SNP", "A", "position", "B", "C"))[,c("chr", "SNP", "position")] %>% as.data.frame()
   result_coloc <- as.data.frame(result[["results"]])
-  pval <- input %>% select("SNP", "pgwas", "p_eqtl");
+  pval <- input %>% dplyr::select("SNP", "pgwas", "p_eqtl");
   
   result_coloc <- inner_join(result_coloc, pval, by = c("snp"="SNP"));
   result_coloc <- inner_join(result_coloc, bim, by = c("snp"="SNP"));
-  input_locuszoom <- subset(result_coloc, select = c("snp", "position", "pgwas", "p_eqtl", "chr"));
+  input_locuszoom <- subset(result_coloc, select = c("chr", "position", "snp", "pgwas", "p_eqtl"));
   causal_snp <- result[[2]][which(result[[2]][11]==max(result[[2]][11])),1]
 
   if (require(EnsDb.Hsapiens.v75)) {
@@ -69,6 +69,8 @@ if (h4 >= 0.8){
     labs(title = "GWAS")
   pq <- gg_scatter(loc_qtl) +
     labs(title = "QTL")
+
+  print("ESTA RODANDO ............................\n\n")
 
   png(filename = paste0(name,"_regional.png"))
   plot_grid(pq, pg, g, ncol = 1, rel_heights = c(2, 2, 1), align = "v")
