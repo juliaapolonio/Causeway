@@ -4,7 +4,7 @@ process UNTAR {
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/quay.io/biocontainers/wget:1.20.1' :
+        'https://depot.galaxyproject.org/singularity/wget:1.20.1' :
         'quay.io/biocontainers/wget:1.20.1' }"
 
     input:
