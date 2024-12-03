@@ -70,10 +70,8 @@ if (h4 >= 0.8){
   pq <- gg_scatter(loc_qtl) +
     labs(title = "QTL")
 
-  print("ESTA RODANDO ............................\n\n")
+  plot <- plot_grid(pq, pg, g, ncol = 1, rel_heights = c(2, 2, 1), align = "v")
 
-  png(filename = paste0(name,"_regional.png"))
-  plot_grid(pq, pg, g, ncol = 1, rel_heights = c(2, 2, 1), align = "v")
-  dev.off()
-
+  ggsave(paste0(name,"_regional.png"), plot, width = 3000, height = 2000, units = "px")
+  
 }
