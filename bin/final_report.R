@@ -31,13 +31,13 @@ volcano <- ggplot(mr_result, mapping=aes(x=bxy, y=-log10(Q), label = Exposure))+
   geom_point(aes(size=nsnp), colour="gray")+
   geom_point(data=mr_result[mr_result$is_candidate == T,], aes(x=bxy, y=-log10(Q), size=nsnp), colour="black")+
   geom_text_repel(data=mr_result[mr_result$is_candidate == T,], aes(label=Exposure, size=20))+
-  xlim(-0.05, 0.05)+
+  xlim(max(mr_result$bxy), min(mr_result$bxy))+
   theme_classic()
 
 saveRDS(volcano, file = "volcano_plot.rds")
 
 volcano
-ggsave("volcano.png",units="px",width=750, height=500, dpi=300)
+ggsave("volcano.png",units="in",width=15, height=10, dpi=300)
 
 ######################## FOREST PLOT ###############################
 
@@ -72,9 +72,10 @@ eqtlgen_result$psize <- (psize * 1) + 0.5
 
 
 # p-value filter to display results
-sign = eqtlgen_result[eqtlgen_result$p<0.0005,]
+eqtlgen_result <- eqtlgen_result %>%
+  inner_join(is_candidate[,c("gene", "is_candidate")], by = c("p1" = "gene"))
 
-forest <- ggplot(data=sign, aes(y=p1, x=estimate, xmin=estimate-stderr, xmax=estimate+stderr)) +
+forest <- ggplot(data=eqtlgen_result, aes(y=p1, x=estimate, xmin=estimate-stderr, xmax=estimate+stderr)) +
   geom_point(aes(size=psize)) +
   scale_size_continuous(range = c(0,2)) +
   geom_errorbarh(height=0.5) +
