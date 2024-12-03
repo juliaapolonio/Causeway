@@ -12,13 +12,17 @@ on:
 env:
   NXF_ANSI_LOG: false
 
+concurrency:
+  group: "${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}"
+  cancel-in-progress: true
+
 jobs:
   test:
     name: Run pipeline with test data
     runs-on: ubuntu-latest
     strategy:
-      profile: ["docker", "singularity"]
       matrix:
+        profile: ["docker", "singularity"]
         NXF_VER:
           - "23.10.0"
     steps:
