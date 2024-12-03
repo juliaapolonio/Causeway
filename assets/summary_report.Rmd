@@ -117,7 +117,9 @@ The bioinformatics analysis pipeline [juliaapolonio/MR_workflow](https://github.
 ## Volcano Plot
 
 ```{r volcano, eval = !isFALSE(params$volcano_plot), out.width='100%', dpi=1200, fig.align='center'}
-knitr::include_graphics(params$volcano_plot)
+volcano_plot_obj <- readRDS(file = params$volcano_plot)
+
+plotly::ggplotly(volcano_plot_obj, height = 1000)
 ```
 
 ## Forest Plot

@@ -12,5 +12,5 @@ workflow {
     ch_volcano_plot = Channel.fromPath("${params.volcano_plot}", checkIfExists: true)
     ch_final_results = Channel.fromPath("${params.final_results}", checkIfExists: true)
 
-    RENDER_REPORT(ch_report_template, ch_report_css, ch_report_logo, ch_forest_plot, ch_volcano_plot, ch_final_results)
+    RENDER_REPORT(ch_forest_plot, ch_volcano_plot, ch_final_results)
 }
