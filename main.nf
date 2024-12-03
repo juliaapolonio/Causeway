@@ -123,7 +123,7 @@ workflow {
          .set { concatenated_coloc }
 
     TWOSAMPLEMR.out.mrpresso
-        .collectFile(name: 'concatenated_mrpresso.txt', storeDir: "$params.outdir}/collected_files/")
+        .collectFile(name: 'concatenated_mrpresso.txt', storeDir: "${params.outdir}/collected_files/")
         .set { concatenated_mrpresso }
 
     PARSE_2SMR (
