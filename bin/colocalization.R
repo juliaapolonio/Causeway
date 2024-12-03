@@ -54,11 +54,11 @@ if (h4 >= 0.8){
   causal_snp <- result[[2]][which(result[[2]][11]==max(result[[2]][11])),1]
 
   if (require(EnsDb.Hsapiens.v75)) {
-    loc_gwas <- locus(data = input_locuszoom, gene = name, flank = 1e6,
+    loc_gwas <- locus(data = input_locuszoom, gene = name, flank = 1e5,
                       ens_db = "EnsDb.Hsapiens.v75", chrom = "chr", pos = "position",
                       p = "pgwas")
     loc_gwas <- link_LD(loc_gwas, token = "5c4d1f5eeb21")
-    loc_qtl <- locus(data = input_locuszoom, gene = name, flank = 1e6,
+    loc_qtl <- locus(data = input_locuszoom, gene = name, flank = 1e5,
                     ens_db = "EnsDb.Hsapiens.v75", chrom = "chr", pos = "position",
                     p = "p_eqtl")
     loc_qtl <- link_LD(loc_qtl, token = "5c4d1f5eeb21")
