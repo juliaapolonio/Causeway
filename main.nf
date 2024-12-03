@@ -175,7 +175,7 @@ workflow {
 
     RENDER_REPORT (
         FINAL_REPORT.out.forest_rds,
-        FINAL_REPORT.out.volcano_plot,
+        FINAL_REPORT.out.volcano_rds,
         RESULT.out.final_results
     )
 
