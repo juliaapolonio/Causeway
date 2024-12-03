@@ -14,6 +14,7 @@ process FINAL_REPORT {
 
   output:
     path("volcano.png")          , emit: volcano_plot
+    path("volcano_plot.rds")     , emit: volcano_rds
     path("forest.png")           , emit: forest_plot
     path("forest_plot.rds")      , emit: forest_rds
 

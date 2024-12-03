@@ -27,16 +27,17 @@ mr_result <- mr_result %>%
 mr_result <- mr_result %>% mutate("p"=as.numeric(p)) %>% filter(!is.na(p)) %>% filter(nsnp>3) %>% mutate(Q=p.adjust(p,method="BH"))
 
 # Make plot
-png("volcano.png", width = 750, height = 500)
-
-ggplot(mr_result, mapping=aes(x=bxy, y=-log10(Q), label = Exposure))+
+volcano <- ggplot(mr_result, mapping=aes(x=bxy, y=-log10(Q), label = Exposure))+
   geom_point(aes(size=nsnp), colour="gray")+
   geom_point(data=mr_result[mr_result$is_candidate == T,], aes(x=bxy, y=-log10(Q), size=nsnp), colour="black")+
   geom_text_repel(data=mr_result[mr_result$is_candidate == T,], aes(label=Exposure, size=20))+
   xlim(-0.05, 0.05)+
   theme_classic()
 
-dev.off()
+saveRDS(volcano, file = "volcano_plot.rds")
+
+volcano
+ggsave("volcano.png",units="px",width=750, height=500, dpi=300)
 
 ######################## FOREST PLOT ###############################
 
