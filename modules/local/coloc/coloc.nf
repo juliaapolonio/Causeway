@@ -12,8 +12,9 @@ process COLOC {
     tuple path(ref_bim), path(reads), val(meta), path(outcome)
 
   output:
-    path("*coloc*")     , emit: merged_coloc
-    path("*png")        , emit: plots
+    path("*_coloc.txt")      , emit: merged_coloc
+    path("*_coloc.png")      , emit: plots_coloc
+    path("*_regional.png")   , emit: plots_regional, optional: true
 
   when:
   task.ext.when == null || task.ext.when

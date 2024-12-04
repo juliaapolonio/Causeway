@@ -28,7 +28,7 @@ result <- coloc.abf(dataset1,dataset2)
 
 # Plot colocalization results
 name <- sub("_GSMR\\.txt$", "", qtl_path)
-png(filename = paste0(name,".png"))
+png(filename = paste0(name,"_coloc.png"))
 sensitivity(result,rule="H4 >= 0.8")
 dev.off()
 
