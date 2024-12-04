@@ -81,7 +81,7 @@ workflow {
         UNTAR_REF (
             zenodo_ref
         )
-        ref = UNTAR_REF.out.untar.map { it[1] } + "/ref"
+        ref = UNTAR_REF.out.untar.map { it[1] } + "/zenodo/ref"
     }
 
     data.combine(outcomes).set { og_combinations }
@@ -108,8 +108,7 @@ workflow {
             )
 
     Channel
-        .fromPath("${ref}/*")
-        .filter { it.name.endsWith('.bim') } // Filter files ending with .bim
+        .fromPath("${ref}/*.bim") // Filter files ending with .bim
         .set { bim_files }
 
     bim_files.combine(combinations).set { coloc_combinations }
