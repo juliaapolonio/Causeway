@@ -108,7 +108,7 @@ workflow {
             )
 
     Channel
-        .fromPath("${params.ref}/*")
+        .fromPath("${ref}/*")
         .filter { it.name.endsWith('.bim') } // Filter files ending with .bim
         .set { bim_files }
 
