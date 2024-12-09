@@ -43,7 +43,15 @@ include { RENDER_REPORT } from "./modules/local/render_report/main.nf"
 
 workflow {
 
-    ref = params.ref
+    if(params.ref){
+
+        ref = params.ref
+
+        Channel
+            .fromPath("${ref}/*.bim") // Filter files ending with .bim
+            .set { bim_files }
+    }
+
     if(params.run_eqtlgen) {
         PREPROCESS ()
         
@@ -81,7 +89,19 @@ workflow {
         UNTAR_REF (
             zenodo_ref
         )
-        ref = UNTAR_REF.out.untar.map { it[1] } + "/zenodo/ref"
+
+        ref = UNTAR_REF.out.untar.map { it[1] } + "/ref/"
+
+        bim_files = UNTAR_REF.out.untar
+            .map { meta, path -> 
+                def bim = file("${path}/ref/*.bim")
+                if (bim.isEmpty()) {
+                    error "No .bim file found in ${path}/ref/"
+                }
+                [meta, bim[0]]  // We're assuming there's only one .bim file
+            }
+            .map { it[1] }
+        
     }
 
     data.combine(outcomes).set { og_combinations }
@@ -106,10 +126,6 @@ workflow {
             combinations,
             ref
             )
-
-    Channel
-        .fromPath("${ref}/*.bim") // Filter files ending with .bim
-        .set { bim_files }
 
     bim_files.combine(combinations).set { coloc_combinations }
     
