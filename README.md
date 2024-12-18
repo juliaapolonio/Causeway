@@ -81,6 +81,7 @@ nextflow run juliaapolonio/MR_workflow \
 ## Databases and references
 
 MR_workflow needs 3 inputs to run:
+
 - A reference folder;
 - An Exposure sample sheet;
 - An Outcome file.
