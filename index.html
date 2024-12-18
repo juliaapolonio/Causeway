@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="A pipeline for Mendelian Randomization and sensitivity analysis with GWAS and QTL data" /><meta name="author" content="Julia Apolonio" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>CauseWay</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Home";
+        var mkdocs_page_input_path = "README.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".">
+          <img src="assets/logo.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Home</a>
+    <ul class="current">
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="usage/">Usage</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="output/">Output</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href=".">CauseWay</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Home</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/juliaapolonio/Causeway/edit/master/docs/README.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <p><a href="github.com/juliaapolonio/MR_workflow"><img src="assets/horizontal_logo.png" style="display: block; margin: 0 auto" height="298" /></a></p>
+<h2 id="overview">Overview</h2>
+<p><strong>juliaapolonio/MR_workflow</strong> is a pipeline for Mendelian Randomization and sensitivity analysis between a phenotype GWAS sumstats and QTL data.</p>
+<p>The pipeline is built using <a href="https://www.nextflow.io">Nextflow</a>, a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It uses Docker/Singularity containers making installation trivial and results highly reproducible. The <a href="https://www.nextflow.io/docs/latest/dsl2.html">Nextflow DSL2</a> implementation of this pipeline uses one container per process which makes it much easier to maintain and update software dependencies. 
+As a future improvement, when possible, the local modules will be submitted to and installed from <a href="https://github.com/nf-core/modules">nf-core/modules</a> in order to make them available to all nf-core pipelines, and to everyone within the Nextflow community!</p>
+<h2 id="pipeline-summary">Pipeline summary</h2>
+<p><img alt="pipeline summary" src="https://github.com/juliaapolonio/MR_workflow/blob/master/assets/causeway_diagram.png?raw=true" /></p>
+<h3 id="generalized-summary-mendelian-randomization-gsmr">Generalized Summary Mendelian Randomization (GSMR)</h3>
+<p>This is the main part of the process. It runs <a href="https://yanglab.westlake.edu.cn/software/gcta/#MendelianRandomisation">GSMR</a> for all Exposures vs the Outcome and returns number of IVs, betas, SEs and p-values for each exposure.</p>
+<h3 id="significant-gene-calculation-and-filtering">Significant gene calculation and filtering</h3>
+<p>With the results from GSMR, this module calculates the FDR p-value for each gene and filters by it and the number of IVs. This step will substantially decrease the number of tasks for the subsequent processes, and therefore, the execution time for the pipeline.</p>
+<h3 id="two-sample-mr-2smr">Two Sample MR (2SMR)</h3>
+<p><a href="https://mrcieu.github.io/TwoSampleMR/">Two Sample MR</a> is an R package that performs Mendelian Randomization and sensitivity analysis. The workflow is configured to run the following 2SMR tests:</p>
+<ul>
+<li>Inverse Variance Weighted regression;</li>
+<li>Simple Median regression;</li>
+<li>Simple mode regression;</li>
+<li>MR Egger regression;</li>
+<li>Heterogeneity Egger;</li>
+<li>Heterogeneity Inverse Variance Weighted;</li>
+<li>Steiger direction test;</li>
+<li>Pleiotropy Egger intercept;</li>
+<li>WIP: MR-PRESSO outlier analysis.</li>
+</ul>
+<h3 id="coloc">Coloc</h3>
+<p><a href="https://chr1swallace.github.io/coloc/">Coloc</a> is an R package for colocalization analysis. For this workflow, the information retrieved from Coloc are:</p>
+<ul>
+<li>H3;</li>
+<li>H4;</li>
+<li>Most probable causal variant.</li>
+</ul>
+<h3 id="generate-output-report">Generate output report</h3>
+<p>This set of processes collects all results from the analysis and merges them into a single .csv file and the results are filtered to a list of candidate drug targets. A markdown report is generated with the analysis highlights.</p>
+<h2 id="quick-start">Quick Start</h2>
+<ol>
+<li>
+<p>Install <a href="https://www.nextflow.io/docs/latest/getstarted.html#installation"><code>Nextflow</code></a> (<code>&gt;=22.10.1</code>)</p>
+</li>
+<li>
+<p>Install any of <a href="https://docs.docker.com/engine/installation/"><code>Docker</code></a>, <a href="https://www.sylabs.io/guides/3.0/user-guide/"><code>Singularity</code></a> (you can follow <a href="https://singularity-tutorial.github.io/01-installation/">this tutorial</a>), <a href="https://podman.io/"><code>Podman</code></a>, <a href="https://nersc.gitlab.io/development/shifter/how-to-use/"><code>Shifter</code></a> or <a href="https://hpc.github.io/charliecloud/"><code>Charliecloud</code></a> for full pipeline reproducibility <em>(you can use <a href="https://conda.io/miniconda.html"><code>Conda</code></a> both to install Nextflow itself and also to manage software within pipelines. Please only use it within pipelines as a last resort; see <a href="https://nf-co.re/usage/configuration#basic-configuration-profiles">docs</a>)</em>.</p>
+</li>
+<li>
+<p>Download the pipeline and test it on a minimal dataset with a single command:</p>
+</li>
+</ol>
+<pre><code class="language-bash">nextflow run juliaapolonio/MR_workflow -profile test,YOURPROFILE --outdir &lt;OUTDIR&gt;
+</code></pre>
+<p>This will set up <a href="https://eqtlgen.org/phase1.html">eQTLGen cis-eQTL</a> data and <a href="https://www.cog-genomics.org/plink/2.0/resources#1kg_phase3">1000 Genomes phase 3 dataset (GRCh37)</a> genotype <a href="https://www.cog-genomics.org/plink/2.0/formats#pgen">p-file</a> with <a href="https://r11.finngen.fi/pheno/F5_DEPRESSION_DYSTHYMIA">Finngen's Dysthymia or Depression sumstats</a>. 
+Note that some form of configuration will be needed so that Nextflow knows how to fetch the required software. This is usually done in the form of a config profile (<code>YOURPROFILE</code> in the example command above).</p>
+<blockquote>
+<ul>
+<li>The pipeline comes with config profiles called <code>docker</code>, <code>singularity</code>, <code>podman</code>, <code>shifter</code>, <code>charliecloud</code> and <code>conda</code> which instruct the pipeline to use the named tool for software management. For example, <code>-profile test,docker</code>.</li>
+<li>Please check <a href="https://github.com/nf-core/configs#documentation">nf-core/configs</a> to see if a custom config file to run nf-core pipelines already exists for your Institute. If so, you can simply use <code>-profile &lt;institute&gt;</code> in your command. This will enable either <code>docker</code> or <code>singularity</code> and set the appropriate execution settings for your local compute environment.</li>
+<li>If you are using <code>singularity</code>, please use the <a href="https://nf-co.re/tools/#downloading-pipelines-for-offline-use"><code>nf-core download</code></a> command to download images first, before running the pipeline. Setting the <a href="https://www.nextflow.io/docs/latest/singularity.html?#singularity-docker-hub"><code>NXF_SINGULARITY_CACHEDIR</code> or <code>singularity.cacheDir</code></a> Nextflow options enables you to store and re-use the images from a central location for future pipeline runs.</li>
+<li>If you are using <code>conda</code>, it is highly recommended to use the <a href="https://www.nextflow.io/docs/latest/conda.html"><code>NXF_CONDA_CACHEDIR</code> or <code>conda.cacheDir</code></a> settings to store the environments in a central location for future pipeline runs.</li>
+</ul>
+</blockquote>
+<ul>
+<li>Start running your own analysis!</li>
+</ul>
+<pre><code class="language-bash">nextflow run juliaapolonio/MR_workflow \
+  --exposure &lt;EXPOSURE_SAMPLESHEET&gt; \
+  --outdir &lt;OUTDIR&gt; \
+  --ref &lt;REFERENCE_FOLDER&gt; \
+  --outcome &lt;OUTCOME_SAMPLESHEET&gt; \
+  -profile &lt;docker/singularity/podman/shifter/charliecloud/conda/institute&gt;
+</code></pre>
+<h2 id="databases-and-references">Databases and references</h2>
+<p>MR_workflow needs 3 inputs to run:</p>
+<ul>
+<li>A reference folder;</li>
+<li>An Exposure sample sheet;</li>
+<li>An Outcome file.</li>
+</ul>
+<p>Both Exposure and Outcome files should follow the <a href="https://yanglab.westlake.edu.cn/software/gcta/#COJO">GCTA-Cojo format</a>. The Exposure file should be separated by one gene per file. The reference files should be in <a href="https://www.cog-genomics.org/plink/1.9/formats#bed">PLINK bfile</a> format.
+Neither the Exposure nor the Outcome files should contain multi-allelic SNPs; the frequency (freq) is the Minor Allele Frequency (MAF). If the Outcome has a small number of SNPs (less than 2M) it is expected that a substantial amount of the tasks will fail due to lack or small number of matching IVs between the Exposure and Outcome data. If the Outcome data has a large number of SNPs (more than 10M) it is still expected that around 10% of GSMR tasks will fail.</p>
+<h2 id="outputs">Outputs</h2>
+<p>If successfully run, the workflow should give three files as the main output:</p>
+<ul>
+<li><code>summary_report.html</code> is a html report with all analysis highlights;</li>
+<li><code>mr_merged_results.csv</code> should contain all analyses results for each GSMR significant gene;</li>
+<li><code>significant_genes.txt</code> should give a gene list of all genes that fill the criteria defined in its paper.</li>
+</ul>
+<p>Other intermediate outputs are stored in a folder with the corresponding process name.</p>
+<h2 id="credits">Credits</h2>
+<p>juliaapolonio/MR_workflow was authored by <a href="https://github.com/juliaapolonio/">Julia Apolonio</a> with <a href="https://github.com/jvfe/">João Cavalcante</a> and <a href="https://github.com/diegomscoelho">Diego Coelho</a>'s assistance, under Dr. <a href="https://scholar.google.co.uk/citations?user=bjj5KdwAAAAJ&amp;hl=en">Vasiliki Lagou</a>'s supervision.</p>
+<h2 id="citations">Citations</h2>
+<blockquote>
+<p><strong>Causal associations between risk factors and common diseases inferred from GWAS summary data.</strong></p>
+<p>Zhihong Zhu, Zhili Zheng, Futao Zhang, Yang Wu, Maciej Trzaskowski, Robert Maier, Matthew R. Robinson, John J. McGrath, Peter M. Visscher, Naomi R. Wray &amp; Jian Yang</p>
+<p><em>Nature Communications</em> 2018 Jan 15. doi: <a href="https://doi.org/10.1038/s41467-017-02317-2">10.1038/s41467-017-02317-2</a></p>
+<p><strong>The MR-Base platform supports systematic causal inference across the human phenome.</strong></p>
+<p>Hemani G, Zheng J, Elsworth B, Wade KH, Baird D, Haberland V, Laurin C, Burgess S, Bowden J, Langdon R, Tan VY, Yarmolinsky J, Shihab HA, Timpson NJ, Evans DM, Relton C, Martin RM, Davey Smith G, Gaunt TR, Haycock PC, The MR-Base Collaboration.</p>
+<p><em>eLife</em> 2018 Jul. doi: <a href="https://doi.org/10.7554/eLife.34408">10.7554/eLife.34408</a></p>
+<p><strong>Eliciting priors and relaxing the single causal variant assumption in colocalisation analyses</strong></p>
+<p>Chris Wallace</p>
+<p><em>PLOS Genetics</em> 2020 Apr 20. doi: <a href="https://doi.org/10.1371/journal.pgen.1008720">10.1371/journal.pgen.1008720</a></p>
+<p><strong>The nf-core framework for community-curated bioinformatics pipelines.</strong></p>
+<p>Philip Ewels, Alexander Peltzer, Sven Fillinger, Harshil Patel, Johannes Alneberg, Andreas Wilm, Maxime Ulysse Garcia, Paolo Di Tommaso &amp; Sven Nahnsen.</p>
+<p><em>Nat Biotechnol.</em> 2020 Feb 13. doi: <a href="https://dx.doi.org/10.1038/s41587-020-0439-x">10.1038/s41587-020-0439-x</a>.</p>
+</blockquote>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="usage/" class="btn btn-neutral float-right" title="Usage">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/juliaapolonio/Causeway/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+      <span><a href="usage/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = ".";</script>
+    <script src="js/theme_extra.js"></script>
+    <script src="js/theme.js"></script>
+      <script src="search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.6.1
+Build Date UTC : 2024-12-18 18:40:19.837538+00:00
+-->
