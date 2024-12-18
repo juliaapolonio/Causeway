@@ -9,5 +9,7 @@ repo_url: https://github.com/juliaapolonio/Causeway/
 theme:
   name: "readthedocs"
   logo: assets/logo.png
+extra_css:
+  - css/docs.css
 plugins:
   - search
