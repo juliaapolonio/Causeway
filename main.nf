@@ -104,6 +104,26 @@ workflow {
         
     }
 
+     if(!params.ref && params.run_replication){
+         zenodo_ref = [[id: 'zenodo'], file(params.zenodo_link)]
+         UNTAR_REF (
+             zenodo_ref
+         )
+ 
+         ref = UNTAR_REF.out.untar.map { it[1] } + "/ref/"
+ 
+         bim_files = UNTAR_REF.out.untar
+             .map { meta, path ->
+                 def bim = file("${path}/ref/*.bim")
+                 if (bim.isEmpty()) {
+                     error "No .bim file found in ${path}/ref/"
+                 }
+                 [meta, bim[0]]  // We're assuming there's only one .bim file
+             }
+             .map { it[1] }
+ 
+     }
+
     data.combine(outcomes).set { og_combinations }
     GCTA_GSMR (
       og_combinations,
