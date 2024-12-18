@@ -151,7 +151,11 @@ datatable(final_results, options = list(
                 // Construct the image path dynamically
                 var imgPath = '../coloc/' + data[1] + '_regional.png';
                 // Update the image source in the viewer
-                document.getElementById('image-display').src = imgPath;
+                document.getElementById('image-display-1').src = imgPath;
+
+                var imgPath2 = '../twosamplemr/' + data[1] + '_GSMR.txt_effect.png';
+                // Update the image source in the viewer
+                document.getElementById('image-display-2').src = imgPath2;
             }
             });
             "
@@ -160,8 +164,13 @@ datatable(final_results, options = list(
 ```
 
 <div style="text-align: center; margin-top: 20px;">
-  <img id="image-display" src=""
+  <img id="image-display-1" src=""
        alt="Click a gene to display its regional image" 
+       style="max-width: 100%; height: auto; border: 1px solid #ddd; padding: 5px;" />
+</div>
+
+<div style="text-align: center; margin-top: 20px;">
+  <img id="image-display-2" src=""
        style="max-width: 100%; height: auto; border: 1px solid #ddd; padding: 5px;" />
 </div>
 
