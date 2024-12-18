@@ -24,6 +24,7 @@ With the results from GSMR, this module calculates the FDR p-value for each gene
 ### Two Sample MR (2SMR)
 
 [Two Sample MR](https://mrcieu.github.io/TwoSampleMR/) is an R package that performs Mendelian Randomization and sensitivity analysis. The workflow is configured to run the following 2SMR tests:
+
 - Inverse Variance Weighted regression;
 - Simple Median regression;
 - Simple mode regression;
@@ -37,6 +38,7 @@ With the results from GSMR, this module calculates the FDR p-value for each gene
 ### Coloc
 
 [Coloc](https://chr1swallace.github.io/coloc/) is an R package for colocalization analysis. For this workflow, the information retrieved from Coloc are:
+
 - H3;
 - H4;
 - Most probable causal variant.
@@ -79,6 +81,7 @@ nextflow run juliaapolonio/MR_workflow \
 ## Databases and references
 
 MR_workflow needs 3 inputs to run:
+
 - A reference folder;
 - An Exposure sample sheet;
 - An Outcome file.

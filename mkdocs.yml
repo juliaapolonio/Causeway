@@ -1,0 +1,13 @@
+site_name: CauseWay
+site_description: A pipeline for Mendelian Randomization and sensitivity analysis with GWAS and QTL data
+site_author: Julia Apolonio
+nav:
+  - Home: README.md
+  - Usage: usage.md
+  - Output: output.md
+repo_url: https://github.com/juliaapolonio/Causeway/
+theme:
+  name: "readthedocs"
+  logo: assets/logo.png
+plugins:
+  - search
