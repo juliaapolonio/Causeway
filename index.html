@@ -81,15 +81,16 @@
               
                 <p><a href="github.com/juliaapolonio/MR_workflow"><img src="assets/horizontal_logo.png" style="display: block; margin: 0 auto" height="298" /></a></p>
 <h2 id="overview">Overview</h2>
-<p><strong>juliaapolonio/MR_workflow</strong> is a pipeline for Mendelian Randomization and sensitivity analysis between a phenotype GWAS sumstats and QTL data.</p>
-<p>The pipeline is built using <a href="https://www.nextflow.io">Nextflow</a>, a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It uses Docker/Singularity containers making installation trivial and results highly reproducible. The <a href="https://www.nextflow.io/docs/latest/dsl2.html">Nextflow DSL2</a> implementation of this pipeline uses one container per process which makes it much easier to maintain and update software dependencies. 
+<p><strong>juliaapolonio/Causeway</strong> is a pipeline for Mendelian Randomization and sensitivity analysis between a phenotype GWAS sumstats and QTL data.</p>
+<p>Previous MR tools have been used to analyze a small number of exposure-outcome combinations, but they are not optimized to perform with a large number of combinations such as in a genome-wide QTL screening. In this context, Causeway was built to enable MR + sensitivity analysis in a user-friendly and computationally effective way.
+The pipeline is built using <a href="https://www.nextflow.io">Nextflow</a>, a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It uses Docker/Singularity containers making installation trivial and results highly reproducible. The <a href="https://www.nextflow.io/docs/latest/dsl2.html">Nextflow DSL2</a> implementation of this pipeline uses one container per process which makes it much easier to maintain and update software dependencies. 
 As a future improvement, when possible, the local modules will be submitted to and installed from <a href="https://github.com/nf-core/modules">nf-core/modules</a> in order to make them available to all nf-core pipelines, and to everyone within the Nextflow community!</p>
 <h2 id="pipeline-summary">Pipeline summary</h2>
 <p><img alt="pipeline summary" src="https://github.com/juliaapolonio/MR_workflow/blob/master/assets/causeway_diagram.png?raw=true" /></p>
 <h3 id="generalized-summary-mendelian-randomization-gsmr">Generalized Summary Mendelian Randomization (GSMR)</h3>
-<p>This is the main part of the process. It runs <a href="https://yanglab.westlake.edu.cn/software/gcta/#MendelianRandomisation">GSMR</a> for all Exposures vs the Outcome and returns number of IVs, betas, SEs and p-values for each exposure.</p>
+<p>This is the main part of the process. It runs <a href="https://yanglab.westlake.edu.cn/software/gcta/#MendelianRandomisation">GSMR</a> for all Exposures vs the Outcomes and returns: number of IVs, betas, SEs and p-values for each exposure.</p>
 <h3 id="significant-gene-calculation-and-filtering">Significant gene calculation and filtering</h3>
-<p>With the results from GSMR, this module calculates the FDR p-value for each gene and filters by it and the number of IVs. This step will substantially decrease the number of tasks for the subsequent processes, and therefore, the execution time for the pipeline.</p>
+<p>With the results from GSMR, this module calculates the FDR p-value for each gene and filters by it and the number of IVs. This step will substantially decrease the number of tasks for the subsequent processes, and therefore, the execution time of the pipeline.</p>
 <h3 id="two-sample-mr-2smr">Two Sample MR (2SMR)</h3>
 <p><a href="https://mrcieu.github.io/TwoSampleMR/">Two Sample MR</a> is an R package that performs Mendelian Randomization and sensitivity analysis. The workflow is configured to run the following 2SMR tests:</p>
 <ul>
@@ -101,7 +102,7 @@ As a future improvement, when possible, the local modules will be submitted to a
 <li>Heterogeneity Inverse Variance Weighted;</li>
 <li>Steiger direction test;</li>
 <li>Pleiotropy Egger intercept;</li>
-<li>WIP: MR-PRESSO outlier analysis.</li>
+<li>MR-PRESSO outlier analysis.</li>
 </ul>
 <h3 id="coloc">Coloc</h3>
 <p><a href="https://chr1swallace.github.io/coloc/">Coloc</a> is an R package for colocalization analysis. For this workflow, the information retrieved from Coloc are:</p>
@@ -111,7 +112,7 @@ As a future improvement, when possible, the local modules will be submitted to a
 <li>Most probable causal variant.</li>
 </ul>
 <h3 id="generate-output-report">Generate output report</h3>
-<p>This set of processes collects all results from the analysis and merges them into a single .csv file and the results are filtered to a list of candidate drug targets. A markdown report is generated with the analysis highlights.</p>
+<p>This set of processes collects all results from the analysis and merges them into a single .csv file and the results are filtered to a list of candidate drug targets. An HTML report is generated with the analysis highlights.</p>
 <h2 id="quick-start">Quick Start</h2>
 <ol>
 <li>
@@ -124,9 +125,9 @@ As a future improvement, when possible, the local modules will be submitted to a
 <p>Download the pipeline and test it on a minimal dataset with a single command:</p>
 </li>
 </ol>
-<pre><code class="language-bash">nextflow run juliaapolonio/MR_workflow -profile test,YOURPROFILE --outdir &lt;OUTDIR&gt;
+<pre><code class="language-bash">nextflow run juliaapolonio/Causeway -profile test,YOURPROFILE --outdir &lt;OUTDIR&gt;
 </code></pre>
-<p>This will set up <a href="https://eqtlgen.org/phase1.html">eQTLGen cis-eQTL</a> data and <a href="https://www.cog-genomics.org/plink/2.0/resources#1kg_phase3">1000 Genomes phase 3 dataset (GRCh37)</a> genotype <a href="https://www.cog-genomics.org/plink/2.0/formats#pgen">p-file</a> with <a href="https://r11.finngen.fi/pheno/F5_DEPRESSION_DYSTHYMIA">Finngen's Dysthymia or Depression sumstats</a>. 
+<p>This will set up 4 genes from <a href="https://eqtlgen.org/phase1.html">eQTLGen cis-eQTL</a> data and <a href="https://www.cog-genomics.org/plink/2.0/resources#1kg_phase3">1000 Genomes phase 3 dataset (GRCh37)</a> genotype <a href="https://www.cog-genomics.org/plink/2.0/formats#pgen">p-file</a> with a custom <a href="https://r11.finngen.fi/pheno/F5_DEPRESSION_DYSTHYMIA">Strict Depression summary statistics</a> retrieved from MTAG. 
 Note that some form of configuration will be needed so that Nextflow knows how to fetch the required software. This is usually done in the form of a config profile (<code>YOURPROFILE</code> in the example command above).</p>
 <blockquote>
 <ul>
@@ -139,7 +140,7 @@ Note that some form of configuration will be needed so that Nextflow knows how t
 <ul>
 <li>Start running your own analysis!</li>
 </ul>
-<pre><code class="language-bash">nextflow run juliaapolonio/MR_workflow \
+<pre><code class="language-bash">nextflow run juliaapolonio/Causeway \
   --exposure &lt;EXPOSURE_SAMPLESHEET&gt; \
   --outdir &lt;OUTDIR&gt; \
   --ref &lt;REFERENCE_FOLDER&gt; \
@@ -164,7 +165,7 @@ Neither the Exposure nor the Outcome files should contain multi-allelic SNPs; th
 </ul>
 <p>Other intermediate outputs are stored in a folder with the corresponding process name.</p>
 <h2 id="credits">Credits</h2>
-<p>juliaapolonio/MR_workflow was authored by <a href="https://github.com/juliaapolonio/">Julia Apolonio</a> with <a href="https://github.com/jvfe/">João Cavalcante</a> and <a href="https://github.com/diegomscoelho">Diego Coelho</a>'s assistance, under Dr. <a href="https://scholar.google.co.uk/citations?user=bjj5KdwAAAAJ&amp;hl=en">Vasiliki Lagou</a>'s supervision.</p>
+<p>juliaapolonio/Causeway was authored by <a href="https://github.com/juliaapolonio/">Julia Apolonio</a> with <a href="https://github.com/jvfe/">João Cavalcante</a> and <a href="https://github.com/diegomscoelho">Diego Coelho</a>'s assistance, under Dr. <a href="https://scholar.google.co.uk/citations?user=bjj5KdwAAAAJ&amp;hl=en">Vasiliki Lagou</a>'s supervision.</p>
 <h2 id="citations">Citations</h2>
 <blockquote>
 <p><strong>Causal associations between risk factors and common diseases inferred from GWAS summary data.</strong></p>
@@ -232,5 +233,5 @@ Neither the Exposure nor the Outcome files should contain multi-allelic SNPs; th
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2024-12-18 18:56:57.483518+00:00
+Build Date UTC : 2024-12-19 11:54:08.373469+00:00
 -->
