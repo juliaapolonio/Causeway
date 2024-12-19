@@ -1,11 +1,111 @@
 # juliaapolonio/Causeway: Usage
 
+## Inputs
+
+Causeway needs 3 different inputs:
+
+### Exposure samplesheet
+
+It is a .csv file containing the exposure phenotype name (i.e. gene name in eQTL) and path to the summary statistics file. It must have a header `sample,path` and should have one line per phenotype. [Check the test data file](https://github.com/juliaapolonio/Causeway/blob/master/testdata/samplesheet_exposure.csv) for an example of an exposure samplesheet.
+
+### Outcome samplesheet
+
+It is a .csv file containing the outcome phenotype name (i.e. Type2Diabetes) and path to the summary statistics file. It must have a header `sample,path` and should have one line per phenotype. [Check the test data file](https://github.com/juliaapolonio/Causeway/blob/master/testdata/samplesheet_outcome.csv) for an example of an outcome samplesheet.
+
+### Reference folder
+
+Instead of downloading the reference files at each execution (around 2GB of data), you can have the files locally and point to the pipeline a folder where the data is. The reference must not be split by chromosome, and there should be 3 files with the following extensions: .bed, .bim and .fam. The folder should not be zipped as well. Check the [Zenodo reference file](https://zenodo.org/records/14024924/files/ref.tar?download=1) provided for an example of reference folder.
+
+Important note: the example file is a reference for European population. If your data is from another ancestry, provide your reference data accordingly. If you need assistance on how to convert p-files to the required format, check [setup_bfile.sh](https://github.com/juliaapolonio/Causeway/blob/master/bin/setup_bfile.sh) script.
+
+### Exposure and Outcome summary statistics format
+
+All exposure/outcome files should be in [GCTA-Cojo format](https://yanglab.westlake.edu.cn/software/gcta/#COJO), which is:
+
+`SNP A1 A2 freq b se p N`
+
+Columns are SNP (rsID identifier), the effect allele, the other allele, frequency of the effect allele, effect size, standard error, p-value and sample size. Important: "A1" needs to be the effect allele with "A2" being the other allele and "freq" should be the frequency of "A1".
+
+## Optional flags
+
+Some optional flags can be added to the pipeline execution:
+
+### run_eqtlgen
+
+This flag runs the analysis with [eQTLGen cis-eQTL](https://eqtlgen.org/phase1.html) data. It is still needed to supply the Outcomes samplesheet.
+
+### WIP: create_ref
+
+This flag builds the reference b-files from the [Plink 2 resource p-files](https://www.cog-genomics.org/plink/2.0/resources#1kg_phase3) links.
+
+### WIP: skip_reports
+
+This flag skip the report rendering module
+
+### WIP: skip_twosamplemr
+
+This flag skips the TwoSampleMR process and all subsequent steps
+
+### WIP: skip_coloc
+
+This flag skips the coloc process and all subsequent steps
+
+## System requirements
+
+To ensure smooth execution of the pipeline, the following system requirements must be met:
+
+### Hardware Requirements
+
+- CPU: Minimum of 4 cores (16 or more recommended for faster execution).
+
+- RAM: At least 6 GB (50GB or more recommended for large datasets).
+
+### Storage:
+
+- Minimum of 20 GB of available disk space for intermediate files and outputs.
+
+- Additional space may be required depending on the size of input datasets.
+
+### Operating System
+
+Supported Platforms:
+
+- Linux 
+
+- macOS 
+
+- Windows Subsystem for Linux 
+
+### Software Requirements
+
+- Pipeline Management: [`Nextflow`](https://www.nextflow.io/docs/latest/getstarted.html#installation) (`>=22.10.1`). Note: Nextflow requires Bash 3.2 (or later) and Java 17 (or later, up to 23)
+
+### Dependencies and Package Managers
+
+- You don´t need to install any dependencies apart from Nextflow. 
+
+- Install any of [`Docker`](https://docs.docker.com/engine/installation/), [`Singularity`](https://www.sylabs.io/guides/3.0/user-guide/) (you can follow [this tutorial](https://singularity-tutorial.github.io/01-installation/)), [`Podman`](https://podman.io/), [`Shifter`](https://nersc.gitlab.io/development/shifter/how-to-use/) or [`Charliecloud`](https://hpc.github.io/charliecloud/) for full pipeline reproducibility _(you can use [`Conda`](https://conda.io/miniconda.html) both to install Nextflow itself and also to manage software within pipelines. Please only use it within pipelines as a last resort; see [docs](https://nf-co.re/usage/configuration#basic-configuration-profiles))_.
+
+### Network Access
+
+Required for downloading dependencies and container images during setup.
+
+### Visualization Tools
+
+A software that renders HTML files (such as any web browser) for visualization of the summary report.
+
+### Testing Environment
+
+A small test dataset is included with the pipeline to verify the installation and setup. Ensure the system can successfully execute the test workflow before running large-scale analyses.
+
+## Some Nextflow and nf-core settings
+
 ### Updating the pipeline
 
 When you run the above command, Nextflow automatically pulls the pipeline code from GitHub and stores it as a cached version. When running the pipeline after this, it will always use the cached version if available - even if the pipeline has been updated since. To make sure that you're running the latest version of the pipeline, make sure that you regularly update the cached version of the pipeline:
 
 ```bash
-nextflow pull juliaapolonio/causeway
+nextflow pull juliaapolonio/Causeway
 ```
 
 ### Reproducibility
@@ -24,9 +124,7 @@ If you wish to share such profile (such as upload as supplementary material for 
 
 ## Core Nextflow arguments
 
-:::note
-These options are part of Nextflow and use a _single_ hyphen (pipeline parameters use a double-hyphen).
-:::
+note: These options are part of Nextflow and use a _single_ hyphen (pipeline parameters use a double-hyphen).
 
 ### `-profile`
 
@@ -34,9 +132,7 @@ Use this parameter to choose a configuration profile. Profiles can give configur
 
 Several generic profiles are bundled with the pipeline which instruct the pipeline to use software packaged using different methods (Docker, Singularity, Podman, Shifter, Charliecloud, Apptainer, Conda) - see below.
 
-:::info
-We highly recommend the use of Docker or Singularity containers for full pipeline reproducibility, however when this is not possible, Conda is also supported.
-:::
+info: We highly recommend the use of Docker or Singularity containers for full pipeline reproducibility, however when this is not possible, Conda is also supported.
 
 The pipeline also dynamically loads configurations from [https://github.com/nf-core/configs](https://github.com/nf-core/configs) when it runs, making multiple config profiles for various institutional clusters available at run time. For more information and to see if your system is available in these configs please see the [nf-core/configs documentation](https://github.com/nf-core/configs#documentation).
 
@@ -48,6 +144,9 @@ If `-profile` is not specified, the pipeline will run locally and expect all sof
 - `test`
   - A profile with a complete configuration for automated testing
   - Includes links to test data so needs no other parameters
+- `replicate`
+  - A profile with a complete configuration for replication of the application analysis
+  - Includes links to data so needs no other parameters
 - `docker`
   - A generic configuration profile to be used with [Docker](https://docker.com/)
 - `singularity`
