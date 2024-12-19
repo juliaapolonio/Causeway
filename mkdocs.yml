@@ -5,6 +5,7 @@ nav:
   - Home: README.md
   - Usage: usage.md
   - Output: output.md
+  - FAQ : faq.md
 repo_url: https://github.com/juliaapolonio/Causeway/
 theme:
   name: "readthedocs"
