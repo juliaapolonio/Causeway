@@ -3,8 +3,9 @@
 
 ## Overview
 
-**juliaapolonio/MR_workflow** is a pipeline for Mendelian Randomization and sensitivity analysis between a phenotype GWAS sumstats and QTL data.
+**juliaapolonio/Causeway** is a pipeline for Mendelian Randomization and sensitivity analysis between a phenotype GWAS sumstats and QTL data.
 
+Previous MR tools have been used to analyze a small number of exposure-outcome combinations, but they are not optimized to perform with a large number of combinations such as in a genome-wide QTL screening. In this context, Causeway was built to enable MR + sensitivity analysis in a user-friendly and computationally effective way.
 The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It uses Docker/Singularity containers making installation trivial and results highly reproducible. The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementation of this pipeline uses one container per process which makes it much easier to maintain and update software dependencies. 
 As a future improvement, when possible, the local modules will be submitted to and installed from [nf-core/modules](https://github.com/nf-core/modules) in order to make them available to all nf-core pipelines, and to everyone within the Nextflow community!
 
@@ -15,11 +16,11 @@ As a future improvement, when possible, the local modules will be submitted to a
 
 ### Generalized Summary Mendelian Randomization (GSMR)
 
-This is the main part of the process. It runs [GSMR](https://yanglab.westlake.edu.cn/software/gcta/#MendelianRandomisation) for all Exposures vs the Outcome and returns number of IVs, betas, SEs and p-values for each exposure.
+This is the main part of the process. It runs [GSMR](https://yanglab.westlake.edu.cn/software/gcta/#MendelianRandomisation) for all Exposures vs the Outcomes and returns: number of IVs, betas, SEs and p-values for each exposure.
 
 ### Significant gene calculation and filtering
 
-With the results from GSMR, this module calculates the FDR p-value for each gene and filters by it and the number of IVs. This step will substantially decrease the number of tasks for the subsequent processes, and therefore, the execution time for the pipeline.
+With the results from GSMR, this module calculates the FDR p-value for each gene and filters by it and the number of IVs. This step will substantially decrease the number of tasks for the subsequent processes, and therefore, the execution time of the pipeline.
 
 ### Two Sample MR (2SMR)
 
@@ -33,7 +34,7 @@ With the results from GSMR, this module calculates the FDR p-value for each gene
 - Heterogeneity Inverse Variance Weighted;
 - Steiger direction test;
 - Pleiotropy Egger intercept;
-- WIP: MR-PRESSO outlier analysis.
+- MR-PRESSO outlier analysis.
 
 ### Coloc
 
@@ -45,7 +46,7 @@ With the results from GSMR, this module calculates the FDR p-value for each gene
 
 ### Generate output report
 
-This set of processes collects all results from the analysis and merges them into a single .csv file and the results are filtered to a list of candidate drug targets. A markdown report is generated with the analysis highlights.
+This set of processes collects all results from the analysis and merges them into a single .csv file and the results are filtered to a list of candidate drug targets. An HTML report is generated with the analysis highlights.
 
 ## Quick Start
 
@@ -56,10 +57,10 @@ This set of processes collects all results from the analysis and merges them int
 3. Download the pipeline and test it on a minimal dataset with a single command:
 
 ```bash
-nextflow run juliaapolonio/MR_workflow -profile test,YOURPROFILE --outdir <OUTDIR>
+nextflow run juliaapolonio/Causeway -profile test,YOURPROFILE --outdir <OUTDIR>
 ```
 
-This will set up [eQTLGen cis-eQTL](https://eqtlgen.org/phase1.html) data and [1000 Genomes phase 3 dataset (GRCh37)](https://www.cog-genomics.org/plink/2.0/resources#1kg_phase3) genotype [p-file](https://www.cog-genomics.org/plink/2.0/formats#pgen) with [Finngen's Dysthymia or Depression sumstats](https://r11.finngen.fi/pheno/F5_DEPRESSION_DYSTHYMIA). 
+This will set up 4 genes from [eQTLGen cis-eQTL](https://eqtlgen.org/phase1.html) data and [1000 Genomes phase 3 dataset (GRCh37)](https://www.cog-genomics.org/plink/2.0/resources#1kg_phase3) genotype [p-file](https://www.cog-genomics.org/plink/2.0/formats#pgen) with a custom [Strict Depression summary statistics](https://r11.finngen.fi/pheno/F5_DEPRESSION_DYSTHYMIA) retrieved from MTAG. 
 Note that some form of configuration will be needed so that Nextflow knows how to fetch the required software. This is usually done in the form of a config profile (`YOURPROFILE` in the example command above).
 
 > - The pipeline comes with config profiles called `docker`, `singularity`, `podman`, `shifter`, `charliecloud` and `conda` which instruct the pipeline to use the named tool for software management. For example, `-profile test,docker`.
@@ -70,7 +71,7 @@ Note that some form of configuration will be needed so that Nextflow knows how t
 - Start running your own analysis!
 
 ```bash
-nextflow run juliaapolonio/MR_workflow \
+nextflow run juliaapolonio/Causeway \
   --exposure <EXPOSURE_SAMPLESHEET> \
   --outdir <OUTDIR> \
   --ref <REFERENCE_FOLDER> \
@@ -101,7 +102,7 @@ Other intermediate outputs are stored in a folder with the corresponding process
 
 ## Credits
 
-juliaapolonio/MR_workflow was authored by [Julia Apolonio](https://github.com/juliaapolonio/) with [João Cavalcante](https://github.com/jvfe/) and [Diego Coelho](https://github.com/diegomscoelho)'s assistance, under Dr. [Vasiliki Lagou](https://scholar.google.co.uk/citations?user=bjj5KdwAAAAJ&hl=en)'s supervision.
+juliaapolonio/Causeway was authored by [Julia Apolonio](https://github.com/juliaapolonio/) with [João Cavalcante](https://github.com/jvfe/) and [Diego Coelho](https://github.com/diegomscoelho)'s assistance, under Dr. [Vasiliki Lagou](https://scholar.google.co.uk/citations?user=bjj5KdwAAAAJ&hl=en)'s supervision.
 
 
 ## Citations
