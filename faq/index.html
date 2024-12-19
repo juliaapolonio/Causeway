@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Julia Apolonio" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Frequently Asked Questions - CauseWay</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../css/docs.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Frequently Asked Questions";
+        var mkdocs_page_input_path = "faq.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="..">
+          <img src="../assets/logo.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../usage/">Usage</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../output/">Output</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">CauseWay</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Frequently Asked Questions</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/juliaapolonio/Causeway/edit/master/docs/faq.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="frequently-asked-questions">Frequently Asked Questions</h1>
+<h2 id="general-questions">General Questions</h2>
+<h4 id="what-is-the-purpose-of-this-pipeline">What is the purpose of this pipeline?</h4>
+<p>Causeway was built to perform Mendelian Randomization and sensitivity analysis for a large number of exposure-outcome phenotype combinations.</p>
+<h4 id="who-is-the-intended-audience-for-this-pipeline">Who is the intended audience for this pipeline?</h4>
+<p>The intended audience of this pipeline are bioinformaticians and Epidemiologists/Geneticists familiarized with command-line tools.</p>
+<h4 id="what-input-data-formats-does-the-pipeline-accept">What input data formats does the pipeline accept?</h4>
+<p>It accepts only summary statistics in GCTA-Cojo format. For more info about inputs, check <a href="https://juliaapolonio.github.io/Causeway/usage/#inputs">the usage input section</a>.</p>
+<h4 id="what-are-the-key-outputs-of-the-pipeline">What are the key outputs of the pipeline?</h4>
+<p>The key output is a report with the main analysis findings. You can check more about this and the other outputs at <a href="https://juliaapolonio.github.io/Causeway/output/#introduction">the outputs section</a>.</p>
+<h2 id="installation-and-setup">Installation and Setup</h2>
+<h4 id="what-are-the-minimum-system-requirements-to-run-the-pipeline">What are the minimum system requirements to run the pipeline?</h4>
+<p>You will need a  system with a minimum of 4 cores, 8GB RAM, 20GB of storage and Linux, MacOS or Windows Subsystem for Linux (WSL) with Nextflow and a container manager installed. More information this can be found at <a href="https://juliaapolonio.github.io/Causeway/usage/#system-requirements">the system requirements section</a>.</p>
+<h4 id="do-i-need-to-install-any-specific-software-or-dependencies-before-running-the-pipeline">Do I need to install any specific software or dependencies before running the pipeline?</h4>
+<p>Apart from Nextflow and a container manager, you won't need to install any dependencies.</p>
+<h4 id="how-do-i-install-and-configure-the-pipeline-on-my-system">How do I install and configure the pipeline on my system?</h4>
+<p>You can download, install and set the pipeline with a single command: </p>
+<pre><code class="language-bash">nextflow pull juliaapolonio/Causeway
+</code></pre>
+<h2 id="usage">Usage</h2>
+<h4 id="how-do-i-execute-the-pipeline-with-example-input-data">How do I execute the pipeline with example input data?</h4>
+<p>To execute the pipeline with minimal test data, you will need this command:</p>
+<pre><code class="language-bash">nextflow run juliaapolonio/Causeway -profile test,YOURPROFILE --outdir &lt;OUTDIR&gt;
+</code></pre>
+<p>Where YOURPROFILE will be the container executor you have in your machine.</p>
+<h4 id="what-command-line-options-are-available-for-customizing-the-pipeline">What command-line options are available for customizing the pipeline?</h4>
+<p>A list of optional flags can be found in <a href="https://juliaapolonio.github.io/Causeway/usage/#optional-flags">the optional flags section</a>.</p>
+<h4 id="how-do-i-specify-a-custom-configuration-file">How do I specify a custom configuration file?</h4>
+<p>You can add your own configuration file as a profile in the <a href="https://github.com/juliaapolonio/Causeway/tree/master/conf">conf</a> directory. Alternatively, you can check if there is an existing configuration profile for your institution at <a href="https://github.com/nf-core/configs#documentation">nf-core/configs documentation</a>.</p>
+<h4 id="can-the-pipeline-be-run-on-a-cluster-or-cloud-environment">Can the pipeline be run on a cluster or cloud environment?</h4>
+<p>Yes, Nextflow can handle lots of cluster and cloud computing environments, such as Slurm, Google Cloud, AWS. More information about it can be found at <a href="https://www.nextflow.io/docs/latest/executor.html">Nextflow executor documentation</a>.</p>
+<h4 id="what-should-i-do-if-my-pipeline-run-is-interrupted">What should I do if my pipeline run is interrupted?</h4>
+<p>You can run it again with the same parameters and adding the -resume option, which will search for the execution cache.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h4 id="what-should-i-check-if-the-pipeline-fails-with-an-error">What should I check if the pipeline fails with an error?</h4>
+<h4 id="where-can-i-find-detailed-logs-of-the-pipeline-execution">Where can I find detailed logs of the pipeline execution?</h4>
+<p>For logs of the whole pipeline execution, you can check the <code>pipeline_info</code> folder on the output directory. If you want a log of specific task, you can check its hash in the work directory.
+See <a href="https://www.nextflow.io/docs/latest/reports.html#execution-log">Nextflow documentation on execution reports</a> for more details.</p>
+<h4 id="why-is-the-pipeline-taking-longer-than-expected-to-execute">Why is the pipeline taking longer than expected to execute?</h4>
+<p>This pipeline should take a while to finish if using large data (e.g. the application analysis took 58 hours using 50GB of RAM in a cluster). If it is abnormally longing to finish, you can check the input data of the tasks that are running.</p>
+<h4 id="what-does-it-mean-if-some-outputs-are-missing-from-the-results-directory">What does it mean if some outputs are missing from the results directory?</h4>
+<p>It probably means that a silent error happened. You can check the log files from the task to see if anything went wrong with the execution.</p>
+<h4 id="how-can-i-debug-issues-with-specific-modules-eg-rendering-reports-statistical-analyses">How can I debug issues with specific modules (e.g., rendering reports, statistical analyses)?</h4>
+<p>For each task, Nextflow has a hash that can be found in the work directory. Inside the task folder, you can check the <code>.command.log</code> or <code>.command.err</code> to see if there's anything unusual.</p>
+<h2 id="results-and-outputs">Results and Outputs</h2>
+<h4 id="what-do-the-output-files-in-each-directory-mean-and-how-do-i-interpret-the-metrics-and-visualizations-produced-by-the-pipeline">What do the output files in each directory mean and how do I interpret the metrics and visualizations produced by the pipeline?</h4>
+<p>A comprehensive description of the outputs and its interpretations can be found at the <a href="https://juliaapolonio.github.io/Causeway/output/">outputs section</a>.</p>
+<h4 id="what-should-i-do-if-i-suspect-a-bug-in-the-output-files">What should I do if I suspect a bug in the output files?</h4>
+<p>This tool is still under testing and bugs can happen. If you feel that something went wrong with the analysis, please leave an <a href="https://github.com/juliaapolonio/Causeway/issues">issue</a> with a reproductible example.</p>
+<h4 id="can-i-customize-the-report-generated-by-the-pipeline">Can I customize the report generated by the pipeline?</h4>
+<p>You can edit the report by directly editing the report module script.</p>
+<h2 id="customization">Customization</h2>
+<h4 id="can-i-add-new-analysis-modules-to-the-pipeline">Can I add new analysis modules to the pipeline?</h4>
+<p>Yes! Since the pipeline is all built based on modules, you can add your own analysis and integrate with the pipeline at <a href="https://github.com/juliaapolonio/Causeway/blob/master/main.nf">main.nf</a>, or use this pipeline as a subworkflow.</p>
+<h4 id="how-do-i-use-my-own-scripts-or-tools-within-the-pipeline">How do I use my own scripts or tools within the pipeline?</h4>
+<p>You will have to build a module and integrate it to the main workflow.</p>
+<h4 id="is-it-possible-to-change-the-default-parameter-values">Is it possible to change the default parameter values?</h4>
+<p>Not yet. Only by editing the source code for now.</p>
+<h4 id="how-can-i-incorporate-additional-datasets-into-the-analysis">How can I incorporate additional datasets into the analysis?</h4>
+<p>You can use any exposure/outcome/reference you want, it just need to follow the <a href="https://juliaapolonio.github.io/Causeway/usage/#inputs">usage input guidelines</a>.</p>
+<h2 id="performance-and-optimization">Performance and Optimization</h2>
+<h4 id="what-steps-can-i-take-to-optimize-pipeline-performance">What steps can I take to optimize pipeline performance?</h4>
+<p>Nextflow already does that to you! But if you feel that you need something more custom, you can change <a href="https://github.com/juliaapolonio/Causeway/blob/master/nextflow.config">nextflow.config</a> or <a href="https://github.com/juliaapolonio/Causeway/blob/master/conf/modules.config">conf/modules.config</a> files.</p>
+<h4 id="can-i-run-specific-modules-independently">Can I run specific modules independently?</h4>
+<p>Yes, you can use Causeway modules to build your own workflow.</p>
+<h2 id="support-and-contributions">Support and Contributions</h2>
+<h4 id="where-can-i-report-bugs-or-request-new-features">Where can I report bugs or request new features?</h4>
+<p>You can do these requests by raising an <a href="https://github.com/juliaapolonio/Causeway/issues">issue</a>.</p>
+<h4 id="is-there-a-user-community-or-forum-for-pipeline-related-discussions">Is there a user community or forum for pipeline-related discussions?</h4>
+<p>For Nextflow users, there's the <a href="https://nf-co.re/">nf-core community</a>! For this specific pipeline, there's no discussion forum.</p>
+<h4 id="how-can-i-contribute-to-the-development-of-the-pipeline">How can I contribute to the development of the pipeline?</h4>
+<p>If you want to make an improvement in the code, you can open a Pull Request at the <a href="https://github.com/juliaapolonio/Causeway">Causeway's repository</a>. If you want to be a continuous collaborator, please reach one of the authors.</p>
+<h4 id="is-there-a-citation-for-this-pipeline">Is there a citation for this pipeline?</h4>
+<p>The paper is in reviewing process but you can cite our BioarXiv preprint: </p>
+<h4 id="can-i-use-the-pipeline-for-commercial-purposes">Can I use the pipeline for commercial purposes?</h4>
+<p>Yes, Causeway's license allows the use for commercial purposes.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/juliaapolonio/Causeway/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
