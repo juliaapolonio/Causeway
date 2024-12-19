@@ -48,9 +48,59 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">Usage</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#updating-the-pipeline">Updating the pipeline</a>
+    <li class="toctree-l2"><a class="reference internal" href="#inputs">Inputs</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#exposure-samplesheet">Exposure samplesheet</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#reproducibility">Reproducibility</a>
+    <li class="toctree-l3"><a class="reference internal" href="#outcome-samplesheet">Outcome samplesheet</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#reference-folder">Reference folder</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exposure-and-outcome-summary-statistics-format">Exposure and Outcome summary statistics format</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#optional-flags">Optional flags</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#run_eqtlgen">run_eqtlgen</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#wip-create_ref">WIP: create_ref</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#wip-skip_reports">WIP: skip_reports</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#wip-skip_twosamplemr">WIP: skip_twosamplemr</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#wip-skip_coloc">WIP: skip_coloc</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#system-requirements">System requirements</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#hardware-requirements">Hardware Requirements</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#storage">Storage:</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#operating-system">Operating System</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#software-requirements">Software Requirements</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dependencies-and-package-managers">Dependencies and Package Managers</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#network-access">Network Access</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#visualization-tools">Visualization Tools</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#testing-environment">Testing Environment</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#some-nextflow-and-nf-core-settings">Some Nextflow and nf-core settings</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#updating-the-pipeline">Updating the pipeline</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#reproducibility">Reproducibility</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#core-nextflow-arguments">Core Nextflow arguments</a>
         <ul>
@@ -110,9 +160,87 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="juliaapoloniocauseway-usage">juliaapolonio/Causeway: Usage</h1>
+<h2 id="inputs">Inputs</h2>
+<p>Causeway needs 3 different inputs:</p>
+<h3 id="exposure-samplesheet">Exposure samplesheet</h3>
+<p>It is a .csv file containing the exposure phenotype name (i.e. gene name in eQTL) and path to the summary statistics file. It must have a header <code>sample,path</code> and should have one line per phenotype. <a href="https://github.com/juliaapolonio/Causeway/blob/master/testdata/samplesheet_exposure.csv">Check the test data file</a> for an example of an exposure samplesheet.</p>
+<h3 id="outcome-samplesheet">Outcome samplesheet</h3>
+<p>It is a .csv file containing the outcome phenotype name (i.e. Type2Diabetes) and path to the summary statistics file. It must have a header <code>sample,path</code> and should have one line per phenotype. <a href="https://github.com/juliaapolonio/Causeway/blob/master/testdata/samplesheet_outcome.csv">Check the test data file</a> for an example of an outcome samplesheet.</p>
+<h3 id="reference-folder">Reference folder</h3>
+<p>Instead of downloading the reference files at each execution (around 2GB of data), you can have the files locally and point to the pipeline a folder where the data is. The reference must not be split by chromosome, and there should be 3 files with the following extensions: .bed, .bim and .fam. The folder should not be zipped as well. Check the <a href="https://zenodo.org/records/14024924/files/ref.tar?download=1">Zenodo reference file</a> provided for an example of reference folder.</p>
+<p>Important note: the example file is a reference for European population. If your data is from another ancestry, provide your reference data accordingly. If you need assistance on how to convert p-files to the required format, check <a href="https://github.com/juliaapolonio/Causeway/blob/master/bin/setup_bfile.sh">setup_bfile.sh</a> script.</p>
+<h3 id="exposure-and-outcome-summary-statistics-format">Exposure and Outcome summary statistics format</h3>
+<p>All exposure/outcome files should be in <a href="https://yanglab.westlake.edu.cn/software/gcta/#COJO">GCTA-Cojo format</a>, which is:</p>
+<p><code>SNP A1 A2 freq b se p N</code></p>
+<p>Columns are SNP (rsID identifier), the effect allele, the other allele, frequency of the effect allele, effect size, standard error, p-value and sample size. Important: "A1" needs to be the effect allele with "A2" being the other allele and "freq" should be the frequency of "A1".</p>
+<h2 id="optional-flags">Optional flags</h2>
+<p>Some optional flags can be added to the pipeline execution:</p>
+<h3 id="run_eqtlgen">run_eqtlgen</h3>
+<p>This flag runs the analysis with <a href="https://eqtlgen.org/phase1.html">eQTLGen cis-eQTL</a> data. It is still needed to supply the Outcomes samplesheet.</p>
+<h3 id="wip-create_ref">WIP: create_ref</h3>
+<p>This flag builds the reference b-files from the <a href="https://www.cog-genomics.org/plink/2.0/resources#1kg_phase3">Plink 2 resource p-files</a> links.</p>
+<h3 id="wip-skip_reports">WIP: skip_reports</h3>
+<p>This flag skip the report rendering module</p>
+<h3 id="wip-skip_twosamplemr">WIP: skip_twosamplemr</h3>
+<p>This flag skips the TwoSampleMR process and all subsequent steps</p>
+<h3 id="wip-skip_coloc">WIP: skip_coloc</h3>
+<p>This flag skips the coloc process and all subsequent steps</p>
+<h2 id="system-requirements">System requirements</h2>
+<p>To ensure smooth execution of the pipeline, the following system requirements must be met:</p>
+<h3 id="hardware-requirements">Hardware Requirements</h3>
+<ul>
+<li>
+<p>CPU: Minimum of 4 cores (16 or more recommended for faster execution).</p>
+</li>
+<li>
+<p>RAM: At least 6 GB (50GB or more recommended for large datasets).</p>
+</li>
+</ul>
+<h3 id="storage">Storage:</h3>
+<ul>
+<li>
+<p>Minimum of 20 GB of available disk space for intermediate files and outputs.</p>
+</li>
+<li>
+<p>Additional space may be required depending on the size of input datasets.</p>
+</li>
+</ul>
+<h3 id="operating-system">Operating System</h3>
+<p>Supported Platforms:</p>
+<ul>
+<li>
+<p>Linux </p>
+</li>
+<li>
+<p>macOS </p>
+</li>
+<li>
+<p>Windows Subsystem for Linux </p>
+</li>
+</ul>
+<h3 id="software-requirements">Software Requirements</h3>
+<ul>
+<li>Pipeline Management: <a href="https://www.nextflow.io/docs/latest/getstarted.html#installation"><code>Nextflow</code></a> (<code>&gt;=22.10.1</code>). Note: Nextflow requires Bash 3.2 (or later) and Java 17 (or later, up to 23)</li>
+</ul>
+<h3 id="dependencies-and-package-managers">Dependencies and Package Managers</h3>
+<ul>
+<li>
+<p>You don´t need to install any dependencies apart from Nextflow. </p>
+</li>
+<li>
+<p>Install any of <a href="https://docs.docker.com/engine/installation/"><code>Docker</code></a>, <a href="https://www.sylabs.io/guides/3.0/user-guide/"><code>Singularity</code></a> (you can follow <a href="https://singularity-tutorial.github.io/01-installation/">this tutorial</a>), <a href="https://podman.io/"><code>Podman</code></a>, <a href="https://nersc.gitlab.io/development/shifter/how-to-use/"><code>Shifter</code></a> or <a href="https://hpc.github.io/charliecloud/"><code>Charliecloud</code></a> for full pipeline reproducibility <em>(you can use <a href="https://conda.io/miniconda.html"><code>Conda</code></a> both to install Nextflow itself and also to manage software within pipelines. Please only use it within pipelines as a last resort; see <a href="https://nf-co.re/usage/configuration#basic-configuration-profiles">docs</a>)</em>.</p>
+</li>
+</ul>
+<h3 id="network-access">Network Access</h3>
+<p>Required for downloading dependencies and container images during setup.</p>
+<h3 id="visualization-tools">Visualization Tools</h3>
+<p>A software that renders HTML files (such as any web browser) for visualization of the summary report.</p>
+<h3 id="testing-environment">Testing Environment</h3>
+<p>A small test dataset is included with the pipeline to verify the installation and setup. Ensure the system can successfully execute the test workflow before running large-scale analyses.</p>
+<h2 id="some-nextflow-and-nf-core-settings">Some Nextflow and nf-core settings</h2>
 <h3 id="updating-the-pipeline">Updating the pipeline</h3>
 <p>When you run the above command, Nextflow automatically pulls the pipeline code from GitHub and stores it as a cached version. When running the pipeline after this, it will always use the cached version if available - even if the pipeline has been updated since. To make sure that you're running the latest version of the pipeline, make sure that you regularly update the cached version of the pipeline:</p>
-<pre><code class="language-bash">nextflow pull juliaapolonio/causeway
+<pre><code class="language-bash">nextflow pull juliaapolonio/Causeway
 </code></pre>
 <h3 id="reproducibility">Reproducibility</h3>
 <p>It is a good idea to specify a pipeline version when running the pipeline on your data. This ensures that a specific version of the pipeline code and software are used when you run your pipeline. If you keep using the same tag, you'll be running the same version of the pipeline, even if there have been changes to the code since.</p>
@@ -123,15 +251,11 @@
 If you wish to share such profile (such as upload as supplementary material for academic publications), make sure to NOT include cluster specific paths to files, nor institutional specific profiles.
 :::</p>
 <h2 id="core-nextflow-arguments">Core Nextflow arguments</h2>
-<p>:::note
-These options are part of Nextflow and use a <em>single</em> hyphen (pipeline parameters use a double-hyphen).
-:::</p>
+<p>note: These options are part of Nextflow and use a <em>single</em> hyphen (pipeline parameters use a double-hyphen).</p>
 <h3 id="-profile"><code>-profile</code></h3>
 <p>Use this parameter to choose a configuration profile. Profiles can give configuration presets for different compute environments.</p>
 <p>Several generic profiles are bundled with the pipeline which instruct the pipeline to use software packaged using different methods (Docker, Singularity, Podman, Shifter, Charliecloud, Apptainer, Conda) - see below.</p>
-<p>:::info
-We highly recommend the use of Docker or Singularity containers for full pipeline reproducibility, however when this is not possible, Conda is also supported.
-:::</p>
+<p>info: We highly recommend the use of Docker or Singularity containers for full pipeline reproducibility, however when this is not possible, Conda is also supported.</p>
 <p>The pipeline also dynamically loads configurations from <a href="https://github.com/nf-core/configs">https://github.com/nf-core/configs</a> when it runs, making multiple config profiles for various institutional clusters available at run time. For more information and to see if your system is available in these configs please see the <a href="https://github.com/nf-core/configs#documentation">nf-core/configs documentation</a>.</p>
 <p>Note that multiple profiles can be loaded, for example: <code>-profile test,docker</code> - the order of arguments is important!
 They are loaded in sequence, so later profiles can overwrite earlier profiles.</p>
@@ -140,6 +264,9 @@ They are loaded in sequence, so later profiles can overwrite earlier profiles.</
 <li><code>test</code></li>
 <li>A profile with a complete configuration for automated testing</li>
 <li>Includes links to test data so needs no other parameters</li>
+<li><code>replicate</code></li>
+<li>A profile with a complete configuration for replication of the application analysis</li>
+<li>Includes links to data so needs no other parameters</li>
 <li><code>docker</code></li>
 <li>A generic configuration profile to be used with <a href="https://docker.com/">Docker</a></li>
 <li><code>singularity</code></li>
