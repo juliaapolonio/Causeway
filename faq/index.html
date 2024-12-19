@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Julia Apolonio" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Frequently Asked Questions - CauseWay</title>
+    <title>FAQ - CauseWay</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
@@ -13,7 +13,7 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Frequently Asked Questions";
+        var mkdocs_page_name = "FAQ";
         var mkdocs_page_input_path = "faq.md";
         var mkdocs_page_url = null;
       </script>
@@ -53,6 +53,106 @@
                 <li class="toctree-l1"><a class="reference internal" href="../output/">Output</a>
                 </li>
               </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">FAQ</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#general-questions">General Questions</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#what-is-the-purpose-of-this-pipeline">What is the purpose of this pipeline?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#who-is-the-intended-audience-for-this-pipeline">Who is the intended audience for this pipeline?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#what-input-data-formats-does-the-pipeline-accept">What input data formats does the pipeline accept?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#what-are-the-key-outputs-of-the-pipeline">What are the key outputs of the pipeline?</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#installation-and-setup">Installation and Setup</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#what-are-the-minimum-system-requirements-to-run-the-pipeline">What are the minimum system requirements to run the pipeline?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#do-i-need-to-install-any-specific-software-or-dependencies-before-running-the-pipeline">Do I need to install any specific software or dependencies before running the pipeline?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#how-do-i-install-and-configure-the-pipeline-on-my-system">How do I install and configure the pipeline on my system?</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#how-do-i-execute-the-pipeline-with-example-input-data">How do I execute the pipeline with example input data?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#what-command-line-options-are-available-for-customizing-the-pipeline">What command-line options are available for customizing the pipeline?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#how-do-i-specify-a-custom-configuration-file">How do I specify a custom configuration file?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#can-the-pipeline-be-run-on-a-cluster-or-cloud-environment">Can the pipeline be run on a cluster or cloud environment?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#what-should-i-do-if-my-pipeline-run-is-interrupted">What should I do if my pipeline run is interrupted?</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#what-should-i-check-if-the-pipeline-fails-with-an-error">What should I check if the pipeline fails with an error?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#where-can-i-find-detailed-logs-of-the-pipeline-execution">Where can I find detailed logs of the pipeline execution?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#why-is-the-pipeline-taking-longer-than-expected-to-execute">Why is the pipeline taking longer than expected to execute?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#what-does-it-mean-if-some-outputs-are-missing-from-the-results-directory">What does it mean if some outputs are missing from the results directory?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#how-can-i-debug-issues-with-specific-modules-eg-rendering-reports-statistical-analyses">How can I debug issues with specific modules (e.g., rendering reports, statistical analyses)?</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#results-and-outputs">Results and Outputs</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#what-do-the-output-files-in-each-directory-mean-and-how-do-i-interpret-the-metrics-and-visualizations-produced-by-the-pipeline">What do the output files in each directory mean and how do I interpret the metrics and visualizations produced by the pipeline?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#what-should-i-do-if-i-suspect-a-bug-in-the-output-files">What should I do if I suspect a bug in the output files?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#can-i-customize-the-report-generated-by-the-pipeline">Can I customize the report generated by the pipeline?</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#customization">Customization</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#can-i-add-new-analysis-modules-to-the-pipeline">Can I add new analysis modules to the pipeline?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#how-do-i-use-my-own-scripts-or-tools-within-the-pipeline">How do I use my own scripts or tools within the pipeline?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#is-it-possible-to-change-the-default-parameter-values">Is it possible to change the default parameter values?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#how-can-i-incorporate-additional-datasets-into-the-analysis">How can I incorporate additional datasets into the analysis?</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#performance-and-optimization">Performance and Optimization</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#what-steps-can-i-take-to-optimize-pipeline-performance">What steps can I take to optimize pipeline performance?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#can-i-run-specific-modules-independently">Can I run specific modules independently?</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#support-and-contributions">Support and Contributions</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#where-can-i-report-bugs-or-request-new-features">Where can I report bugs or request new features?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#is-there-a-user-community-or-forum-for-pipeline-related-discussions">Is there a user community or forum for pipeline-related discussions?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#how-can-i-contribute-to-the-development-of-the-pipeline">How can I contribute to the development of the pipeline?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#is-there-a-citation-for-this-pipeline">Is there a citation for this pipeline?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#can-i-use-the-pipeline-for-commercial-purposes">Can I use the pipeline for commercial purposes?</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
       </div>
     </div>
     </nav>
@@ -67,7 +167,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">Frequently Asked Questions</li>
+      <li class="breadcrumb-item active">FAQ</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/juliaapolonio/Causeway/edit/master/docs/faq.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
@@ -156,6 +256,9 @@ See <a href="https://www.nextflow.io/docs/latest/reports.html#execution-log">Nex
               
             </div>
           </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../output/" class="btn btn-neutral float-left" title="Output"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
 
   <hr/>
 
@@ -180,6 +283,8 @@ See <a href="https://www.nextflow.io/docs/latest/reports.html#execution-log">Nex
           <a href="https://github.com/juliaapolonio/Causeway/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
         </span>
     
+    
+      <span><a href="../output/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
   </span>
