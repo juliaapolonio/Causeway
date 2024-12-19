@@ -113,13 +113,15 @@
               
                 <h1 id="juliaapoloniocauseway-output">juliaapolonio/Causeway: Output</h1>
 <h2 id="introduction">Introduction</h2>
-<p>After running a Nextflow pipeline, all the results will be available in an output directory along the pipeline root that can be set using the <code>--outdir</code> flag. If no outdir is set, the folder will be named <code>null</code>. Inside the folder is expected that you have 6 more folders:
-- collected_files: This folder will contain the results of each analysis performed individually, such as heterogeneity test, metrics (TwoSampleMR regressions), Coloc etc.
-- coloc: This folder will contain all coloc outputs, that are for each GSMR-significant gene: a regional plot made with locuszoomr, a .txt file with H3, H4 and causal SNP, and another .png file with coloc's default plot.
-- final_report: This folder will contain the outputs of all results modules. A detailed explanation of these files, as well as how to interpret the metrics, will be presented in the next section.
-- GCTA_GSMR: This folder will contain GSMR's outputs: a .log file with GSMR's execution log; a .err file if the GSMR task fails for that phenotype; a .gsmr file with the analysis results; and a <code>gcta_error_genes.txt</code> file, that shows every phenotype that failed because of an insufficient number of IVs. 
-- pipeline_info: Nextflow-generated informations about the pipeline run, such as RAM and storage consumption and execution time. You can check more information on what you can do with this data in the <a href="https://www.nextflow.io/docs/latest/reports.html">Nextflow's documentation</a>
-- twosamplemr: This is the folder with most of the files. In a nutshell, it has the TwoSampleMR analysis results separated by phenotype; and the TwoSampleMR's scatter plot for all metrics.</p>
+<p>After running a Nextflow pipeline, all the results will be available in an output directory along the pipeline root that can be set using the <code>--outdir</code> flag. If no outdir is set, the folder will be named <code>null</code>. Inside the folder is expected that you have 6 more folders:</p>
+<ul>
+<li>collected_files: This folder will contain the results of each analysis performed individually, such as heterogeneity test, metrics (TwoSampleMR regressions), Coloc etc.</li>
+<li>coloc: This folder will contain all coloc outputs, that are for each GSMR-significant gene: a regional plot made with locuszoomr, a .txt file with H3, H4 and causal SNP, and another .png file with coloc's default plot.</li>
+<li>final_report: This folder will contain the outputs of all results modules. A detailed explanation of these files, as well as how to interpret the metrics, will be presented in the next section.</li>
+<li>GCTA_GSMR: This folder will contain GSMR's outputs: a .log file with GSMR's execution log; a .err file if the GSMR task fails for that phenotype; a .gsmr file with the analysis results; and a <code>gcta_error_genes.txt</code> file, that shows every phenotype that failed because of an insufficient number of IVs. </li>
+<li>pipeline_info: Nextflow-generated informations about the pipeline run, such as RAM and storage consumption and execution time. You can check more information on what you can do with this data in the <a href="https://www.nextflow.io/docs/latest/reports.html">Nextflow's documentation</a></li>
+<li>twosamplemr: This is the folder with most of the files. In a nutshell, it has the TwoSampleMR analysis results separated by phenotype; and the TwoSampleMR's scatter plot for all metrics.</li>
+</ul>
 <h2 id="final-report-folder">Final Report folder</h2>
 <p>This folder contains all merged result files:
 - Candidate gene list: a .txt file with all candidate effector phenotypes, separated by newline.
