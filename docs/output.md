@@ -3,6 +3,7 @@
 ## Introduction
 
 After running a Nextflow pipeline, all the results will be available in an output directory along the pipeline root that can be set using the `--outdir` flag. If no outdir is set, the folder will be named `null`. Inside the folder is expected that you have 6 more folders:
+
 - collected_files: This folder will contain the results of each analysis performed individually, such as heterogeneity test, metrics (TwoSampleMR regressions), Coloc etc.
 - coloc: This folder will contain all coloc outputs, that are for each GSMR-significant gene: a regional plot made with locuszoomr, a .txt file with H3, H4 and causal SNP, and another .png file with coloc's default plot.
 - final_report: This folder will contain the outputs of all results modules. A detailed explanation of these files, as well as how to interpret the metrics, will be presented in the next section.
