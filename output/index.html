@@ -60,27 +60,37 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#how-to-interpret-the-results">How to interpret the results</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#volcano-plot">Volcano plot</a>
+    <li class="toctree-l3"><a class="reference internal" href="#plots">Plots</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#volcano-plot">Volcano plot</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#forest-plot">Forest plot</a>
+    <li class="toctree-l4"><a class="reference internal" href="#forest-plot">Forest plot</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#regional-plot">Regional plot</a>
+    <li class="toctree-l4"><a class="reference internal" href="#regional-plot">Regional plot</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#scatter-plot">Scatter plot</a>
+    <li class="toctree-l4"><a class="reference internal" href="#scatter-plot">Scatter plot</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#gsmr-metrics">GSMR metrics</a>
+        </ul>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#twosamplemr-regression-metrics">TwoSampleMR regression metrics</a>
+    <li class="toctree-l3"><a class="reference internal" href="#data-in-final-results-file">Data in final results file</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#gsmr-metrics">GSMR metrics</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#twosamplemr-pleiotropy-metrics">TwoSampleMR pleiotropy metrics</a>
+    <li class="toctree-l4"><a class="reference internal" href="#twosamplemr-heterogeneity-metrics">TwoSampleMR heterogeneity metrics</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#twosamplemr-direction-metrics">TwoSampleMR direction metrics</a>
+    <li class="toctree-l4"><a class="reference internal" href="#twosamplemr-regression-metrics">TwoSampleMR regression metrics</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#twosamplemr-heterogeneity-metrics">TwoSampleMR heterogeneity metrics</a>
+    <li class="toctree-l4"><a class="reference internal" href="#twosamplemr-direction-metrics">TwoSampleMR direction metrics</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#twosamplemr-rsquared-metrics">TwoSampleMR rsquared metrics</a>
+    <li class="toctree-l4"><a class="reference internal" href="#coloc-metrics">Coloc metrics</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#coloc-metrics">Coloc metrics</a>
+    <li class="toctree-l4"><a class="reference internal" href="#twosamplemr-pleiotropy-metrics">TwoSampleMR pleiotropy metrics</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#twosamplemr-mrpresso-metrics">TwoSampleMR MRPRESSO metrics</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#other-metrics">Other metrics</a>
+    </li>
+        </ul>
     </li>
         </ul>
     </li>
@@ -145,19 +155,99 @@
 - summary report: an HTML report with the analysis highlights - an interactive volcano plot with candidates highlighted; an interactive forest plot with the candidates; and a table showing a brief of the metrics for each candidate, with the option to show the regional plot and MR scatter plot for each phenotype individually.</p>
 <h2 id="a-brief-of-the-summary-report">A brief of the summary report</h2>
 <p>Important note: for the proper renderization of the report, it must be kept along with the pipeline output folder. If moving the HTML report file, ensure to move all the output folder together.</p>
-<p><img alt="Navigating an example report" src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzFxdjhpOWVtM2ZweW9wNmVnNDlsYWxmeHF2MmdhczgzYjA5cDZyOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/VG0lzESd2o6CxwU7y4/giphy.gif" /></p>
+<p align="center">
+<img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzFxdjhpOWVtM2ZweW9wNmVnNDlsYWxmeHF2MmdhczgzYjA5cDZyOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/VG0lzESd2o6CxwU7y4/giphy.gif" width="500" />
+</p>
+
 <h2 id="how-to-interpret-the-results">How to interpret the results</h2>
+<h3 id="plots">Plots</h3>
 <h4 id="volcano-plot">Volcano plot</h4>
+<p>The x-axis represents the effect size of exposure on the outcome and  the Y-axis is showing the FDR-adjusted p-value. The circle size is proportional to the number of instrumental variables (IVs) used in GSMR analysis. The prioritized phenotypes are highlighted in black and have name labels.</p>
 <h4 id="forest-plot">Forest plot</h4>
+<p>The circle size represents the variance of the effect size, while the line size is the 95% confidence interval for the effect size. </p>
 <h4 id="regional-plot">Regional plot</h4>
+<p>This plot is generated using LocusZoom R package and shows regional plots of eQTL (upper) and outcome GWAS (lower) at a specific locus. The index variant in each plot is represented in purple and the colocalized variant is labeled with its rsID. The lowest part of the plot is a gene browser, with the target gene colored in red.</p>
 <h4 id="scatter-plot">Scatter plot</h4>
+<p>TwoSampleMR plot generated by Causeway showing the relationship of each IV effect on exposure against each IV effect on outcome across different MR regression methods. The error bars correspond to 95% confidence intervals for the effect size.</p>
+<h3 id="data-in-final-results-file">Data in final results file</h3>
 <h4 id="gsmr-metrics">GSMR metrics</h4>
-<h4 id="twosamplemr-regression-metrics">TwoSampleMR regression metrics</h4>
-<h4 id="twosamplemr-pleiotropy-metrics">TwoSampleMR pleiotropy metrics</h4>
-<h4 id="twosamplemr-direction-metrics">TwoSampleMR direction metrics</h4>
+<ul>
+<li>
+<p>gsmr_beta: effect size of GSMR analysis</p>
+</li>
+<li>
+<p>gsmr_se: Standard error of GSMR analysis</p>
+</li>
+<li>
+<p>gsmr_pval: P-value of GSMR analysis</p>
+</li>
+<li>
+<p>gsmr_nsnp: Number of IVs selected for GSMR analysis</p>
+</li>
+<li>
+<p>heidi_out: p-value for HEIDI-outlier filtering analysis</p>
+</li>
+</ul>
 <h4 id="twosamplemr-heterogeneity-metrics">TwoSampleMR heterogeneity metrics</h4>
-<h4 id="twosamplemr-rsquared-metrics">TwoSampleMR rsquared metrics</h4>
+<ul>
+<li>Q_MR_Egger: Cochran's Q statistic estimate using MR Egger method</li>
+<li>Q_Inverse_variance_weighted: Cochran's Q statistic estimate using Inverse Variance Weighted method</li>
+<li>Q_df_MR_Egger: heterogeneity degrees of freedom using MR Egger method</li>
+<li>Q_df_Inverse_variance_weighted: heterogeneity degrees of freedom using Inverse Variance Weighted method</li>
+<li>Q_pval_MR_Egger: Cochran's Q statistic P-value using MR Egger method</li>
+<li>Q_pval_Inverse_variance_weighted: Cochran's Q statistic P-value using Inverse Variance Weighted method</li>
+</ul>
+<h4 id="twosamplemr-regression-metrics">TwoSampleMR regression metrics</h4>
+<ul>
+<li>nsnp: Number of IVs selected for Two Sample MR analysis</li>
+<li>b_MR_Egger: Effect size of MR Egger regression</li>
+<li>b_Weighted_median: Effect size of Weighted median regression</li>
+<li>b_Inverse_variance_weighted: Effect size of Inverse Variance Weighted regression</li>
+<li>b_Simple_mode: Effect size of Simple mode regression</li>
+<li>b_Weighted_mode: Effect size of Weighted mode regression</li>
+<li>se_MR_Egger: Standard Error of MR Egger regression</li>
+<li>se_Weighted_median: Standard Error of Weighted median regression</li>
+<li>se_Inverse_variance_weighted: Standard Error of Inverse Variance Weighted regression</li>
+<li>se_Simple_mode: Standard Error of Simple mode regression</li>
+<li>se_Weighted_mode: Standard Error of Weighted mode regression</li>
+<li>pval_MR_Egger: P-value of MR Egger regression</li>
+<li>pval_Weighted_median: P-value of Weighted median regression</li>
+<li>pval_Inverse_variance_weighted: P-value of Inverse Variance Weighted regression</li>
+<li>pval_Simple_mode: P-value of Simple mode regression</li>
+<li>pval_Weighted_mode: P-value of Weighted mode regression</li>
+<li>adjp_MR_Egger: Adjusted P-value of MR Egger regression</li>
+<li>adjp_Weighted_median: Adjusted P-value of Weighted median regression</li>
+<li>adjp_Inverse_variance_weighted: Adjusted P-value of Inverse Variance Weighted regression</li>
+<li>adjp_Simple_mode: Adjusted P-value of Simple mode regression</li>
+<li>adjp_Weighted_mode: Adjusted P-value of Weighted mode regression</li>
+</ul>
+<h4 id="twosamplemr-direction-metrics">TwoSampleMR direction metrics</h4>
+<ul>
+<li>snp_r2.exposure: mean r-squared of exposure effect on IVs</li>
+<li>snp_r2.outcome: mean r-squared of outcome effect on IVs</li>
+<li>correct_causal_direction: logical value, if TRUE the correct causal direction is exposure -&gt; outcome</li>
+<li>steiger_pval: P-value of Steiger test</li>
+</ul>
 <h4 id="coloc-metrics">Coloc metrics</h4>
+<ul>
+<li>H3: H3 posterior probability of association with both traits but driven by different causal variants </li>
+<li>H4: H4 posterior probability of association with both traits driven by a shared causal variant</li>
+<li>causal_snp: most probable colocalized variant rsID</li>
+</ul>
+<h4 id="twosamplemr-pleiotropy-metrics">TwoSampleMR pleiotropy metrics</h4>
+<ul>
+<li>egger_intercept: intercept value of Egger regression</li>
+<li>se: Standard error of Egger regression</li>
+<li>pleiotropy_pval: P-value of Egger regression</li>
+</ul>
+<h4 id="twosamplemr-mrpresso-metrics">TwoSampleMR MRPRESSO metrics</h4>
+<ul>
+<li>mrpresso_pval: global p-value of MRPRESSO test</li>
+</ul>
+<h4 id="other-metrics">Other metrics</h4>
+<ul>
+<li>is_candidate: logical value, if phenotype passes all filtering criteria, value = TRUE</li>
+</ul>
               
             </div>
           </div><footer>
