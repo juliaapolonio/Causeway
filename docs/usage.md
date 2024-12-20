@@ -26,6 +26,19 @@ All exposure/outcome files should be in [GCTA-Cojo format](https://yanglab.westl
 
 Columns are SNP (rsID identifier), the effect allele, the other allele, frequency of the effect allele, effect size, standard error, p-value and sample size. Important: "A1" needs to be the effect allele with "A2" being the other allele and "freq" should be the frequency of "A1".
 
+## Replication of the paper analysis
+
+To replicate the analysis, download and untar [the data](linkplaceholder) inside the root of the pipeline. Then, use the following command:
+
+```bash
+nextflow run juliaapolonio/Causeway \
+  --exposure replicate_analysis/samplesheet_exposure.csv \
+  --outdir replication \
+  --ref replicate_analysis/tsmr_ref/ \
+  --outcome replicate_analysis/samplesheet_outcome.csv \
+  -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
+```
+
 ## Optional flags
 
 Some optional flags can be added to the pipeline execution:
@@ -144,9 +157,6 @@ If `-profile` is not specified, the pipeline will run locally and expect all sof
 - `test`
   - A profile with a complete configuration for automated testing
   - Includes links to test data so needs no other parameters
-- `replicate`
-  - A profile with a complete configuration for replication of the application analysis
-  - Includes links to data so needs no other parameters
 - `docker`
   - A generic configuration profile to be used with [Docker](https://docker.com/)
 - `singularity`
