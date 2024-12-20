@@ -98,7 +98,7 @@ If successfully run, the workflow should give three files as the main output:
 - `mr_merged_results.csv` should contain all analyses results for each GSMR significant gene;
 - `significant_genes.txt` should give a gene list of all genes that fill the criteria defined in its paper.
 
-Other intermediate outputs are stored in a folder with the corresponding process name.
+Other intermediate outputs are stored in a folder with the corresponding process name and are described in the [output section](https://juliaapolonio.github.io/Causeway/output/).
 
 ## Credits
 
