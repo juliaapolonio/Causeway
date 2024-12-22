@@ -32,10 +32,10 @@ To replicate the analysis, download and untar [the data](linkplaceholder) inside
 
 ```bash
 nextflow run juliaapolonio/Causeway \
-  --exposure replicate_analysis/samplesheet_exposure.csv \
+  --exposures replicate_analysis/samplesheet_exposure.csv \
   --outdir replication \
-  --ref replicate_analysis/tsmr_ref/ \
-  --outcome replicate_analysis/samplesheet_outcome.csv \
+  --ref ${pwd}/replicate_analysis/tsmr_ref/ \
+  --outcomes replicate_analysis/samplesheet_outcome.csv \
   -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
 ```
 
