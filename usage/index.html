@@ -182,10 +182,10 @@
 <h2 id="replication-of-the-paper-analysis">Replication of the paper analysis</h2>
 <p>To replicate the analysis, download and untar <a href="linkplaceholder">the data</a> inside the root of the pipeline. Then, use the following command:</p>
 <pre><code class="language-bash">nextflow run juliaapolonio/Causeway \
-  --exposure replicate_analysis/samplesheet_exposure.csv \
+  --exposures replicate_analysis/samplesheet_exposure.csv \
   --outdir replication \
-  --ref replicate_analysis/tsmr_ref/ \
-  --outcome replicate_analysis/samplesheet_outcome.csv \
+  --ref ${pwd}/replicate_analysis/tsmr_ref/ \
+  --outcomes replicate_analysis/samplesheet_outcome.csv \
   -profile &lt;docker/singularity/podman/shifter/charliecloud/conda/institute&gt;
 </code></pre>
 <h2 id="optional-flags">Optional flags</h2>
