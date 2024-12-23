@@ -184,7 +184,7 @@
 <pre><code class="language-bash">nextflow run juliaapolonio/Causeway \
   --exposures replicate_analysis/samplesheet_exposure.csv \
   --outdir replication \
-  --ref ${pwd}/replicate_analysis/tsmr_ref/ \
+  --ref $PWD/replicate_analysis/tsmr_ref/ \
   --outcomes replicate_analysis/samplesheet_outcome.csv \
   -profile &lt;docker/singularity/podman/shifter/charliecloud/conda/institute&gt;
 </code></pre>
