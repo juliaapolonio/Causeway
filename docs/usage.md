@@ -28,7 +28,7 @@ Columns are SNP (rsID identifier), the effect allele, the other allele, frequenc
 
 ## Replication of the paper analysis
 
-To replicate the analysis, download and untar [the data](linkplaceholder) inside the root of the pipeline. Then, use the following command:
+To replicate the analysis, download and untar [the data](https://zenodo.org/records/14547336/files/replicate_analysis.tar.gz?download=1) inside the root of the pipeline. Then, use the following command:
 
 ```bash
 nextflow run juliaapolonio/Causeway \
