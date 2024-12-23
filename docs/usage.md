@@ -34,7 +34,7 @@ To replicate the analysis, download and untar [the data](https://zenodo.org/reco
 nextflow run juliaapolonio/Causeway \
   --exposures replicate_analysis/samplesheet_exposure.csv \
   --outdir replication \
-  --ref ${pwd}/replicate_analysis/tsmr_ref/ \
+  --ref $PWD/replicate_analysis/tsmr_ref/ \
   --outcomes replicate_analysis/samplesheet_outcome.csv \
   -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
 ```
