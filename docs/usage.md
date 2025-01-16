@@ -26,6 +26,8 @@ All exposure/outcome files should be in [GCTA-Cojo format](https://yanglab.westl
 
 Columns are SNP (rsID identifier), the effect allele, the other allele, frequency of the effect allele, effect size, standard error, p-value and sample size. Important: "A1" needs to be the effect allele with "A2" being the other allele and "freq" should be the frequency of "A1".
 
+**All exposure and outcome files must be gzipped (.gz extension format)**
+
 ## Replication of the paper analysis
 
 To replicate the analysis, download and untar [the data](https://zenodo.org/records/14547336/files/replicate_analysis.tar.gz?download=1) inside the root of the pipeline. Then, use the following command:
