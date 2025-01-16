@@ -179,6 +179,7 @@
 <p>All exposure/outcome files should be in <a href="https://yanglab.westlake.edu.cn/software/gcta/#COJO">GCTA-Cojo format</a>, which is:</p>
 <p><code>SNP A1 A2 freq b se p N</code></p>
 <p>Columns are SNP (rsID identifier), the effect allele, the other allele, frequency of the effect allele, effect size, standard error, p-value and sample size. Important: "A1" needs to be the effect allele with "A2" being the other allele and "freq" should be the frequency of "A1".</p>
+<p><strong>All exposure and outcome files must be gzipped (.gz extension format)</strong></p>
 <h2 id="replication-of-the-paper-analysis">Replication of the paper analysis</h2>
 <p>To replicate the analysis, download and untar <a href="https://zenodo.org/records/14547336/files/replicate_analysis.tar.gz?download=1">the data</a> inside the root of the pipeline. Then, use the following command:</p>
 <pre><code class="language-bash">nextflow run juliaapolonio/Causeway \
