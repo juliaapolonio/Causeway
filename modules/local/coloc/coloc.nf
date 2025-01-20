@@ -5,7 +5,7 @@ process COLOC {
 
   label 'process_medium'
 
-  container "${ workflow.containerEngine == 'singularity' ? 'docker://juliaapolonio/coloc:5.2.3':
+  container "${ workflow.containerEngine == 'singularity' ? 'docker://juliaapolonio/coloc:5.2.3dev':
             'docker.io/juliaapolonio/coloc:5.2.3dev' }"
 
   input:
