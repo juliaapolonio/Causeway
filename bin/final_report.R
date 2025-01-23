@@ -52,7 +52,7 @@ eqtlgen_result=eqtlgen_result %>% filter(Q<0.05)
 
 colnames(eqtlgen_result) <- c("p1", "p2", "estimate", "stderr", "p", "NSNPs")
 
-eqtlgen_result$p1 <- stringr::str_remove(eqtlgen_result$p1, "\\_GSMR")
+#eqtlgen_result$p1 <- stringr::str_remove(eqtlgen_result$p1, "\\_GSMR")
 
 eqtlgen_result$upper <- eqtlgen_result$estimate+eqtlgen_result$stderr
 eqtlgen_result$lower <- eqtlgen_result$estimate-eqtlgen_result$stderr

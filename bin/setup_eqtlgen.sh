@@ -32,7 +32,7 @@
  awk 'NR==1{print} NR>1{print $0, $11=$5^2/$6^2}' ciseQTLGen_freq_GSMR_b37.txt  > fstats_tmp.txt
 
  # Filter by f-stats
- awk 'NR==1{print} NR>1&&$11>10' fstats_tmp.txt  > eqtlgen_fstats.txt 
+ awk 'NR==1{print} NR>1&&$11<10' fstats_tmp.txt  > eqtlgen_fstats.txt 
 
  rm *tmp*
 

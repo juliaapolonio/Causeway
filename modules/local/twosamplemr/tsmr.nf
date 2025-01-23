@@ -11,6 +11,7 @@ process TWOSAMPLEMR {
   input:
     tuple path(exposure), val(meta), path(outcome)
     path(reference)
+    val(p_clump)
 
   output:
     path("*pleiotropy.txt")              , emit: pleiotropy
@@ -29,6 +30,7 @@ process TWOSAMPLEMR {
   run_twosamplemr.R \\
     $exposure \\
     $outcome \\
-    $reference
+    $reference \\
+    $p_clump
   """
 }
