@@ -43,6 +43,10 @@ include { RENDER_REPORT } from "./modules/local/render_report/main.nf"
 
 workflow {
 
+    ch_report_template = Channel.fromPath("${params.report_template}", checkIfExists: true)
+    ch_report_css = Channel.fromPath("${params.report_css}", checkIfExists: true)
+    ch_report_logo = Channel.fromPath("${params.report_logo}", checkIfExists: true)
+
     if(params.ref){
 
         ref = params.ref
@@ -197,7 +201,7 @@ workflow {
             RESULT.out.final_results            
     )
 
-    RENDER_REPORT (
+    RENDER_REPORT(ch_report_template, ch_report_css, ch_report_logo,
         FINAL_REPORT.out.forest_rds,
         FINAL_REPORT.out.volcano_rds,
         RESULT.out.final_results
