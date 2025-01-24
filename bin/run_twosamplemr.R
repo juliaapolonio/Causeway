@@ -127,8 +127,17 @@ write.table(
 )
 
 # Run MR-PRESSO and get global p-value
-mrpresso <- run_mr_presso(dat, NbDistribution = 1000, SignifThreshold = 0.05)
-mrpresso_pval <- mrpresso[[1]][["MR-PRESSO results"]]["Global Test"]$`Global Test`$Pvalue
+mrpresso_pval <- NA
+# Adding tryCatch to deal with errors on MR-PRESSO
+tryCatch({
+  mrpresso <- run_mr_presso(dat, NbDistribution = 1000, SignifThreshold = 0.05)
+  
+  mrpresso_pval <- mrpresso[[1]][["MR-PRESSO results"]]["Global Test"]$`Global Test`$Pvalue
+  
+}, error = function(e) {
+  message("Error when executing MR-PRESSO: ", e$message)
+})
+
 write(c(prefix_exp, mrpresso_pval), ncolumns = 2, file = paste0(prefix_exp, "_mrpresso.txt"))
 
 # Effect plot
