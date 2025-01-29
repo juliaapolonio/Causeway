@@ -54,17 +54,19 @@ if (h4 >= 0.8){
   causal_snp <- result[[2]][which(result[[2]][11]==max(result[[2]][11])),1]
 
   if (require(EnsDb.Hsapiens.v75)) {
-    loc_gwas <- locus(data = input_locuszoom, flank = 1e5,
+    loc_gwas <- locus(data = input_locuszoom, , seqname = input_locuszoom$chr[1], 
+                      xrange = c(input_locuszoom$position[which(input_locuszoom$snp == causal_snp)] - 1e5, input_locuszoom$position[which(input_locuszoom$snp == causal_snp)] + 1e5),
                       ens_db = "EnsDb.Hsapiens.v75", chrom = "chr", pos = "position",
                       p = "pgwas")
     loc_gwas <- link_LD(loc_gwas, token = "5c4d1f5eeb21")
-    loc_qtl <- locus(data = input_locuszoom, flank = 1e5,
-                    ens_db = "EnsDb.Hsapiens.v75", chrom = "chr", pos = "position",
-                    p = "p_eqtl")
+    loc_qtl <- locus(data = input_locuszoom, , seqname = input_locuszoom$chr[1], 
+                     xrange = c(input_locuszoom$position[which(input_locuszoom$snp == causal_snp)] - 1e5, input_locuszoom$position[which(input_locuszoom$snp == causal_snp)] + 1e5),
+                     ens_db = "EnsDb.Hsapiens.v75", chrom = "chr", pos = "position",
+                     p = "p_eqtl")
     loc_qtl <- link_LD(loc_qtl, token = "5c4d1f5eeb21")
   }
 
-  g <- gg_genetracks(loc_gwas)
+  g <- gg_genetracks(loc_gwas, highlight = name)
   pg <- gg_scatter(loc_gwas, labels = causal_snp, nudge_x = 0.2, nudge_y = 0.2) + 
     labs(title = "GWAS")
   pq <- gg_scatter(loc_qtl) +
