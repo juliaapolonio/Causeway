@@ -94,7 +94,13 @@ write.table(
 
 # Run heterogeneity test and remove spaces from method name
 hetero <- mr_heterogeneity(dat)
-hetero$method <- gsub("\\s+", "_", hetero$method)
+if(length(hetero) == 0) {
+  hetero <- data.frame(c(prefix_exp, prefix_exp), c("MR_Egger", "Inverse_variance_weighted"), c(NA, NA), c(NA, NA), c(NA, NA))
+  colnames(hetero) <- c("exposure", "method", "Q", "Q_df", "Q_pval")
+} else {
+  hetero$method <- gsub("\\s+", "_", hetero$method)
+}
+
 write.table(
   hetero[,c("exposure", "method", "Q", "Q_df", "Q_pval")],
   file = paste0(prefix_exp, "_heterogeneity.txt"),
@@ -117,6 +123,12 @@ write.table(
 
 # Run pleiotropy test
 pleiotropy <- mr_pleiotropy_test(dat)
+
+if(length(pleiotropy) == 0) {
+  pleiotropy <- data.frame(prefix_exp, NA, NA, NA)
+  colnames(pleiotropy) <- c("exposure", "egger_intercept", "se", "pval")
+} 
+
 write.table(
   pleiotropy[,c("exposure", "egger_intercept", "se", "pval")],
   file = paste0(prefix_exp, "_pleiotropy.txt"),
