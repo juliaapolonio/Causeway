@@ -15,7 +15,7 @@ mkdir $destination_dir
 # Iterate over each gene name in the list
 while IFS= read -r gene_name; do
     # Search for files matching the gene name pattern in the source directory
-    matching_files=(./*"${gene_name}"*)
+    matching_files=(./*"${gene_name}"*gz)
     
     # Move matching files to the destination directory
     for file in "${matching_files[@]}"; do
