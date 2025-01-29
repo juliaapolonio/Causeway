@@ -25,9 +25,10 @@ process RESULT {
   task.ext.when == null || task.ext.when
 
   script:
+  coloc_val = coloc_path ? coloc_path : 10
   """
   mr_final_results.R \\
-    $coloc_path \\
+    $coloc_val \\
     $gsmr_path \\
     $tsmr_hetero_path \\
     $tsmr_steiger_path \\

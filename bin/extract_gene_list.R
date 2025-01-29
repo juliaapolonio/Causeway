@@ -19,9 +19,6 @@ eqtlgen_result=eqtlgen_result %>% filter(nsnp>=3)
 eqtlgen_result=eqtlgen_result %>% mutate(Q=p.adjust(p,method="BH"))
 eqtlgen_result=eqtlgen_result %>% filter(Q<0.05)
 
-# Correct gene name
-eqtlgen_result$Exposure <- sapply(eqtlgen_result$Exposure, function(x) strsplit(x, "_")[[1]][1])
-
 # Save file with significant genes info
 readr::write_tsv(eqtlgen_result, "filtered_genes.txt")
 

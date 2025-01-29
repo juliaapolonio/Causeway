@@ -9,9 +9,9 @@ process GCTA_GSMR {
     path(reference)
 
     output:
-    path "${exposure.getBaseName(2)}_${outcome.baseName}.log", emit: gsmr_log
-    path "${exposure.getBaseName(2)}_${outcome.baseName}.gsmr", emit: gsmr_res, optional: true
-    path "${exposure.getBaseName(2)}_${outcome.baseName}.err", emit: gsmr_err, optional: true
+    path "${meta.id}_${meta2.id}.log", emit: gsmr_log
+    path "${meta.id}_${meta2.id}.gsmr", emit: gsmr_res, optional: true
+    path "${meta.id}_${meta2.id}.err", emit: gsmr_err, optional: true
 
     script:
     """
@@ -22,25 +22,25 @@ process GCTA_GSMR {
         gunzip "$exposure"
     fi
 
-    echo  "${exposure.getBaseName(2)} ${exposure.getBaseName(1)}" > ${exposure.getBaseName(2)}.input.txt
-    echo "${outcome.baseName} $outcome" > outcome.txt
+    echo "${meta.id} ${exposure.getBaseName(1)}" > ${meta.id}.input.txt
+    echo "${meta2.id} $outcome" > outcome.txt
     echo "$reference/1KG_phase3_EUR" > reference.txt
 
     gcta  \
     --mbfile reference.txt  \
-    --gsmr-file ${exposure.getBaseName(2)}.input.txt outcome.txt \
+    --gsmr-file ${meta.id}.input.txt outcome.txt \
     --gsmr-direction 0   \
     --gsmr-snp-min 1   \
     --diff-freq 0.5   \
     --gwas-thresh 5e-8   \
     --clump-r2 0.05   \
     --heidi-thresh 0.01   \
-    --out "${exposure.getBaseName(2)}_${outcome.baseName}"
+    --out "${meta.id}_${meta2.id}"
 
-    if [[ -f "${exposure.getBaseName(2)}_${outcome.baseName}.log" ]]; then
+    if [[ -f "${meta.id}_${meta2.id}.log" ]]; then
         # Check if the error message exists in the log file
-        if [[ \$(grep -c "Error: not enough SNPs" "${exposure.getBaseName(2)}_${outcome.baseName}.log") -gt 0 ]]; then
-            echo "${meta.id}" > ${exposure.getBaseName(2)}_${outcome.baseName}.err
+        if [[ \$(grep -c "Error: not enough SNPs" "${meta.id}_${meta2.id}.log") -gt 0 ]]; then
+            echo "${meta.id}" > ${meta.id}_${meta2.id}.err
             exit 0
         fi
     else

@@ -135,7 +135,7 @@ plotly::ggplotly(forest_plot_obj, height = 1000)
 ```{r full, results='asis'}
 final_results <- read.csv(file = params$final_results, header = TRUE)
 
-cols <- c("gene", "nsnp", "b_Inverse_variance_weighted", "pval_Inverse_variance_weighted", "gsmr_beta", "gsmr_pval", "causal_snp")
+cols <- c("gene", "nsnp", "b_Inverse_variance_weighted", "pval_Inverse_variance_weighted", "gsmr_beta", "gsmr_pval")
 final_results <- final_results[final_results$is_candidate == TRUE, cols]
 colnames(final_results)[3:4] <- c("b_IVW", "pval_IVW")
 
@@ -149,9 +149,9 @@ datatable(final_results, options = list(
             var data = table.row(this).data();
             if (data) {
                 // Construct the image path dynamically
-                var imgPath = '../coloc/' + data[1] + '_regional.png';
+                // var imgPath = '../coloc/' + data[1] + '_regional.png';
                 // Update the image source in the viewer
-                document.getElementById('image-display-1').src = imgPath;
+                // document.getElementById('image-display-1').src = imgPath;
 
                 var imgPath2 = '../twosamplemr/' + data[1] + '_GSMR.txt_effect.png';
                 // Update the image source in the viewer

@@ -144,18 +144,22 @@ workflow {
     GENE_LIST.out.filtered.flatten().combine(outcomes).set { combinations }
     TWOSAMPLEMR (
             combinations,
-            ref
+            ref,
+            params.p_clump
             )
 
     bim_files.combine(combinations).set { coloc_combinations }
     
-    COLOC (
+    if(!params.skip_coloc){
+        COLOC (
             coloc_combinations
 	    )
 
-    COLOC.out.merged_coloc
-         .collectFile(name: 'concatenated_coloc.csv', storeDir: "${params.outdir}/collected_files/")
-         .set { concatenated_coloc }
+        COLOC.out.merged_coloc
+             .collectFile(name: 'concatenated_coloc.csv', storeDir: "${params.outdir}/collected_files/")
+             .set { concatenated_coloc }
+    }
+    concatenated_coloc = []
 
     TWOSAMPLEMR.out.mrpresso
         .collectFile(name: 'concatenated_mrpresso.txt', storeDir: "${params.outdir}/collected_files/")

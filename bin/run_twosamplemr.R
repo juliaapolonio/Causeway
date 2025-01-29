@@ -6,10 +6,11 @@ library(ggplot2)
 args <- commandArgs(trailingOnly = TRUE)
 
 exposure_path <- args[1]
-prefix_exp <- sub(".*/|_.*", "", exposure_path)
+prefix_exp <- gsub(".txt", "", exposure_path)
 outcome_path <- args[2]
-prefix_outcome <- sub(".*/|_.*", "", outcome_path)
+prefix_outcome <- gsub(".txt", "", outcome_path)
 ref <- args[3]
+p_clump <- args[4]
 
 exp <-
   read_exposure_data(
@@ -27,7 +28,7 @@ exp <-
 
 exp[, "exposure"] <- prefix_exp
 
-exp_filtered <- exp[which(exp$pval.exposure < 0.00001), ]
+exp_filtered <- exp[which(exp$pval.exposure < as.numeric(p_clump)), ]
 
 mic_exp <- ieugwasr::ld_clump(
   exp_filtered |> dplyr::select(
@@ -36,7 +37,6 @@ mic_exp <- ieugwasr::ld_clump(
     id = id.exposure
   ),
   clump_kb = 1000,
-  clump_p = 5e-8,
   clump_r2 = 0.05,
   plink_bin = "/usr/local/bin/plink",
   bfile = paste0(ref, "/1KG_phase3_EUR")
