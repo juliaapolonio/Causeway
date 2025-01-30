@@ -132,6 +132,7 @@ workflow {
     GCTA_GSMR (
       og_combinations,
 	  ref,
+          params.p_clump
     )
 
     GCTA_MERGE_ERR(GCTA_GSMR.out.gsmr_err.collect())

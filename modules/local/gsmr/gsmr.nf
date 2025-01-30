@@ -7,6 +7,7 @@ process GCTA_GSMR {
     input: 
     tuple val(meta), path(exposure), val(meta2), path(outcome)
     path(reference)
+    val(p_clump)
 
     output:
     path "${meta.id}_${meta2.id}.log", emit: gsmr_log
@@ -32,7 +33,7 @@ process GCTA_GSMR {
     --gsmr-direction 0   \
     --gsmr-snp-min 1   \
     --diff-freq 0.5   \
-    --gwas-thresh 5e-8   \
+    --gwas-thresh $p_clump   \
     --clump-r2 0.05   \
     --heidi-thresh 0.01   \
     --out "${meta.id}_${meta2.id}"
