@@ -72,10 +72,10 @@ Note that some form of configuration will be needed so that Nextflow knows how t
 
 ```bash
 nextflow run juliaapolonio/Causeway \
-  --exposure <EXPOSURE_SAMPLESHEET> \
+  --exposures <EXPOSURE_SAMPLESHEET> \
   --outdir <OUTDIR> \
   --ref <REFERENCE_FOLDER> \
-  --outcome <OUTCOME_SAMPLESHEET> \
+  --outcomes <OUTCOME_SAMPLESHEET> \
   -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
 ```
 
