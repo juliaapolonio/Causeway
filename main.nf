@@ -13,7 +13,7 @@ include { fromSamplesheet; validateParameters } from 'plugin/nf-validation'
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-
+include { QTL_FILTER } from "./modules/local/qtl_filter/qtl_filter.nf"
 include { TWOSAMPLEMR } from "./modules/local/twosamplemr/tsmr.nf"
 include { COLOC } from "./modules/local/coloc/coloc.nf"
 include { GCTA_GSMR } from "./modules/local/gsmr/gsmr.nf"
@@ -94,13 +94,13 @@ workflow {
             zenodo_ref
         )
 
-        ref = UNTAR_REF.out.untar.map { it[1] } + "/ref/"
+        ref = UNTAR_REF.out.untar.map { it[1] } 
 
         bim_files = UNTAR_REF.out.untar
             .map { meta, path -> 
-                def bim = file("${path}/ref/*.bim")
+                def bim = file("${path}/*.bim")
                 if (bim.isEmpty()) {
-                    error "No .bim file found in ${path}/ref/"
+                    error "No .bim file found in ${path}/"
                 }
                 [meta, bim[0]]  // We're assuming there's only one .bim file
             }
@@ -114,25 +114,48 @@ workflow {
              zenodo_ref
          )
  
-         ref = UNTAR_REF.out.untar.map { it[1] } + "/ref/"
+         ref = UNTAR_REF.out.untar.map { it[1] }
  
          bim_files = UNTAR_REF.out.untar
              .map { meta, path ->
-                 def bim = file("${path}/ref/*.bim")
+                 def bim = file("${path}/*.bim")
                  if (bim.isEmpty()) {
-                     error "No .bim file found in ${path}/ref/"
+                     error "No .bim file found in ${path}/"
                  }
                  [meta, bim[0]]  // We're assuming there's only one .bim file
              }
              .map { it[1] }
  
      }
+    
+    QTL_FILTER (
+        data,
+        params.p_clump
+    )
 
-    data.combine(outcomes).set { og_combinations }
+    QTL_FILTER.out.filtered_sumstats
+        .branch {
+            pass: it[2] == "true"
+            fail: it[2] == "false"
+        }
+        .set { filter_result }
+    
+    // Continue with passed QTLs
+    filter_result.pass
+        .map { meta, sumstats, pass_filter -> [meta, sumstats] }
+        .set { passed_qtls }
+
+    passed_qtls.view { meta, sumstats -> 
+        "Passed QTL - Meta: $meta, Sumstats: $sumstats.name"
+    }
+
+    //Combine qlt_filter.out with outcomes
+    passed_qtls.combine(outcomes).set { og_combinations }
+
     GCTA_GSMR (
-      og_combinations,
-	  ref,
-          params.p_clump
+        og_combinations,
+	ref,
+        params.p_clump
     )
 
     GCTA_MERGE_ERR(GCTA_GSMR.out.gsmr_err.collect())
