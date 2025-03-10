@@ -94,13 +94,13 @@ workflow {
             zenodo_ref
         )
 
-        ref = UNTAR_REF.out.untar.map { it[1] } 
+        ref = UNTAR_REF.out.untar.map { it[1] } + "/ref/" 
 
         bim_files = UNTAR_REF.out.untar
             .map { meta, path -> 
-                def bim = file("${path}/*.bim")
+                def bim = file("${path}/ref/*.bim")
                 if (bim.isEmpty()) {
-                    error "No .bim file found in ${path}/"
+                    error "No .bim file found in ${path}/ref/"
                 }
                 [meta, bim[0]]  // We're assuming there's only one .bim file
             }
@@ -114,13 +114,13 @@ workflow {
              zenodo_ref
          )
  
-         ref = UNTAR_REF.out.untar.map { it[1] }
+         ref = UNTAR_REF.out.untar.map { it[1] } + "/ref/"
  
          bim_files = UNTAR_REF.out.untar
              .map { meta, path ->
-                 def bim = file("${path}/*.bim")
+                 def bim = file("${path}/ref/*.bim")
                  if (bim.isEmpty()) {
-                     error "No .bim file found in ${path}/"
+                     error "No .bim file found in ${path}/ref/"
                  }
                  [meta, bim[0]]  // We're assuming there's only one .bim file
              }
@@ -144,10 +144,6 @@ workflow {
     filter_result.pass
         .map { meta, sumstats, pass_filter -> [meta, sumstats] }
         .set { passed_qtls }
-
-    passed_qtls.view { meta, sumstats -> 
-        "Passed QTL - Meta: $meta, Sumstats: $sumstats.name"
-    }
 
     //Combine qlt_filter.out with outcomes
     passed_qtls.combine(outcomes).set { og_combinations }
