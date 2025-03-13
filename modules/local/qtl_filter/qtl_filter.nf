@@ -1,5 +1,5 @@
 process QTL_FILTER {
-    label 'process_low'
+    label 'process_medium'
 
     container "${ workflow.containerEngine == 'singularity' ? 'docker://juliaapolonio/qtl_filter:v1.0':
             'docker.io/juliaapolonio/qtl_filter:v1.0' }"
